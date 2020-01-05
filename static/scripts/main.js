@@ -45,7 +45,11 @@ const sendPostShows = (arg) => {
 const displayShows = () => {
   let htmlString = "";
   for (const show of shows) {
-    htmlString += `<li class="show">${show}</li>`;
+    htmlString += 
+    `<li class="show">
+      ${show}
+      <span class="delete-show" title="Remove">&#x2715;</span>
+    </li>`;
   }
   document.getElementById("shows-list").innerHTML = htmlString;
 };
