@@ -2,9 +2,13 @@
   "name": "easy-show-downloader",
   "version": "0.0.1",
   "description": "Web app for automatically downloading new episodes of TV shows",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "ts-node-dev src",
+    "test": "echo \"Tests are for nerds!\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,15 @@
   "bugs": {
     "url": "https://github.com/jojonium/easy-show-downloader/issues"
   },
-  "homepage": "https://github.com/jojonium/easy-show-downloader#readme"
+  "homepage": "https://github.com/jojonium/easy-show-downloader#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.1.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
