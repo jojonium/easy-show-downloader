@@ -1,5 +1,5 @@
 import * as express from "express";
-import { writeFile } from "fs";
+import { promises } from "fs";
 
 interface RequestBody {
   shows: string[];
@@ -28,28 +28,29 @@ export const postShows = (req: express.Request, res: express.Response) => {
     );
     return;
   }
-  // write to the shows file
-  writeFile(
-    "storage/shows.json",
-    JSON.stringify(body),
-    { mode: 0o664 },
-    (err) => {
-      if (err) {
-        res.status(500).header("Content-Type", "application/json").send(
-          JSON.stringify({
-            message: "Failed to write to file: " + err.message,
-            status: 500,
-          })
-        );
-        return;
-      } else {
-        res.status(200).header("Content-Type", "application/json").send(
-          JSON.stringify({
-            message: "Shows list successfully updated",
-            status: 200,
-          })
-        );
-      }
-    }
-  );
+  promises.mkdir(
+    "storage",
+    { mode: 0o775, recursive: true }
+  ).then(() => {
+    return promises.writeFile(
+      "storage/shows.json",
+      JSON.stringify(body),
+      { mode: 0o664 }
+    );
+  }).then(() => {
+    res.status(200).header("Content-Type", "application/json").send(
+      JSON.stringify({
+        message: "Shows list successfully updated",
+        status: 200,
+      })
+    );
+  }).catch((reason: Error) => {
+    res.status(500).header("Content-Type", "application/json").send(
+      JSON.stringify({
+        message: "Failed to write to file",
+        reason: reason.message,
+        status: 500,
+      })
+    );
+  });
 };

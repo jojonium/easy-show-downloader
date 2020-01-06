@@ -1,9 +1,19 @@
 import * as express from "express";
-import { readFile } from "fs";
+import { promises } from "fs";
 
 interface FileFormat {
   shows: string[];
 }
+
+const sendSuccess = (res: express.Response, showArray: string[]) => {
+  res.status(200).header("Content-Type", "application/json").send(
+    JSON.stringify({
+      message: "Successfully read shows file",
+      shows: showArray,
+      status: 200,
+    })
+  );
+};
 
 /**
  * Returns the list of shows
@@ -14,42 +24,24 @@ interface FileFormat {
  * @param res the HTML response
  */
 export const getShows = (req: express.Request, res: express.Response) => {
-  readFile("storage/shows.json", (err, data) => {
-    let showArray: string[];
-    if (err) {
-      if (err.errno === -2) {
-        // no such file
-        showArray = [];
-      } else {
-        res.status(500).header("Content-Type", "application/json").send(
-          JSON.stringify({
-            message: "Failed to read file: " + err.message,
-            status: 500,
-          })
-        );
-        return;
-      }
+  promises.readFile("storage/shows.json", { encoding: "utf8" }).then((str) => {
+    let json: FileFormat;
+    try {
+      json = JSON.parse(str);
+    } catch (err) {
+      // invalid format
+      sendSuccess(res, []);
     }
-    if (!err) { // if the showArray wasn't already set to []
-      try {
-        const json: FileFormat = JSON.parse(data.toString("utf8"));
-        showArray = json.shows;
-      } catch (e) {
-        res.status(500).header("Content-Type", "application/json").send(
-          JSON.stringify({
-            exception: e,
-            message: "Unable to process file contents",
-            status: 500,
-          })
-        );
-        return;
-      }
-    }
-    res.status(200).header("Content-Type", "application/json").send(
+    sendSuccess(res, json.shows);
+  }, (reason) => {
+    // file doesn't exist
+    sendSuccess(res, []);
+  }).catch((reason: Error) => {
+    res.status(500).header("Content-Type", "application/json").send(
       JSON.stringify({
-        message: "Successfully read shows file",
-        shows: showArray,
-        status: 200,
+        message: "Failed to read file",
+        reason: reason.message,
+        status: 500,
       })
     );
   });
