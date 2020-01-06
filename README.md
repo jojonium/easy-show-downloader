@@ -3,6 +3,10 @@
 A simple web application built on Node and TypeScript for automatically
 downloading new episodes of TV shows.
 
+This project is not very robust, flexible, or feature complete, because I made
+it primarily for myself and my own personal use case. That said, pull requests
+are welcome if you want to add features.
+
 ## Running development server
 
 Edit `config.json`:
@@ -32,6 +36,10 @@ Then just run the Node project:
 $ npm install
 $ npm start
 ```
+
+Navigate to `http://localhost:8080` to see it in action. You can use the web
+interface to add shows and manually trigger a check for new episodes. The server
+will also check for new episodes automatically each hour.
 
 ## API documentation
 
