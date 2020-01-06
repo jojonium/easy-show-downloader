@@ -1,4 +1,6 @@
+import { CronJob } from "cron";
 import * as express from "express";
+import { downloadTorrents } from "./downloadTorrents";
 import { getShows } from "./endpoints/getShows";
 import { postDownload } from "./endpoints/postDownload";
 import { postShows } from "./endpoints/postShows";
@@ -24,6 +26,9 @@ app.get("/api/shows", getShows);
 
 // endpoint to download new episodes
 app.post("/api/download", postDownload);
+
+// set up job to download new torrents each hour
+const job = new CronJob("0 53 * * * *", downloadTorrents, undefined, true);
 
 // start server
 app.listen(PORT, () => {
