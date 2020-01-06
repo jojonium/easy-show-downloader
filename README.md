@@ -7,6 +7,9 @@ This project is not very robust, flexible, or feature complete, because I made
 it primarily for myself and my own personal use case. That said, pull requests
 are welcome if you want to add features.
 
+It's also not particularly well-written, efficient, or pretty, because I wrote
+it in approximately two days.
+
 ## Running development server
 
 Edit `config.json`:
@@ -20,7 +23,7 @@ Edit `config.json`:
   "showDirectory": "/mnt/media/Television",
 
   "transmissionOptions": {
-    "host": "transmission.kek.fun",
+    "host": "localhost",
     "port": 9091,
     "username": "username",
     "password": "password",
@@ -34,7 +37,7 @@ Then just run the Node project:
 
 ```
 $ npm install
-$ npm start
+$ npm start:dev
 ```
 
 Navigate to `http://localhost:8080` to see it in action. You can use the web
