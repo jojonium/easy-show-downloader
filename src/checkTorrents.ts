@@ -3,8 +3,9 @@ import * as Parser from "rss-parser";
 import Transmission = require("transmission-promise");
 import { ShowFileFormat } from "./endpoints/getShows";
 
-interface Config {
+export interface Config {
   rssURLs: string[];
+  showDirectory: string;
   transmissionOptions: {
     host: string;
     port: number;
@@ -15,14 +16,22 @@ interface Config {
   };
 }
 
-interface ShowTuple {
+export interface ShowTuple {
   showName: string;
   link: string;
   episodeName: string;
 }
 
+export interface RejectionObject {
+ status: number;
+ message: string;
+ reason: object | string;
+}
+
 /**
  * Gets the list of episodes we need to download
+ * @param config the object contained in config.json
+ * @param transmission a object for connecting to the Transmission server
  * @return a promise that resolves with a list of episodes we want or rejects
  * with an object like this in case of an error:
  * {
@@ -31,32 +40,16 @@ interface ShowTuple {
  *   reason: {Some kind of Error object}
  * }
  */
-export const getEpisodesToDownload = (): Promise<ShowTuple[]> => {
-  let config: Config;
-  let transmission: Transmission;
+export const getEpisodesToDownload = (
+  config: Config,
+  transmission: Transmission
+): Promise<ShowTuple[]> => {
   let torrentNames: string[];
   let shows: string[];
 
   return new Promise((resolve, reject) => {
-    promises
-      .readFile("../config.json", { encoding: "utf8" })
-      .then((value) => {
-        // save the config value for later
-        config = JSON.parse(value);
-        if (config.rssURLs.length < 1) {
-          throw new Error("No RSS URLs provided in config.json");
-        }
-
-        // get the list of desired shows from the file
-        return promises.readFile("../storage/shows.json", { encoding: "utf8" });
-      }, (reason) => {
-        reject({
-          message: "Failed to read config.json",
-          reason,
-          status: 500,
-        });
-        return;
-      })
+    // get the list of desired shows from the file
+    promises.readFile("../storage/shows.json", { encoding: "utf8" })
       .then((res) => {
         let json: ShowFileFormat;
         try {
@@ -71,7 +64,6 @@ export const getEpisodesToDownload = (): Promise<ShowTuple[]> => {
         shows = json.shows;
 
         // get the list of all torrent names from transmission
-        transmission = new Transmission(config.transmissionOptions);
         return transmission.get(false, ["name"]);
       }, (reason) => {
         reject({
@@ -173,4 +165,27 @@ const getRSSFeeds = (urls: string[]): Promise<Parser.Output[]> => {
     );
 
   return serial(functions);
+};
+
+/**
+ * Adds any number of torrents asynchronously
+ * @param transmission Transmission object
+ * @param shows list of shows we want to add
+ * @param baseDir base directory for TV shows, which contains each show's
+ * individual folder
+ * @return a promise that resolves with nothing
+ */
+export const addAllTorrents = (
+  transmission: Transmission,
+  shows: ShowTuple[],
+  baseDir: string
+): Promise<void> => {
+  // execute each promise sequentially
+  let p = Promise.resolve();
+  shows.forEach((show) => {
+    p = p.then(() => transmission.addUrl(show.link, {
+      "download-dir": baseDir + show.showName,
+    }));
+  });
+  return p;
 };

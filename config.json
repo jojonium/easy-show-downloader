@@ -1,11 +1,12 @@
 {
-  "rssUrls": [],
+  "rssURLs": [],
+  "showDirectory": "/mnt/media/Television",
   "transmissionOptions": {
-    "host": "example.com",
-    "port": 9091,
-    "username": "user",
-    "password": "pass",
-    "ssl": true,
+    "host": "localhost",
+    "port": 80,
+    "username": "username",
+    "password": "password",
+    "ssl": false,
     "url": "/transmission/rpc"
   }
  }
