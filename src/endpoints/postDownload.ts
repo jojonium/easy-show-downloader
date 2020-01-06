@@ -26,7 +26,7 @@ const sendFailure = (
 const sendSuccess = (res: express.Response, num: number) => {
   res.status(200).header("Content-Type", "application/json").send(
     JSON.stringify({
-      message: `Adding ${num} episode` + (num !== 1) ? "s" : "",
+      message: "Added " + num + " episode" + ((num !== 1) ? "s" : ""),
       status: 200,
     })
   );
@@ -37,7 +37,7 @@ export const postDownload = (req: express.Request, res: express.Response) => {
   let transmission: Transmission;
   let numAdded: number;
 
-  promises.readFile("../config.json", { encoding: "utf8" }).then((value) => {
+  promises.readFile("config.json", { encoding: "utf8" }).then((value) => {
     // save the config value for later
     config = JSON.parse(value);
     if (config.rssURLs.length < 1) {

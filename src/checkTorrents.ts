@@ -49,7 +49,7 @@ export const getEpisodesToDownload = (
 
   return new Promise((resolve, reject) => {
     // get the list of desired shows from the file
-    promises.readFile("../storage/shows.json", { encoding: "utf8" })
+    promises.readFile("storage/shows.json", { encoding: "utf8" })
       .then((res) => {
         let json: ShowFileFormat;
         try {
@@ -184,7 +184,7 @@ export const addAllTorrents = (
   let p = Promise.resolve();
   shows.forEach((show) => {
     p = p.then(() => transmission.addUrl(show.link, {
-      "download-dir": baseDir + show.showName,
+      "download-dir": baseDir + "/" + show.showName,
     }));
   });
   return p;
