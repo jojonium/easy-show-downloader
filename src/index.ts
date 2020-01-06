@@ -7,7 +7,10 @@ const PORT = 8080;
 const app = express();
 
 // static directory for non-API requests
-app.use(express.static(__dirname + "/../static"));
+app.use(
+  express.static(__dirname + "/../static",
+  { index: ["index.html"], extensions: ["html"] })
+);
 
 // use built-in JSON body-parsing
 app.use(express.json());
