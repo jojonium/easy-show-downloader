@@ -18,6 +18,7 @@ window.onload = () => {
 
   postShowsXHR.addEventListener("load", ev => {
     if (postShowsXHR.status === 200) {
+      // always update the local show list after sending something to the server
       sendGetShows();
       // TODO show that it was successfully added
     } else {
@@ -31,27 +32,45 @@ window.onload = () => {
 const sendGetShows = () => {
   getShowsXHR.open("GET", "/api/shows");
   getShowsXHR.send();
-}
+};
 
-const sendPostShows = (arg) => {
+/**
+ * 
+ * @param {string[]} showArray 
+ */
+const sendPostShows = showArray => {
   postShowsXHR.open("POST", "/api/shows");
   postShowsXHR.setRequestHeader("Content-Type", "application/json");
-  postShowsXHR.send(arg);
-}
+  postShowsXHR.send(JSON.stringify({ shows: showArray }));
+};
 
 /**
  * displays the of show names in the document
  */
 const displayShows = () => {
   let htmlString = "";
+  let counter = 0;
   for (const show of shows) {
-    htmlString += 
-    `<li class="show">
+    htmlString += `<li class="show">
       ${show}
-      <span class="delete-show" title="Remove">&#x2715;</span>
+      <span
+        class="delete-show" 
+        title="Remove"
+        onclick="removeShow(${counter})"
+      >&#x2715;</span>
     </li>`;
+    counter++;
   }
   document.getElementById("shows-list").innerHTML = htmlString;
+};
+
+/**
+ * Removes a show from the list, updating the server
+ * @param {number} id 0-based index of show to remove
+ */
+const removeShow = id => {
+  shows.splice(id, 1);
+  sendPostShows(shows);
 };
 
 /**
@@ -60,8 +79,9 @@ const displayShows = () => {
  * @return {false}
  */
 const addShow = formElement => {
-  const input =
-    /** @type {HTMLInputElement} */ (document.getElementById("new-show"));
+  const input = /** @type {HTMLInputElement} */ (document.getElementById(
+    "new-show"
+  ));
   // clean input
   if (input.value === "" || input.value.length >= 128) return false;
   input.value = input.value.trim();
@@ -72,7 +92,7 @@ const addShow = formElement => {
     }
   }
   shows.push(input.value);
-  sendPostShows(JSON.stringify({shows: shows}));
+  sendPostShows(shows);
   input.value = "";
   return false;
 };
