@@ -71,12 +71,14 @@ export const postDownload = (req: express.Request, res: express.Response) => {
     return;
   })
   .catch((err: Error) => {
-    sendFailure(
-      res,
-      500,
-      "Error was thrown, see reason for details",
-      err.message
-    );
+    if (!res.headersSent) {
+      sendFailure(
+        res,
+        500,
+        "Error was thrown, see reason for details",
+        err.message
+      );
+    }
     return;
   });
 };
