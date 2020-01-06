@@ -33,6 +33,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "rss-parser": "^3.7.3"
   }
 }
