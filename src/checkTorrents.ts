@@ -21,76 +21,133 @@ interface ShowTuple {
   episodeName: string;
 }
 
-export const getEpisodesToDownload = () => {
+/**
+ * Gets the list of episodes we need to download
+ * @return a promise that resolves with a list of episodes we want or rejects
+ * with an object like this in case of an error:
+ * {
+ *   status: 500,
+ *   message: "Something went wrong",
+ *   reason: {Some kind of Error object}
+ * }
+ */
+export const getEpisodesToDownload = (): Promise<ShowTuple[]> => {
   let config: Config;
   let transmission: Transmission;
   let torrentNames: string[];
   let shows: string[];
 
-  promises
-    .readFile("../config.json", { encoding: "utf8" })
-    .then((value) => {
-      // save the config value for later
-      config = JSON.parse(value);
-      if (config.rssURLs.length < 1) {
-        throw new Error("No RSS URLs provided in config.json");
-      }
+  return new Promise((resolve, reject) => {
+    promises
+      .readFile("../config.json", { encoding: "utf8" })
+      .then((value) => {
+        // save the config value for later
+        config = JSON.parse(value);
+        if (config.rssURLs.length < 1) {
+          throw new Error("No RSS URLs provided in config.json");
+        }
 
-      // get the list of desired shows from the file
-      return promises.readFile("../storage/shows.json", { encoding: "utf8" });
-    }, (reason) => {
-      throw reason;
-    })
-    .then((res) => {
-      let json: ShowFileFormat;
-      try {
-        json = JSON.parse(res);
-      } catch (err) {
-        // invalid format
-        throw new Error("Invalid shows.json format");
-      }
-      shows = json.shows;
+        // get the list of desired shows from the file
+        return promises.readFile("../storage/shows.json", { encoding: "utf8" });
+      }, (reason) => {
+        reject({
+          message: "Failed to read config.json",
+          reason,
+          status: 500,
+        });
+        return;
+      })
+      .then((res) => {
+        let json: ShowFileFormat;
+        try {
+          if (typeof res !== "string") {
+            throw new Error("Failed to read shows.json");
+          }
+          json = JSON.parse(res);
+        } catch (err) {
+          // invalid format
+          throw new Error("Invalid shows.json format");
+        }
+        shows = json.shows;
 
-      // get the list of all torrent names from transmission
-      transmission = new Transmission(config.transmissionOptions);
-      return transmission.get(false, ["name"]);
-    }, (reason) => {
-      throw reason;
-    })
-    .then((res) => {
-      torrentNames = res.torrents.map((obj: { name: string }) => obj.name);
-
-      // parse RSS feeds for desired torrents
-      return getRSSFeeds(config.rssURLs);
-    }, (reason) => {
-      throw reason;
-    }).then((res) => {
-      const wantedLinks: ShowTuple[] = [];
-      // get list of torrents we want
-      // this could probably be more efficient
-      for (const feed of res) {
-        for (const item of feed.items) {
-          for (const show of shows) {
-            const regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`);
-            if (item.title.match(regex) !== null) {
-              wantedLinks.push({
-                episodeName: item.title,
-                link: item.link,
-                showName: show,
-              });
-              break;
+        // get the list of all torrent names from transmission
+        transmission = new Transmission(config.transmissionOptions);
+        return transmission.get(false, ["name"]);
+      }, (reason) => {
+        reject({
+          message: "Failed to read shows.json",
+          reason,
+          status: 500,
+        });
+        return;
+      })
+      .then((res) => {
+        torrentNames = res.torrents.map((obj: { name: string }) => obj.name);
+        // parse RSS feeds for desired torrents
+        return getRSSFeeds(config.rssURLs);
+      }, (reason) => {
+        reject({
+          message: "Failed to get torrent names from Transmission",
+          reason,
+          status: 500,
+        });
+        return;
+      }).then((res) => {
+        if (!res) {
+          throw new Error("Failed to get RSS feeds");
+        }
+        const wantedLinks: ShowTuple[] = [];
+        // get list of torrents we want
+        // this could probably be more efficient
+        for (const feed of res) {
+          for (const item of feed.items) {
+            for (const show of shows) {
+              const regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`, "i");
+              if (item.title.match(regex) !== null) {
+                wantedLinks.push({
+                  episodeName: item.title,
+                  link: item.link,
+                  showName: show,
+                });
+                break;
+              }
             }
           }
         }
-      }
-      // tslint:disable-next-line: no-console
-      console.log(wantedLinks);
-    }, (reason) => {
-      throw reason;
-    });
+        // see if we already have any of these torrents
+        const confirmedLinks: ShowTuple[] = [];
+        for (const wanted of wantedLinks) {
+          let alreadyHave = false;
+          for (const torrentName of torrentNames) {
+            if (wanted.episodeName === torrentName) {
+              // tslint:disable-next-line: no-console
+              console.log(torrentName);
+              alreadyHave = true;
+              break;
+            }
+          }
+          // we don't have wanted yet
+          if (!alreadyHave) confirmedLinks.push(wanted);
+        }
+        // we found all the links we need, resolve now
+        resolve(confirmedLinks);
+      }, (reason) => {
+        reject({
+          message: "Failed to get RSS feeds",
+          reason,
+          status: 500,
+        });
+        return;
+      }).catch((err: Error) => {
+        reject({
+          message: "Error was thrown, see reason for details",
+          reason: err.message,
+          status: 500,
+        });
+        return;
+      });
+  });
 };
-
-getEpisodesToDownload();
 
 /**
  * Fetches any number of RSS feeds asynchronously
