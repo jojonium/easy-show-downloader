@@ -22,7 +22,7 @@ export interface ShowTuple {
   episodeName: string;
 }
 
-export interface RejectionObject {
+export interface OutObject {
  status: number;
  message: string;
  reason: object | string;
