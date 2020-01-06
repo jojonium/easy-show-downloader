@@ -1,9 +1,6 @@
 import * as express from "express";
 import { promises } from "fs";
-
-interface RequestBody {
-  shows: string[];
-}
+import { ShowFileFormat } from "./getShows";
 
 /**
  * Updates the list of shows, replacing it with one sent in the request.
@@ -16,7 +13,7 @@ interface RequestBody {
  * @param res the HTML response
  */
 export const postShows = (req: express.Request, res: express.Response) => {
-  let body: RequestBody;
+  let body: ShowFileFormat;
   try {
     body = req.body;
   } catch (e) {

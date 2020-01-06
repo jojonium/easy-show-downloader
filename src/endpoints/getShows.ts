@@ -1,7 +1,7 @@
 import * as express from "express";
 import { promises } from "fs";
 
-interface FileFormat {
+export interface ShowFileFormat {
   shows: string[];
 }
 
@@ -25,7 +25,7 @@ const sendSuccess = (res: express.Response, showArray: string[]) => {
  */
 export const getShows = (req: express.Request, res: express.Response) => {
   promises.readFile("storage/shows.json", { encoding: "utf8" }).then((str) => {
-    let json: FileFormat;
+    let json: ShowFileFormat;
     try {
       json = JSON.parse(str);
     } catch (err) {
