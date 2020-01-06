@@ -130,11 +130,13 @@ const addShow = formElement => {
  */
 const log = (str, badness = 0) => {
   const line = document.createElement("li");
+  const log = document.getElementById("log");
   line.innerText = str;
   if (badness === 1) {
     line.style.color = "#bfbf94";
   } else if (badness === 2) {
     line.style.color = "#c0392b";
   }
-  document.getElementById("log").appendChild(line);
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
 }
