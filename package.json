@@ -1,13 +1,14 @@
 {
   "name": "easy-show-downloader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Web app for automatically downloading new episodes of TV shows",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "ts-node-dev src",
+    "start": "node dist/index.js",
+    "start:dev": "ts-node-dev src",
     "test": "echo \"Tests are for nerds!\" && exit 1"
   },
   "repository": {
