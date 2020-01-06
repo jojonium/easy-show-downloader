@@ -6,15 +6,26 @@
 
   <script src="scripts/main.js"></script>
 </head>
+<body>
+  <header>
+    <h1>Easy Show Downloader</h1>
+  </header>
 
-<h1>Easy Show Downloader</h1>
+  <main>
+    <ul id="shows-list"></ul>
+    
+    <form
+      name="add-show-form" id="add-show-form"
+      onsubmit="return addShow(this)">
+      <input 
+        type="text" name="new-show" id="new-show"
+        placeholder="Cowboy Bebop" maxlength="64">
+      <button type="submit">Add Show</button>
+    </form>
+  </main>
 
-<ul id="shows-list"></ul>
-
-<form name="add-show-form" id="add-show-form" onsubmit="return addShow(this)">
-  <input 
-    type="text" name="new-show" id="new-show"
-    placeholder="Cowboy Bebop" maxlength="64">
-  <button type="submit">Add Show</button>
-</form>
-
+  <footer>
+    &copy; 2020 Joseph Petitti. Released free and open source
+    <a href="/licenses.html" rel="jslicense">licenses</a>.
+  </footer>
+</body>
