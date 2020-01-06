@@ -1,0 +1,11 @@
+{
+  "rssUrls": [],
+  "transmissionOptions": {
+    "host": "example.com",
+    "port": 9091,
+    "username": "user",
+    "password": "pass",
+    "ssl": true,
+    "url": "/transmission/rpc"
+  }
+ }
