@@ -37,7 +37,7 @@ Then just run the Node project:
 
 ```
 $ npm install
-$ npm start:dev
+$ npm run start:dev
 ```
 
 Navigate to `http://localhost:8080` to see it in action. You can use the web
