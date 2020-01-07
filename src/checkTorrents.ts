@@ -183,8 +183,11 @@ export const addAllTorrents = (
   // execute each promise sequentially
   let p = Promise.resolve();
   shows.forEach((show) => {
+    let downloadTo = baseDir;
+    if (downloadTo.slice(-1) !== "/") downloadTo += "/";
+    downloadTo += show.showName;
     p = p.then(() => transmission.addUrl(show.link, {
-      "download-dir": baseDir + "/" + show.showName,
+      "download-dir": downloadTo,
     }));
   });
   return p;
