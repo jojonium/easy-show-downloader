@@ -8,6 +8,10 @@
     "outDir": "dist",
     "baseUrl": ".",
     "diagnostics": true,
+    "typeRoots": [
+      "./src/custom_typings",
+      "./node_modules/@types"
+    ],
     "paths": {
       "*": [
         "node_modules/*"
