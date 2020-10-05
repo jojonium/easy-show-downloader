@@ -19,11 +19,9 @@ export const rssFilter = (
       for (const item of feed.items) {
         let regex: RegExp;
         // specific regexes for known providers
-        switch (feed.link) {
-          case "https://nyaa.si/":
-            regex = new RegExp(`(\[.*\])? ?${show} - \d+ \[1080p\].*`, "i");
-          default:
-            regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`, "i");
+        regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`, "i");
+        if (feed.link === "https://nyaa.si/") {
+          regex = new RegExp(`(\[.*\])? ?${show} - \d+ \[1080p\].*`, "i");
         }
 
         if (regex.test(item.title)) {
