@@ -106,8 +106,6 @@ export const getEpisodesToDownload = (
             let alreadyHave = false;
             for (const torrentName of torrentNames) {
               if (wanted.episodeName === torrentName) {
-                // tslint:disable-next-line: no-console
-                console.log(torrentName);
                 alreadyHave = true;
                 break;
               }
