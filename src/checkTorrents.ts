@@ -2,6 +2,7 @@ import { promises } from "fs";
 import * as Parser from "rss-parser";
 import Transmission = require("transmission-promise");
 import { ShowFileFormat } from "./endpoints/getShows";
+import { rssFilter } from "./rssFilter";
 
 export interface Config {
   rssURLs: string[];
@@ -23,9 +24,9 @@ export interface ShowTuple {
 }
 
 export interface OutObject {
- status: number;
- message: string;
- reason: object | string;
+  status: number;
+  message: string;
+  reason: object | string;
 }
 
 /**
@@ -49,88 +50,84 @@ export const getEpisodesToDownload = (
 
   return new Promise((resolve, reject) => {
     // get the list of desired shows from the file
-    promises.readFile("storage/shows.json", { encoding: "utf8" })
-      .then((res) => {
-        let json: ShowFileFormat;
-        try {
-          if (typeof res !== "string") {
-            throw new Error("Failed to read shows.json");
+    promises
+      .readFile("storage/shows.json", { encoding: "utf8" })
+      .then(
+        (res) => {
+          let json: ShowFileFormat;
+          try {
+            if (typeof res !== "string") {
+              throw new Error("Failed to read shows.json");
+            }
+            json = JSON.parse(res);
+          } catch (err) {
+            // invalid format
+            throw new Error("Invalid shows.json format");
           }
-          json = JSON.parse(res);
-        } catch (err) {
-          // invalid format
-          throw new Error("Invalid shows.json format");
-        }
-        shows = json.shows;
+          shows = json.shows;
 
-        // get the list of all torrent names from transmission
-        return transmission.get(false, ["name"]);
-      }, (reason) => {
-        reject({
-          message: "Failed to read shows.json",
-          reason,
-          status: 500,
-        });
-        return;
-      })
-      .then((res) => {
-        torrentNames = res.torrents.map((obj: { name: string }) => obj.name);
-        // parse RSS feeds for desired torrents
-        return getRSSFeeds(config.rssURLs);
-      }, (reason) => {
-        reject({
-          message: "Failed to get torrent names from Transmission",
-          reason,
-          status: 500,
-        });
-        return;
-      }).then((res) => {
-        if (!res) {
-          throw new Error("Failed to get RSS feeds");
+          // get the list of all torrent names from transmission
+          return transmission.get(false, ["name"]);
+        },
+        (reason) => {
+          reject({
+            message: "Failed to read shows.json",
+            reason,
+            status: 500,
+          });
+          return;
         }
-        const wantedLinks: ShowTuple[] = [];
-        // get list of torrents we want
-        // this could probably be more efficient
-        for (const feed of res) {
-          for (const item of feed.items) {
-            for (const show of shows) {
-              const regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`, "i");
-              if (item.title.match(regex) !== null) {
-                wantedLinks.push({
-                  episodeName: item.title,
-                  link: item.link,
-                  showName: show,
-                });
+      )
+      .then(
+        (res) => {
+          torrentNames = res.torrents.map((obj: { name: string }) => obj.name);
+          // parse RSS feeds for desired torrents
+          return getRSSFeeds(config.rssURLs);
+        },
+        (reason) => {
+          reject({
+            message: "Failed to get torrent names from Transmission",
+            reason,
+            status: 500,
+          });
+          return;
+        }
+      )
+      .then(
+        (res) => {
+          if (!res) {
+            throw new Error("Failed to get RSS feeds");
+          }
+          // get list of torrents we want
+          const wantedLinks = rssFilter(res, shows);
+          // see if we already have any of these torrents
+          const confirmedLinks: ShowTuple[] = [];
+          for (const wanted of wantedLinks) {
+            let alreadyHave = false;
+            for (const torrentName of torrentNames) {
+              if (wanted.episodeName === torrentName) {
+                // tslint:disable-next-line: no-console
+                console.log(torrentName);
+                alreadyHave = true;
                 break;
               }
             }
+            // we don't have wanted yet
+            if (!alreadyHave) confirmedLinks.push(wanted);
           }
+          // we found all the links we need, resolve now
+          resolve(confirmedLinks);
+        },
+        (reason) => {
+          reject({
+            message: "Failed to get RSS feeds",
+            reason,
+            status: 500,
+          });
+          return;
         }
-        // see if we already have any of these torrents
-        const confirmedLinks: ShowTuple[] = [];
-        for (const wanted of wantedLinks) {
-          let alreadyHave = false;
-          for (const torrentName of torrentNames) {
-            if (wanted.episodeName === torrentName) {
-              // tslint:disable-next-line: no-console
-              console.log(torrentName);
-              alreadyHave = true;
-              break;
-            }
-          }
-          // we don't have wanted yet
-          if (!alreadyHave) confirmedLinks.push(wanted);
-        }
-        // we found all the links we need, resolve now
-        resolve(confirmedLinks);
-      }, (reason) => {
-        reject({
-          message: "Failed to get RSS feeds",
-          reason,
-          status: 500,
-        });
-        return;
-      }).catch((err: Error) => {
+      )
+      .catch((err: Error) => {
         reject({
           message: "Error was thrown, see reason for details",
           reason: err.message,
@@ -148,10 +145,19 @@ export const getEpisodesToDownload = (
  * output of each RSS feed
  */
 const getRSSFeeds = (urls: string[]): Promise<Parser.Output[]> => {
-  const parser = new Parser();
-
   // convert urls to array of functions returning promises
-  const functions = urls.map((url) => () => parser.parseURL(url));
+  const functions = urls.map((url) => () => {
+    let parser: Parser = new Parser();
+    // special cases for known URLs
+    if (/https:\/\/nyaa.si\/.*/.test(url)) {
+      parser = new Parser({
+        customFields: {
+          item: ["nyaa:seeders"],
+        },
+      });
+    }
+    return parser.parseURL(url);
+  });
 
   // this function executes an array of promises in sequence, returning one big
   // promise that wraps them and resolves to the concatentation of their results
@@ -186,9 +192,11 @@ export const addAllTorrents = (
     let downloadTo = baseDir;
     if (downloadTo.slice(-1) !== "/") downloadTo += "/";
     downloadTo += show.showName;
-    p = p.then(() => transmission.addUrl(show.link, {
-      "download-dir": downloadTo,
-    }));
+    p = p.then(() =>
+      transmission.addUrl(show.link, {
+        "download-dir": downloadTo,
+      })
+    );
   });
   return p;
 };
