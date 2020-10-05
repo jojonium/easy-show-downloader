@@ -8,7 +8,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/index.js",
-    "start:dev": "ts-node-dev src",
+    "start:dev": "ts-node-dev --poll src/index.ts",
     "test": "echo \"Tests are for nerds!\" && exit 1"
   },
   "repository": {
