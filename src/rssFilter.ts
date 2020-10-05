@@ -13,17 +13,16 @@ export const rssFilter = (
 ): ShowTuple[] => {
   const wantedLinks = new Array<ShowTuple>();
 
-  for (const feed of feeds) {
-    for (const show of shows) {
+  for (const show of shows) {
+    for (const feed of feeds) {
       let bestShowMatch: Parser.Item;
+      let regex: RegExp;
+      // specific regexes for known providers
+      regex = new RegExp(`(\\[.*\\])? ?${show} - \\d+.*`, "i");
+      if (feed.link === "https://nyaa.si/") {
+        regex = new RegExp(`(\\[.*\\])? ?${show} - \\d+ \\[1080p\\].*`, "i");
+      }
       for (const item of feed.items) {
-        let regex: RegExp;
-        // specific regexes for known providers
-        regex = new RegExp(`(\[.*\])? ?${show} - \d*.*`, "i");
-        if (feed.link === "https://nyaa.si/") {
-          regex = new RegExp(`(\[.*\])? ?${show} - \d+ \[1080p\].*`, "i");
-        }
-
         if (regex.test(item.title)) {
           // for Nyaa torrents (where seeders are reported) grab only the
           // highest-seeded torrent
