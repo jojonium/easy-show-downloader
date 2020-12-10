@@ -21,8 +21,7 @@
           name="add-show-form" id="add-show-form"
           onsubmit="return addShow(this)">
           <input 
-            type="text" name="new-show" id="new-show"
-            placeholder="Cowboy Bebop" maxlength="128">
+            type="text" name="new-show" id="new-show" placeholder="^(?<name>Cowboy Bebop) - (?<episode>\d+).*$" maxlength="256">
           <button type="submit">Add Show</button>
         </form>
       </div>
@@ -33,19 +32,29 @@
         </button>
 
         <p>
-          The server will check for new episodes each hour. You can also click the button above to do it manually.
+          The server will check for new episodes each hour. You can also click
+          the button above to do it manually.
         </p>
 
         <p>
-          Enter names exactly as they appear on the torrent. For example, if
-          you want to grab torrents like
+          Enter regular expressions in the box to the left. Your regex should
+          have two named capture groups, <code>name</code>, which captures the
+          name of the show, and <code>episode</code> which captures the episode
+          number.
         </p>
 
-        <code>[HorribleSubs] Darwin's Game - 01 [1080p].mkv</code>
+        <p>
+          Here's an example:
+        </p>
 
-        <p>enter the name</p>
-        
-        <code>Darwin's Game</code>
+        <code>^\[SubsPlease] (?&lt;name&gt;Akudama Drive) - (?&lt;episode&gt;\d+)
+          \(1080p\).*$</code>
+
+        <p>
+          This will download files with names like
+        </p>
+
+        <code>[SubsPlease] Akudama Drive - 10 (1080p) [7F2BE509].mkv</code>
       </div>
     </div>
 
@@ -56,7 +65,6 @@
     </div>
 
   </main>
-
 
   <footer>
     <span>
