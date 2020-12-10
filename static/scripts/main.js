@@ -58,6 +58,17 @@ const sendPostShows = showArray => {
 };
 
 /**
+ * Escapes a string so it can appear in html
+ */
+const htmlClean = (str) => 
+    String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+
+
+/**
  * displays the of show names in the document
  */
 const displayShows = () => {
@@ -65,7 +76,7 @@ const displayShows = () => {
   let counter = 0;
   for (const show of shows) {
     htmlString += `<li class="show">
-      ${show}
+      ${htmlClean(show)}
       <span
         class="delete-show" 
         title="Remove"
@@ -109,7 +120,7 @@ const addShow = formElement => {
   const input =
     /** @type {HTMLInputElement} */ (document.getElementById("new-show"));
   // clean input
-  if (input.value === "" || input.value.length >= 128) return false;
+  if (input.value === "") return false;
   input.value = input.value.trim();
   for (const show of shows) {
     if (show === input.value) {

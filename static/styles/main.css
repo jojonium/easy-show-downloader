@@ -28,10 +28,10 @@ header {
 }
 
 footer {
-  font-size: .7em;
+  font-size: 0.7em;
   flex-grow: 1;
   text-align: center;
-  padding: .5em 0;
+  padding: 0.5em 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -49,28 +49,35 @@ ul#shows-list {
   padding: 0;
   margin: 0;
   display: inline-block;
+  font-family: monospace;
 }
 
 li.show {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   margin: 3px 0;
   background-color: #404040;
   border-radius: 5px;
   border: 2px solid #666666;
+  font-size: 0.8em;
 }
 
 li.show > span.delete-show {
   opacity: 0;
-  transition: opacity .3s;
+  transition: opacity 0.3s;
   cursor: pointer;
   padding-left: 1em;
 }
 
 li.show:hover > span.delete-show {
   opacity: 1;
+}
+
+input#new-show {
+  font-family: monospace;
+  width: 400px;
 }
 
 div.big-container {
@@ -95,6 +102,10 @@ code {
   padding: 4px;
 }
 
+p code {
+  padding: 0 4px;
+}
+
 button#post-download {
   align-self: flex-end;
 }
@@ -114,8 +125,9 @@ table {
   font-size: 1em;
 }
 
-table td, table th {
-  padding: 2px .75em 2px;
+table td,
+table th {
+  padding: 2px 0.75em 2px;
   text-align: left;
 }
 
@@ -137,3 +149,4 @@ table td, table th {
     opacity: 1;
   }
 }
+

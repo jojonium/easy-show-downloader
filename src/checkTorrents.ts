@@ -20,7 +20,8 @@ export interface Config {
 export interface ShowTuple {
   showName: string;
   link: string;
-  episodeName: string;
+  fileName: string;
+  episodeNumber: number;
 }
 
 export interface OutObject {
@@ -46,7 +47,7 @@ export const getEpisodesToDownload = (
   transmission: Transmission
 ): Promise<ShowTuple[]> => {
   let torrentNames: string[];
-  let shows: string[];
+  let shows: RegExp[];
 
   return new Promise((resolve, reject) => {
     // get the list of desired shows from the file
@@ -60,11 +61,10 @@ export const getEpisodesToDownload = (
               throw new Error("Failed to read shows.json");
             }
             json = JSON.parse(res);
+            shows = json.shows.map((s) => new RegExp(s));
           } catch (err) {
-            // invalid format
             throw new Error("Invalid shows.json format");
           }
-          shows = json.shows;
 
           // get the list of all torrent names from transmission
           return transmission.get(false, ["name"]);
@@ -105,7 +105,7 @@ export const getEpisodesToDownload = (
           for (const wanted of wantedLinks) {
             let alreadyHave = false;
             for (const torrentName of torrentNames) {
-              if (wanted.episodeName === torrentName) {
+              if (wanted.fileName === torrentName) {
                 alreadyHave = true;
                 break;
               }

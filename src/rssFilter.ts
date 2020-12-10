@@ -3,43 +3,39 @@ import { ShowTuple } from "./checkTorrents";
 
 /**
  * Returns a list of torrents from any of the RSS feeds that match any of the
- * desired show titles
+ * desired show titles and have unique episode numbers
  * @param feeds a list of RSS feeds to search through for relevant items
- * @param shows a list of show titles to search for
+ * @param shows a list of regular expressions to search for, with a capturing
+ * group named 'episode' that contains the episode number and a capturing group
+ * named 'name' that contains the show name
  */
 export const rssFilter = (
   feeds: Parser.Output[],
-  shows: string[]
+  shows: RegExp[]
 ): ShowTuple[] => {
   const wantedLinks = new Array<ShowTuple>();
 
-  for (const show of shows) {
+  for (const regex of shows) {
     for (const feed of feeds) {
-      let bestShowMatch: Parser.Item;
-      let regex: RegExp;
-      // specific regexes for known providers
-      regex = new RegExp(`(\\[.*\\])? ?${show} - \\d+.*`, "i");
-      if (feed.link === "https://nyaa.si/") {
-        regex = new RegExp(`(\\[.*\\])? ?${show} - \\d+ \\[1080p\\].*`, "i");
-      }
       for (const item of feed.items) {
-        if (regex.test(item.title)) {
-          // for Nyaa torrents (where seeders are reported) grab only the
-          // highest-seeded torrent
+        const m = item.title.match(regex);
+        if (m !== null && m.length >= 3) {
+          const episode = +m.groups.episode;
+          const name = m.groups.name;
           if (
-            bestShowMatch === undefined ||
-            item["nyaa:seeders"] > bestShowMatch["nyaa:seeders"]
+            !wantedLinks.some(
+              (val) => val.episodeNumber === episode && val.showName === name
+            )
           ) {
-            bestShowMatch = item;
+            // don't have this episode yet
+            wantedLinks.push({
+              episodeNumber: episode,
+              fileName: item.title,
+              link: item.link,
+              showName: name,
+            });
           }
         }
-      }
-      if (bestShowMatch !== undefined) {
-        wantedLinks.push({
-          episodeName: bestShowMatch.title,
-          link: bestShowMatch.link,
-          showName: show,
-        });
       }
     }
   }
