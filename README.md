@@ -51,7 +51,7 @@ shouldn't be used in production. If you really want to though, simply build and
 run it:
 
 ```
-$ npm build
+$ npm run build
 $ npm start
 ```
 
