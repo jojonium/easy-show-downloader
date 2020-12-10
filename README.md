@@ -44,6 +44,17 @@ Navigate to `http://localhost:8080` to see it in action. You can use the web
 interface to add shows and manually trigger a check for new episodes. The server
 will also check for new episodes automatically each hour.
 
+## Production use
+
+I'll mention again that this is not super secure or robust and probably
+shouldn't be used in production. If you really want to though, simply build and
+run it:
+
+```
+$ npm build
+$ npm start
+```
+
 ## API documentation
 
 Bodies of POST methods should be JSONs. Response bodies are JSONs containing a
@@ -53,7 +64,9 @@ optionally other fields.
 ### POST `/api/shows`
 
 Updates the list of shows, replacing it with one sent in the request. Required
-fields: "shows", which is an array of strings, each being a show name.
+fields: "shows", which is an array of strings. Each string should be a valid
+regular expression with two named capturing groups: `name`, which captures the
+name of the show, and `episode`, which captures the episode number.
 
 Returns 200 if successfully updated, 400 if the request was invalid, or 500 if
 an internal server error occurred.
