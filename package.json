@@ -4,11 +4,11 @@
   "description": "Web app for automatically downloading new episodes of TV shows",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "npm run lint",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/index.js",
-    "start:dev": "ts-node-dev --poll src/index.ts",
+    "lint": "eslint . --fix",
     "test": "echo \"Tests are for nerds!\" && exit 1"
   },
   "repository": {
@@ -27,7 +27,9 @@
   },
   "homepage": "https://github.com/jojonium/easy-show-downloader#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
     "eslint": "^7.23.0",
+    "eslint-config-standard-with-typescript": "^20.0.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   },
