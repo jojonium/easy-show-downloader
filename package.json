@@ -2,12 +2,12 @@
   "name": "easy-show-downloader",
   "version": "2.0.0",
   "description": "Web app for automatically downloading new episodes of TV shows",
-  "main": "dist/index.js",
+  "main": "dist/src/app.js",
   "scripts": {
     "prebuild": "npm run lint",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/index.js",
+    "start": "node dist/src/app.js",
     "lint": "eslint . --fix",
     "test": "echo \"Tests are for nerds!\" && exit 1"
   },
@@ -34,6 +34,8 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@hapi/hapi": "^20.1.2",
+    "@types/hapi__hapi": "^20.0.5",
     "cron": "^1.8.2",
     "rss-parser": "^3.12.0",
     "transmission-promise": "^1.1.5"
