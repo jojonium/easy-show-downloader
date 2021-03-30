@@ -3,12 +3,8 @@
 A simple web application built on Node and TypeScript for automatically
 downloading new episodes of TV shows.
 
-This project is not very robust, flexible, or feature complete, because I made
-it primarily for myself and my own personal use case. That said, pull requests
-are welcome if you want to add features.
-
-It's also not particularly well-written, efficient, or pretty, because I wrote
-it in approximately two days.
+The original version was written in about 2 days. I am currently working on
+rewriting to be more flexible and feature complete!
 
 ## Running development server
 
@@ -44,42 +40,3 @@ Navigate to `http://localhost:8080` to see it in action. You can use the web
 interface to add shows and manually trigger a check for new episodes. The server
 will also check for new episodes automatically each hour.
 
-## Production use
-
-I'll mention again that this is not super secure or robust and probably
-shouldn't be used in production. If you really want to though, simply build and
-run it:
-
-```
-$ npm run build
-$ npm start
-```
-
-## API documentation
-
-Bodies of POST methods should be JSONs. Response bodies are JSONs containing a
-"status" field with the HTTP status code and a "message" field, as well as
-optionally other fields.
-
-### POST `/api/shows`
-
-Updates the list of shows, replacing it with one sent in the request. Required
-fields: "shows", which is an array of strings. Each string should be a valid
-regular expression with two named capturing groups: `name`, which captures the
-name of the show, and `episode`, which captures the episode number.
-
-Returns 200 if successfully updated, 400 if the request was invalid, or 500 if
-an internal server error occurred.
-
-### GET `/api/shows`
-
-Returns a list of shows.
-
-Returns 200 along with a "shows" field containing an array of show names if
-successful, or 500 if an internal server error occurred.
-
-### POST `/api/download`
-
-Downloads all new episodes from the RSS feeds.
-
-Returns 200 if successful, or 500 if an internal server error occurred.
