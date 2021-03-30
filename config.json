@@ -1,6 +1,6 @@
 {
   "rssURLs": [],
-  "showDirectory": "/mnt/media/Television",
+  "showDirectory": "/home/user/Videos",
   "transmissionOptions": {
     "host": "localhost",
     "port": 80,
