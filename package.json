@@ -4,12 +4,7 @@
   "description": "Web app for automatically downloading new episodes of TV shows",
   "main": "dist/src/app.js",
   "scripts": {
-    "prebuild": "npm run lint",
-    "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node dist/src/app.js",
-    "lint": "eslint . --fix",
-    "test": "echo \"Tests are for nerds!\" && exit 1"
+    "build:server": "tsc --project tsconfig.server.json"
   },
   "repository": {
     "type": "git",
@@ -27,10 +22,26 @@
   },
   "homepage": "https://github.com/jojonium/easy-show-downloader#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "eslint": "^7.23.0",
-    "eslint-config-standard-with-typescript": "^20.0.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@tsconfig/svelte": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
     "ts-node": "^9.1.1",
+    "tslib": "^2.0.0",
     "typescript": "^4.2.3"
   },
   "dependencies": {
