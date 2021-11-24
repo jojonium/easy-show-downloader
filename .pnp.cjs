@@ -40,7 +40,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["typescript", "patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=ddd1e8"]
           ],
           "linkType": "SOFT",
         }]
@@ -49,7 +48,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:server", {
           "packageLocation": "./server/",
           "packageDependencies": [
-            ["@easy-show-downloader/server", "workspace:server"]
+            ["@easy-show-downloader/server", "workspace:server"],
+            ["typescript", "patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=ddd1e8"]
           ],
           "linkType": "SOFT",
         }]
@@ -58,8 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:.", {
           "packageLocation": "./",
           "packageDependencies": [
-            ["easy-show-downloader", "workspace:."],
-            ["typescript", "patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=ddd1e8"]
+            ["easy-show-downloader", "workspace:."]
           ],
           "linkType": "SOFT",
         }]

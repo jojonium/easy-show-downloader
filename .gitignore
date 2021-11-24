@@ -2,6 +2,9 @@ node_modules/
 *.swp
 .idea/
 .vscode/
+
+dist/
+
 .yarn/*
 !.yarn/cache
 !.yarn/patches

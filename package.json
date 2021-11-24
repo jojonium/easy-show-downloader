@@ -1,10 +1,8 @@
 {
   "name": "easy-show-downloader",
   "packageManager": "yarn@3.1.0",
+  "version": "2.0.0",
   "workspaces": [
     "server"
-  ],
-  "devDependencies": {
-    "typescript": "^4.5.2"
-  }
+  ]
 }

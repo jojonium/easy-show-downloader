@@ -8,14 +8,14 @@ __metadata:
 "@easy-show-downloader/server@workspace:server":
   version: 0.0.0-use.local
   resolution: "@easy-show-downloader/server@workspace:server"
+  dependencies:
+    typescript: ^4.5.2
   languageName: unknown
   linkType: soft
 
 "easy-show-downloader@workspace:.":
   version: 0.0.0-use.local
   resolution: "easy-show-downloader@workspace:."
-  dependencies:
-    typescript: ^4.5.2
   languageName: unknown
   linkType: soft
 

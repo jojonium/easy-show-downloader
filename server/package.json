@@ -1,8 +1,14 @@
 {
   "name": "@easy-show-downloader/server",
   "packageManager": "yarn@3.1.0",
+  "version": "2.0.0",
   "scripts": {
     "build": "tsc",
-    "server:build": "tsc"
+    "clean": "rm -r dist",
+    "server:build": "tsc",
+    "server:clean": "rm -r dist"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.2"
   }
 }
