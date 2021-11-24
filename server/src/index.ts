@@ -1,5 +1,7 @@
+const PORT = process.env.NODE_PORT ?? 8000;
+
 const main = () => {
-  console.log("Hello world");
+  console.log('Port = ' + PORT);
 };
 
 main();
