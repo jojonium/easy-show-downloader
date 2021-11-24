@@ -2,6 +2,7 @@ node_modules/
 *.swp
 .idea/
 .vscode/
+.vim/
 
 dist/
 
