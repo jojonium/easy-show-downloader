@@ -2,20 +2,30 @@
   "name": "@easy-show-downloader/server",
   "packageManager": "yarn@3.1.0",
   "version": "2.0.0",
+  "directories": {
+    "src": "./src",
+    "test": "./test"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -r dist",
     "lint": "eslint src --ext ts",
+    "test": "NODE_ENV=test ts-mocha",
     "server:build": "tsc",
     "server:clean": "rm -r dist",
-    "server:lint": "eslint src --ext ts"
+    "server:lint": "eslint src --ext ts",
+    "server:test": "NODE_ENV=test ts-mocha"
   },
   "devDependencies": {
     "@types/eslint": "^8",
+    "@types/mocha": "^9",
+    "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "eslint": "^8.3.0",
     "eslint-config-google": "^0.14.0",
+    "mocha": "^9.1.3",
+    "ts-mocha": "^8.0.0",
     "typescript": "^4.5.2"
   }
 }
