@@ -5,6 +5,7 @@ node_modules/
 .vim/
 
 dist/
+tsconfig.tsbuildinfo
 
 .yarn/*
 !.yarn/cache
