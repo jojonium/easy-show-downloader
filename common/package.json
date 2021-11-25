@@ -1,0 +1,20 @@
+{
+  "name": "@easy-show-downloader/common",
+  "private": true,
+  "packageManager": "yarn@3.2.0",
+  "version": "2.0.0",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -r dist",
+    "lint": "eslint src --ext ts",
+    "common:build": "tsc",
+    "common:clean": "rm -r dist",
+    "common:lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8",
+    "eslint": "^8.3.0",
+    "eslint-config-google": "^0.14.0",
+    "typescript": "^4.5.2"
+  }
+}

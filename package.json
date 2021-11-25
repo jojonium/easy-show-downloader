@@ -7,7 +7,8 @@
     "test": "NODE_ENV=test yarn workspaces foreach run test"
   },
   "workspaces": [
-    "server"
+    "server",
+    "common"
   ],
   "devDependencies": {
     "@types/eslint": "^8",
