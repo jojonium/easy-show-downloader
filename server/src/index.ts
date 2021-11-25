@@ -1,7 +1,13 @@
-const PORT = process.env.NODE_PORT ?? 8000;
+import express from 'express';
+import {logger} from './logger';
 
-const main = () => {
-  console.log('Port = ' + PORT);
-};
+const PORT = process.env['PORT'] ?? 8000;
 
-main();
+const app = express();
+
+// Use built-in JSON parser from express.
+app.use(express.json());
+
+app.listen(PORT, () => {
+  logger.log(`Listening on port ${PORT}`);
+});
