@@ -39,7 +39,7 @@ export const writeDataFile = async (
       };
     }),
   };
-  fs.promises.writeFile(path, JSON.stringify(plainObject));
+  await fs.promises.writeFile(path, JSON.stringify(plainObject));
 };
 
 /**
