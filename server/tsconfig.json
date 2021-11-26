@@ -5,6 +5,12 @@
     "rootDir": "./src",
     "outDir": "./dist"
   },
+  "references": [
+    { "path": "../common" }
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [
     "dist/**",
     "test/**"

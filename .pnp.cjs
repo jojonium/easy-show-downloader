@@ -80,6 +80,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./server/",
           "packageDependencies": [
             ["@easy-show-downloader/server", "workspace:server"],
+            ["@easy-show-downloader/common", "workspace:common"],
             ["@types/chai", "npm:4.2.22"],
             ["@types/chai-as-promised", "npm:7.1.4"],
             ["@types/eslint", "npm:8.2.0"],

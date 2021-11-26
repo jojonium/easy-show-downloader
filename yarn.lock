@@ -5,7 +5,7 @@ __metadata:
   version: 5
   cacheKey: 8
 
-"@easy-show-downloader/common@workspace:common":
+"@easy-show-downloader/common@workspace:^, @easy-show-downloader/common@workspace:common":
   version: 0.0.0-use.local
   resolution: "@easy-show-downloader/common@workspace:common"
   dependencies:
@@ -25,6 +25,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@easy-show-downloader/server@workspace:server"
   dependencies:
+    "@easy-show-downloader/common": "workspace:^"
     "@types/chai": ^4
     "@types/chai-as-promised": ^7
     "@types/eslint": ^8
