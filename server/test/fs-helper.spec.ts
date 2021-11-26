@@ -25,7 +25,7 @@ describe('fs-helpers', () => {
         ],
       };
       after(async () => {
-        fs.promises.rm(fileName, {force: true});
+        await fs.promises.rm(fileName, {force: true});
       });
       await writeDataFile(fileName, data);
       const result = await readDataFile(fileName);
@@ -47,6 +47,7 @@ describe('fs-helpers', () => {
         new Show('Diebuster'),
       ],
     };
+
     afterEach(async () => {
       await fs.promises.rm(fileName, {force: true});
     });
