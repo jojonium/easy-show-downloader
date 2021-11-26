@@ -1,6 +1,9 @@
-import {parseDataString, readDataFile} from '../src/fs-helper';
+import {parseDataString, readDataFile, writeDataFile} from '../src/fs-helper';
 import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import {Data} from '../src/data';
+import fs from 'fs';
+import {Show} from '@easy-show-downloader/common/src/show';
 chai.use(chaiAsPromised);
 
 describe('fs-helpers', () => {
@@ -11,6 +14,54 @@ describe('fs-helpers', () => {
           expect(result.rssUrls).to.be.empty;
           expect(result.shows).to.be.empty;
         });
+
+    it('Should read files written by writeDataFile()', async () => {
+      const fileName = 'data.json';
+      const data: Data = {
+        rssUrls: ['https://example.com/rss.xml'],
+        shows: [
+          new Show('Gunbuster'),
+          new Show('Diebuster'),
+        ],
+      };
+      after(async () => {
+        fs.promises.rm(fileName, {force: true});
+      });
+      await writeDataFile(fileName, data);
+      const result = await readDataFile(fileName);
+      expect(result.rssUrls).to.have.lengthOf(1);
+      expect(result.rssUrls[0]).to.equal('https://example.com/rss.xml');
+      expect(result.shows).to.have.lengthOf(2);
+      expect(result.shows[0].title).to.equal('Gunbuster');
+      expect(result.shows[0].feedUrl).to.be.undefined;
+      expect(result.shows[1].folder).to.equal('Diebuster');
+    });
+  });
+
+  describe('writeDataFile()', () => {
+    const fileName = 'data.json';
+    const data: Data = {
+      rssUrls: ['https://example.com/rss.xml'],
+      shows: [
+        new Show('Gunbuster'),
+        new Show('Diebuster'),
+      ],
+    };
+    afterEach(async () => {
+      await fs.promises.rm(fileName, {force: true});
+    });
+
+    it('Should write to a file', async () => {
+      await writeDataFile(fileName, data);
+      expect((await fs.promises.readFile(fileName)).toString())
+          .to.be.a('string');
+    });
+
+    it('Should write a valid JSON string', async () => {
+      await writeDataFile(fileName, data);
+      expect(JSON.parse((await fs.promises.readFile(fileName)).toString()))
+          .to.be.an('object');
+    });
   });
 
   describe('parseDataString()', () => {

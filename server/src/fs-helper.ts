@@ -24,6 +24,24 @@ export const readDataFile = async (path: fs.PathLike): Promise<Data> => {
   }
 };
 
+export const writeDataFile = async (
+    path: fs.PathLike,
+    data: Data,
+): Promise<void> => {
+  const plainObject = {
+    rssUrls: data.rssUrls,
+    shows: data.shows.map((s) => {
+      return {
+        title: s.title,
+        regex: s.regex.source,
+        folder: s.folder,
+        feedUrl: s.feedUrl ?? null,
+      };
+    }),
+  };
+  fs.promises.writeFile(path, JSON.stringify(plainObject));
+};
+
 /**
  * Parse a stringified JSON representation of a Data object. Throws an error if
  * the string is malformed.
