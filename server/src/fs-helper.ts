@@ -1,5 +1,5 @@
 import {Data} from './data';
-import {Show} from '../../common/src/show';
+import {Show} from '../../common/dist/show';
 import fs from 'fs';
 
 /**

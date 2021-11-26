@@ -1,4 +1,4 @@
-import {Show} from '../../common/src/show';
+import {Show} from '../../common/dist/show';
 
 /**
  * Contains all the data the server knows about shows and RSS sources.

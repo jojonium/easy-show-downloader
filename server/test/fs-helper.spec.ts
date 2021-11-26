@@ -3,7 +3,7 @@ import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import {Data} from '../src/data';
 import fs from 'fs';
-import {Show} from '@easy-show-downloader/common/src/show';
+import {Show} from '@easy-show-downloader/common/dist/show';
 chai.use(chaiAsPromised);
 
 describe('fs-helpers', () => {
