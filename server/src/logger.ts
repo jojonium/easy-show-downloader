@@ -1,4 +1,5 @@
-import {promises as fsPromises, PathLike} from 'fs';
+import fs from 'fs';
+import {config} from './config';
 export type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
 
 /**
@@ -6,22 +7,17 @@ export type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
  * or both.
  */
 class Logger {
-  /** Whether to write to stdout. */
-  public stdout: boolean = true;
-  /** An optional file path to write logs to. */
-  public outFile: PathLike | undefined = undefined;
-
   /**
    * Write a string to stdout and the output file.
    * @param {string} s The string to write
    */
   private async write(s: string): Promise<void> {
     s = s.trim();
-    if (this.stdout) {
+    if (config.LOG_STDOUT) {
       console.log(s);
     }
-    if (this.outFile !== undefined) {
-      await fsPromises.appendFile(this.outFile, s + '\n');
+    if (config.LOG_FILE !== undefined) {
+      await fs.promises.appendFile(config.LOG_FILE, s + '\n');
     }
   }
 

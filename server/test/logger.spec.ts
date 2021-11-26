@@ -2,19 +2,23 @@ import {logger} from '../src/logger';
 import chai, {expect} from 'chai';
 import fs from 'fs';
 import chaiAsPromised from 'chai-as-promised';
+import {config} from '../src/config';
 chai.use(chaiAsPromised);
 
 describe('Logger', () => {
+  const oldLogStdout = config.LOG_STDOUT;
+  const oldLogFile = config.LOG_FILE;
+
   after(() => {
-    // Return logger to its default settings.
-    logger.stdout = true;
-    logger.outFile = undefined;
+    // Return logger to its original settings.
+    config.LOG_STDOUT = oldLogStdout;
+    config.LOG_FILE = oldLogFile;
   });
 
   describe('#log()', () => {
     before(() => {
-      logger.stdout = false;
-      logger.outFile = undefined;
+      config.LOG_STDOUT = false;
+      config.LOG_FILE = undefined;
     });
 
     it('Should include a current ISO timestamp', async () => {
@@ -32,8 +36,8 @@ describe('Logger', () => {
 
       beforeEach(async () => {
         await fs.promises.rm(logFileName, {force: true});
-        logger.stdout = false;
-        logger.outFile = logFileName;
+        config.LOG_STDOUT = false;
+        config.LOG_FILE = logFileName;
       });
 
       after(async () => {

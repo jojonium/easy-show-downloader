@@ -5,9 +5,6 @@ import {config, prettyPrintConfig} from './config';
 
 export const app = express();
 
-logger.stdout = config.LOG_STDOUT;
-logger.outFile = config.LOG_FILE;
-
 // Use built-in JSON parser from express.
 app.use(express.json());
 
