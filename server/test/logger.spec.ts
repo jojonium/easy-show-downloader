@@ -50,8 +50,10 @@ describe('Logger', () => {
 
         const d = new Date();
         await logger.log('Test');
-        expect((await fs.promises.readFile(logFileName)).toString()).to.equal(
-            `${d.toISOString()} [INFO] Test\n`,
+        expect((await fs.promises.readFile(logFileName)).toString()).to.match(
+            new RegExp(
+                `^${d.toISOString().substring(0, 16)}.* \\[INFO\\] Test\\n$`,
+            ),
         );
       });
 
