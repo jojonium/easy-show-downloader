@@ -11,7 +11,7 @@ app.use(express.json());
 app.get('/data', getData);
 
 
-logger.log('Starging server with config:\n' + prettyPrintConfig());
+logger.log('Starting server with config:\n' + prettyPrintConfig());
 
 const server = app.listen(config.PORT, config.HOST, () => {
   logger.log('Server started.');
