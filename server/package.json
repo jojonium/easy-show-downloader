@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@easy-show-downloader/common": "workspace:^",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "rss-parser": "^3.12.0"
   }
 }

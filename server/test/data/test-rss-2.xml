@@ -1,0 +1,44 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyaa="https://nyaa.si/xmlns/nyaa" version="2.0">
+	<channel>
+		<title>Test RSS 2</title>
+		<description>RSS Feed for Home</description>
+		<link>https://nyaa.si/</link>
+		<atom:link href="https://nyaa.si/?page=rss" rel="self" type="application/rss+xml" />
+		<item>
+			<title>[YuiSubs] Dragon Quest - Dai no Daibouken (2020) - 59  (NVENC H.265 1080p)</title>
+				<link>https://wrong.link/false-result</link>
+				<guid isPermaLink="true">https://nyaa.si/view/1460617</guid>
+				<pubDate>Sat, 27 Nov 2021 02:09:20 -0000</pubDate>
+
+				<nyaa:seeders>12</nyaa:seeders>
+				<nyaa:leechers>24</nyaa:leechers>
+				<nyaa:downloads>11</nyaa:downloads>
+				<nyaa:infoHash>98917badf8fa97f4ca17d57a849e1caf562751fa</nyaa:infoHash>
+			<nyaa:categoryId>1_2</nyaa:categoryId>
+			<nyaa:category>Anime - English-translated</nyaa:category>
+			<nyaa:size>445.4 MiB</nyaa:size>
+			<nyaa:comments>0</nyaa:comments>
+			<nyaa:trusted>No</nyaa:trusted>
+			<nyaa:remake>Yes</nyaa:remake>
+			<description><![CDATA[<a href="https://nyaa.si/view/1460617">#1460617 | [YuiSubs] Dragon Quest - Dai no Daibouken (2020) - 59  (NVENC H.265 1080p)</a> | 445.4 MiB | Anime - English-translated | 98917BADF8FA97F4CA17D57A849E1CAF562751FA]]></description>
+		</item>
+		<item>
+			<title>[BDMV] Shin Tetsujin 28-gou (1980)</title>
+				<link>https://correct-link-test</link>
+				<guid isPermaLink="true">https://nyaa.si/view/1460616</guid>
+				<pubDate>Sat, 27 Nov 2021 02:09:18 -0000</pubDate>
+
+				<nyaa:seeders>1</nyaa:seeders>
+				<nyaa:leechers>8</nyaa:leechers>
+				<nyaa:downloads>0</nyaa:downloads>
+				<nyaa:infoHash>0ab2286808100340eaa4a76c7b387fd3daf06abd</nyaa:infoHash>
+			<nyaa:categoryId>1_2</nyaa:categoryId>
+			<nyaa:category>Anime - English-translated</nyaa:category>
+			<nyaa:size>153.0 GiB</nyaa:size>
+			<nyaa:comments>0</nyaa:comments>
+			<nyaa:trusted>No</nyaa:trusted>
+			<nyaa:remake>No</nyaa:remake>
+			<description><![CDATA[<a href="https://nyaa.si/view/1460616">#1460616 | [BDMV] Shin Tetsujin 28-gou (1980)</a> | 153.0 GiB | Anime - English-translated | 0AB2286808100340EAA4A76C7B387FD3DAF06ABD]]></description>
+		</item>
+	</channel>
+</rss>
