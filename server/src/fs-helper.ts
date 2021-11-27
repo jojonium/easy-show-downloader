@@ -1,4 +1,4 @@
-import {Data} from './data';
+import {Data} from '@easy-show-downloader/common/dist/data';
 import {Show} from '../../common/dist/show';
 import fs from 'fs';
 

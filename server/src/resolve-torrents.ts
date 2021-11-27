@@ -1,4 +1,4 @@
-import {Data} from './data';
+import {Data} from '@easy-show-downloader/common/dist/data';
 import Parser from 'rss-parser';
 
 /**

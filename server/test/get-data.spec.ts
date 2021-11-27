@@ -4,7 +4,7 @@ import chai, {expect} from 'chai';
 import chaiHttp from 'chai-http';
 import {config} from '../src/config';
 import {writeDataFile} from '../src/fs-helper';
-import {Data} from '../src/data';
+import {Data} from '@easy-show-downloader/common/dist/data';
 import {Show} from '@easy-show-downloader/common/dist/show';
 
 chai.use(chaiHttp);

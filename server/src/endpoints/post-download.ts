@@ -5,7 +5,7 @@ import {logger} from '../logger';
 import {config} from '../config';
 import {resolveTorrents} from '../resolve-torrents';
 import {addTorrents} from '../add-torrents';
-import {Data} from '../data';
+import {Data} from '@easy-show-downloader/common/dist/data';
 
 export const postDownload = async (_: Request, res: Response) => {
   logger.log('Checking for new torrents to download.');

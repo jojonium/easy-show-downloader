@@ -1,7 +1,7 @@
 import {parseDataString, readDataFile, writeDataFile} from '../src/fs-helper';
 import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import {Data} from '../src/data';
+import {Data} from '@easy-show-downloader/common/dist/data';
 import fs from 'fs';
 import {Show} from '@easy-show-downloader/common/dist/show';
 chai.use(chaiAsPromised);
@@ -32,9 +32,9 @@ describe('fs-helpers', () => {
       expect(result.rssUrls).to.have.lengthOf(1);
       expect(result.rssUrls[0]).to.equal('https://example.com/rss.xml');
       expect(result.shows).to.have.lengthOf(2);
-      expect(result.shows[0].title).to.equal('Gunbuster');
-      expect(result.shows[0].feedUrl).to.be.undefined;
-      expect(result.shows[1].folder).to.equal('Diebuster');
+      expect(result.shows[0]?.title).to.equal('Gunbuster');
+      expect(result.shows[0]?.feedUrl).to.be.undefined;
+      expect(result.shows[1]?.folder).to.equal('Diebuster');
     });
   });
 
@@ -84,7 +84,7 @@ describe('fs-helpers', () => {
       expect(result.rssUrls).to.have.lengthOf(1);
       expect(result.rssUrls[0]).to.equal('asdf.com');
       expect(result.shows).to.have.lengthOf(1);
-      expect(result.shows[0].folder).to.equal('Cowboy Bebop');
+      expect(result.shows[0]?.folder).to.equal('Cowboy Bebop');
     });
 
     it('Should throw an error with a malformed shows list', () => {
@@ -114,7 +114,7 @@ describe('fs-helpers', () => {
       );
       expect(result2.rssUrls).to.be.empty;
       expect(result2.shows).to.have.lengthOf(1);
-      expect(result2.shows[0].folder).to.equal('Cowboy Bebop');
+      expect(result2.shows[0]?.folder).to.equal('Cowboy Bebop');
     });
   });
 });
