@@ -4,6 +4,7 @@ import {getData} from './endpoints/get-data';
 import {config, prettyPrintConfig} from './config';
 import {postData} from './endpoints/post-data';
 import {getHealth} from './endpoints/get-health';
+import {postDownload} from './endpoints/post-download';
 
 export const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.get('/api/data', getData);
 app.post('/api/data', postData);
+app.post('/api/download', postDownload);
 app.get('/api/health', getHealth);
 
 logger.log('Starting server with config:\n' + prettyPrintConfig());

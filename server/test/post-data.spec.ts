@@ -58,10 +58,10 @@ describe('POST /api/data', () => {
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.have.lengthOf(2);
-    expect(written.shows[0].title).to.equal('New Show');
-    expect(written.shows[0].folder).to.equal('New Show Folder');
-    expect(written.shows[1].title).to.equal('Only on Nyaa');
-    expect(written.shows[1].feedUrl).to.equal('https://nyaa.se');
+    expect(written.shows[0]?.title).to.equal('New Show');
+    expect(written.shows[0]?.folder).to.equal('New Show Folder');
+    expect(written.shows[1]?.title).to.equal('Only on Nyaa');
+    expect(written.shows[1]?.feedUrl).to.equal('https://nyaa.se');
     expect(written.rssUrls).to.have.lengthOf(2);
     expect(written.rssUrls[0]).to.equal('https://example.com');
     expect(written.rssUrls[1]).to.equal('https://nyaa.se');
