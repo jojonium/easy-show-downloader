@@ -11,18 +11,15 @@ export const postData = async (req: Request, res: Response) => {
       await writeDataFile(config.DATA_FILE, data);
     } catch (e) {
       logger.log(
-          'Failure in POST /data. ' +
-        `Could not write data file to '${config.DATA_FILE}'.\n${e}`,
+          'Failure in POST /api/data. ' +
+          `Could not write data file to '${config.DATA_FILE}'.\n${e}`,
           'ERROR',
       );
       sendError(res, 500, 'Server failed to write show data.');
     }
     res.status(200).end();
   } catch (e: any) {
-    logger.log(
-        `Failure in POST /data. Invalid request.'.\n${e}`,
-        'ERROR',
-    );
+    logger.log(`Failure in POST /api/data. Invalid request.'.\n${e}`, 'ERROR');
     sendError(
         res,
         400,

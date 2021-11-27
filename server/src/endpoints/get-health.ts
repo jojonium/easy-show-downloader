@@ -10,7 +10,7 @@ export const getHealth = async (_: Request, res: Response) => {
     await readDataFile(config.DATA_FILE);
   } catch (e) {
     logger.log(
-        'Failure in GET /health. ' +
+        'Failure in GET /api/health. ' +
         `Could not read data file '${config.DATA_FILE}'.\n${e}`,
         'ERROR',
     );

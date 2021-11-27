@@ -13,7 +13,7 @@ export const getData = async (_: Request, res: Response) => {
         .send(JSON.stringify(data));
   } catch (e) {
     logger.log(
-        'Failure in GET /data. ' +
+        'Failure in GET /api/data. ' +
         `Could not read data file '${config.DATA_FILE}'.\n${e}`,
         'ERROR',
     );
