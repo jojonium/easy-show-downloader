@@ -6,7 +6,7 @@ import {config} from '../src/config';
 
 chai.use(chaiHttp);
 
-describe('GET /data', () => {
+describe('GET /api/health', () => {
   const fileName = 'get-health-test.json';
   const oldFileName = config.DATA_FILE;
   const oldLogStdout = config.LOG_STDOUT;
@@ -23,13 +23,13 @@ describe('GET /data', () => {
   });
 
   it('Should normally return 200', async () => {
-    const res = await chai.request(server).get('/health');
+    const res = await chai.request(server).get('/api/health');
     expect(res).to.have.status(200);
   });
 
   it('Should return a 500 if data file is unreadable', async () => {
     await fs.promises.writeFile(fileName, 'ai0bj3n1');
-    const res = await chai.request(server).get('/data');
+    const res = await chai.request(server).get('/api/health');
     expect(res).to.have.status(500);
     await fs.promises.rm(fileName, {force: true});
   });

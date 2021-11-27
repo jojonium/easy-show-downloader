@@ -8,7 +8,7 @@ import {Show} from '@easy-show-downloader/common/dist/show';
 
 chai.use(chaiHttp);
 
-describe('POST /data', () => {
+describe('POST /api/data', () => {
   const fileName = 'post-data-test.json';
   const oldFileName = config.DATA_FILE;
   const oldLogStdout = config.LOG_STDOUT;
@@ -28,7 +28,7 @@ describe('POST /data', () => {
     await fs.promises.rm(fileName, {force: true});
     const res = await chai
         .request(server)
-        .post('/data')
+        .post('/api/data')
         .send({
           shows: [],
           rssUrls: ['asdf'],
@@ -47,7 +47,7 @@ describe('POST /data', () => {
     });
     const res = await chai
         .request(server)
-        .post('/data')
+        .post('/api/data')
         .send({
           shows: [
             new Show('New Show', undefined, 'New Show Folder'),
@@ -71,7 +71,7 @@ describe('POST /data', () => {
   it('Should return a 400 error on invalid input', async () => {
     const res = await chai
         .request(server)
-        .post('/data')
+        .post('/api/data')
         .send({
           shows: [
             {'test': 'wrong'},

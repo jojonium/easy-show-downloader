@@ -9,7 +9,7 @@ import {Show} from '@easy-show-downloader/common/dist/show';
 
 chai.use(chaiHttp);
 
-describe('GET /data', () => {
+describe('GET /api/data', () => {
   const fileName = 'get-data-test.json';
   const oldFileName = config.DATA_FILE;
   const oldLogStdout = config.LOG_STDOUT;
@@ -32,7 +32,7 @@ describe('GET /data', () => {
   it('Should return an empty data object if no data file exists', async () => {
     await fs.promises.rm(fileName, {force: true});
 
-    const res = await chai.request(server).get('/data');
+    const res = await chai.request(server).get('/api/data');
     expect(res).to.have.status(200);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['shows']).to.be.an('array');
@@ -44,7 +44,7 @@ describe('GET /data', () => {
   it('Should return an error message for a malformed data file', async () => {
     await fs.promises.writeFile(fileName, 'jasid:fj}ds');
 
-    const res = await chai.request(server).get('/data');
+    const res = await chai.request(server).get('/api/data');
     expect(res).to.have.status(500);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['statusCode']).to.equal(500);
@@ -68,7 +68,7 @@ describe('GET /data', () => {
     };
     await writeDataFile(fileName, data);
 
-    const res = await chai.request(server).get('/data');
+    const res = await chai.request(server).get('/api/data');
     expect(res).to.have.status(200);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['shows']).to.be.an('array');

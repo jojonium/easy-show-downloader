@@ -10,9 +10,9 @@ export const app = express();
 // Use built-in JSON parser from express.
 app.use(express.json());
 
-app.get('/data', getData);
-app.post('/data', postData);
-app.get('/health', getHealth);
+app.get('/api/data', getData);
+app.post('/api/data', postData);
+app.get('/api/health', getHealth);
 
 logger.log('Starting server with config:\n' + prettyPrintConfig());
 
