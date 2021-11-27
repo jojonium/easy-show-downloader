@@ -5,6 +5,7 @@ import chaiHttp from 'chai-http';
 import {config} from '../src/config';
 import {readDataFile, writeDataFile} from '../src/fs-helper';
 import {Show} from '@easy-show-downloader/common/dist/show';
+import {stringifyData} from '@easy-show-downloader/common/src/data';
 
 chai.use(chaiHttp);
 
@@ -26,13 +27,14 @@ describe('POST /api/data', () => {
 
   it('Should successfully write a data file', async () => {
     await fs.promises.rm(fileName, {force: true});
+    const toSend = stringifyData({
+      shows: [],
+      rssUrls: ['asdf'],
+    });
     const res = await chai
         .request(server)
         .post('/api/data')
-        .send({
-          shows: [],
-          rssUrls: ['asdf'],
-        });
+        .send(JSON.parse(toSend));
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.be.empty;
@@ -48,17 +50,23 @@ describe('POST /api/data', () => {
     const res = await chai
         .request(server)
         .post('/api/data')
-        .send({
+        .send(JSON.parse(stringifyData({
           shows: [
             new Show('New Show', undefined, 'New Show Folder'),
-            new Show('Only on Nyaa', undefined, undefined, 'https://nyaa.se'),
+            new Show(
+                'Only on Nyaa',
+                undefined,
+                undefined,
+                'https://nyaa.se',
+            ),
           ],
           rssUrls: ['https://example.com', 'https://nyaa.se'],
-        });
+        })));
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.have.lengthOf(2);
     expect(written.shows[0]?.title).to.equal('New Show');
+    expect(written.shows[0]?.regex.source).to.equal('New Show');
     expect(written.shows[0]?.folder).to.equal('New Show Folder');
     expect(written.shows[1]?.title).to.equal('Only on Nyaa');
     expect(written.shows[1]?.feedUrl).to.equal('https://nyaa.se');
@@ -74,7 +82,7 @@ describe('POST /api/data', () => {
         .post('/api/data')
         .send({
           shows: [
-            {'test': 'wrong'},
+            {test: 'wrong'},
             new Show('Only on Nyaa', undefined, undefined, 'https://nyaa.se'),
           ],
           rssUrls: ['https://example.com', 'https://nyaa.se'],

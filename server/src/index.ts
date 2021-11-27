@@ -30,9 +30,9 @@ if (config.CRON_SCHEDULE !== '') {
         config.CRON_SCHEDULE,
         async () => {
           try {
-            await addTorrents(
-                await resolveTorrents(await readDataFile(config.DATA_FILE)),
-            );
+            const data = await readDataFile(config.DATA_FILE);
+            const torrents = await resolveTorrents(data);
+            await addTorrents(torrents, data.mediaRoot);
           } catch (e) {
             logger.log(
                 `Error in cron job (schedule '${config.CRON_SCHEDULE}')\n` + e,

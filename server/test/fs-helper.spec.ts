@@ -1,7 +1,7 @@
-import {parseDataString, readDataFile, writeDataFile} from '../src/fs-helper';
+import {readDataFile, writeDataFile} from '../src/fs-helper';
 import chai, {expect} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import {Data} from '@easy-show-downloader/common/dist/data';
+import {Data, parseDataString} from '@easy-show-downloader/common/dist/data';
 import fs from 'fs';
 import {Show} from '@easy-show-downloader/common/dist/show';
 chai.use(chaiAsPromised);
@@ -23,10 +23,8 @@ describe('fs-helpers', () => {
           new Show('Gunbuster'),
           new Show('Diebuster'),
         ],
+        mediaRoot: '/mnt/media',
       };
-      after(async () => {
-        await fs.promises.rm(fileName, {force: true});
-      });
       await writeDataFile(fileName, data);
       const result = await readDataFile(fileName);
       expect(result.rssUrls).to.have.lengthOf(1);
@@ -35,6 +33,8 @@ describe('fs-helpers', () => {
       expect(result.shows[0]?.title).to.equal('Gunbuster');
       expect(result.shows[0]?.feedUrl).to.be.undefined;
       expect(result.shows[1]?.folder).to.equal('Diebuster');
+      expect(result.mediaRoot).to.equal('/mnt/media');
+      await fs.promises.rm(fileName, {force: true});
     });
   });
 

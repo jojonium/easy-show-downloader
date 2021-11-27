@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
-import {parsePlainDataObject, writeDataFile} from '../fs-helper';
+import {writeDataFile} from '../fs-helper';
+import {parsePlainDataObject} from '@easy-show-downloader/common/dist/data';
 import {sendError} from './send-error';
 import {logger} from '../logger';
 import {config} from '../config';

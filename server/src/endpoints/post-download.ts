@@ -34,7 +34,7 @@ export const postDownload = async (_: Request, res: Response) => {
     sendError(res, 500, 'Server resolve a list of torrent links.');
   }
   try {
-    const count = await addTorrents(torrentData);
+    const count = await addTorrents(torrentData, data.mediaRoot);
     res.status(200).type('application/json').send({torrentsAdded: count});
   } catch (e) {
     logger.log(

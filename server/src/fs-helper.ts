@@ -1,5 +1,8 @@
-import {Data} from '@easy-show-downloader/common/dist/data';
-import {Show} from '../../common/dist/show';
+import {
+  Data,
+  parseDataString,
+  stringifyData,
+} from '@easy-show-downloader/common/dist/data';
 import fs from 'fs';
 
 /**
@@ -28,54 +31,5 @@ export const writeDataFile = async (
     path: fs.PathLike,
     data: Data,
 ): Promise<void> => {
-  const plainObject = {
-    rssUrls: data.rssUrls,
-    shows: data.shows.map((s) => {
-      return {
-        title: s.title,
-        regex: s.regex.source,
-        folder: s.folder,
-        feedUrl: s.feedUrl ?? null,
-      };
-    }),
-  };
-  await fs.promises.writeFile(path, JSON.stringify(plainObject));
-};
-
-/**
- * Parse a stringified JSON representation of a Data object. Throws an error if
- * the string is malformed.
- * @param {string} s
- * @return {Data}
- */
-export const parseDataString = (s: string): Data => {
-  if (s === '') {
-    return {
-      shows: [],
-      rssUrls: [],
-    };
-  }
-  const data = JSON.parse(s);
-  return parsePlainDataObject(data);
-};
-
-export const parsePlainDataObject = (o: {[key: string]: any}): Data => {
-  const showObjects: any[] = o['shows'] ?? [];
-  // Check to make sure showObjects is an array.
-  if (!Array.isArray(showObjects)) {
-    throw new Error('Failed to parse data string. Shows list is invalid.');
-  }
-  const shows: Show[] = showObjects.map((s) =>
-    Show.fromJsonString(JSON.stringify(s)),
-  );
-  let rssUrls: any[] = o['rssUrls'] ?? [];
-  // Check to make sure rssUrls is a string array.
-  if (!Array.isArray(rssUrls) || rssUrls.some((s) => typeof s !== 'string')) {
-    throw new Error('Failed to parse data string. RSS URLs list is invalid.');
-  }
-  rssUrls = rssUrls.map((s) => s.toString());
-  return {
-    shows: shows,
-    rssUrls: rssUrls,
-  };
+  await fs.promises.writeFile(path, stringifyData(data));
 };
