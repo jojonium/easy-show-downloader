@@ -83,6 +83,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@easy-show-downloader/common", "workspace:common"],
             ["@types/chai", "npm:4.2.22"],
             ["@types/chai-as-promised", "npm:7.1.4"],
+            ["@types/cron", "npm:1.7.3"],
             ["@types/eslint", "npm:8.2.0"],
             ["@types/express", "npm:4.17.13"],
             ["@types/mocha", "npm:9.0.0"],
@@ -92,6 +93,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai", "npm:4.3.4"],
             ["chai-as-promised", "virtual:99892e2adf00f6ebea6424152b9a484f6e9f355e072e763b5f5e53d74737717f9a0207c0227cfdf14cbc8062d0afa490df246b6585d7f85fe995ecf9e0ab122c#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
+            ["cron", "npm:1.8.2"],
             ["eslint", "npm:8.3.0"],
             ["eslint-config-google", "virtual:6536fa393006776fe0499925b7b0ef949dc5069457be596264337964bda250f2b33d1d16c908930e04542e15809f054da5cc9e85bb0ec252e15f7671c5c9c56a#npm:0.14.0"],
             ["express", "npm:4.17.1"],
@@ -259,6 +261,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-cookiejar-npm-2.1.2-2588120a7c-f6e1903454.zip/node_modules/@types/cookiejar/",
           "packageDependencies": [
             ["@types/cookiejar", "npm:2.1.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/cron", [
+        ["npm:1.7.3", {
+          "packageLocation": "./.yarn/cache/@types-cron-npm-1.7.3-9b4aaff472-f271c8624d.zip/node_modules/@types/cron/",
+          "packageDependencies": [
+            ["@types/cron", "npm:1.7.3"],
+            ["@types/node", "npm:16.11.10"],
+            ["moment", "npm:2.29.1"]
           ],
           "linkType": "HARD",
         }]
@@ -1186,6 +1199,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/core-util-is-npm-1.0.3-ca74b76c90-9de8597363.zip/node_modules/core-util-is/",
           "packageDependencies": [
             ["core-util-is", "npm:1.0.3"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["cron", [
+        ["npm:1.8.2", {
+          "packageLocation": "./.yarn/cache/cron-npm-1.8.2-e208a565b6-9df2d2e246.zip/node_modules/cron/",
+          "packageDependencies": [
+            ["cron", "npm:1.8.2"],
+            ["moment-timezone", "npm:0.5.34"]
           ],
           "linkType": "HARD",
         }]
@@ -2826,6 +2849,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["yargs", "npm:16.2.0"],
             ["yargs-parser", "npm:20.2.4"],
             ["yargs-unparser", "npm:2.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["moment", [
+        ["npm:2.29.1", {
+          "packageLocation": "./.yarn/cache/moment-npm-2.29.1-787d9fdafd-1e14d5f422.zip/node_modules/moment/",
+          "packageDependencies": [
+            ["moment", "npm:2.29.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["moment-timezone", [
+        ["npm:0.5.34", {
+          "packageLocation": "./.yarn/cache/moment-timezone-npm-0.5.34-e4fe2d01f6-12a1d3d52e.zip/node_modules/moment-timezone/",
+          "packageDependencies": [
+            ["moment-timezone", "npm:0.5.34"],
+            ["moment", "npm:2.29.1"]
           ],
           "linkType": "HARD",
         }]

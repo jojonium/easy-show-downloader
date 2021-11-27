@@ -28,6 +28,7 @@ __metadata:
     "@easy-show-downloader/common": "workspace:^"
     "@types/chai": ^4
     "@types/chai-as-promised": ^7
+    "@types/cron": ^1
     "@types/eslint": ^8
     "@types/express": ^4
     "@types/mocha": ^9
@@ -37,6 +38,7 @@ __metadata:
     chai: ^4.3.4
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
+    cron: ^1.8.2
     eslint: ^8.3.0
     eslint-config-google: ^0.14.0
     express: ^4.17.1
@@ -183,6 +185,16 @@ __metadata:
   version: 2.1.2
   resolution: "@types/cookiejar@npm:2.1.2"
   checksum: f6e1903454007f86edd6c3520cbb4d553e1d4e17eaf1f77f6f75e3270f48cc828d74397a113a36942f5fe52f9fa71067bcfa738f53ad468fcca0bc52cb1cbd28
+  languageName: node
+  linkType: hard
+
+"@types/cron@npm:^1":
+  version: 1.7.3
+  resolution: "@types/cron@npm:1.7.3"
+  dependencies:
+    "@types/node": "*"
+    moment: ">=2.14.0"
+  checksum: f271c8624d5c2e8e38f62b66a4741877ffe31aa04ea8a038f117616e2a85196cfcd44edfce55fde91671348dab5b7ed1e65dcd902084243f5e19827b764cd770
   languageName: node
   linkType: hard
 
@@ -908,6 +920,15 @@ __metadata:
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
   checksum: 9de8597363a8e9b9952491ebe18167e3b36e7707569eed0ebf14f8bba773611376466ae34575bca8cfe3c767890c859c74056084738f09d4e4a6f902b2ad7d99
+  languageName: node
+  linkType: hard
+
+"cron@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "cron@npm:1.8.2"
+  dependencies:
+    moment-timezone: ^0.5.x
+  checksum: 9df2d2e24684e1ebce37e3e29c183b1dfecf7adb5fb16f84435014e7205926fc9868e9bfacfa5f7b93c556c9f4a6fbcce5fde9bee1306d20bc848568bb587791
   languageName: node
   linkType: hard
 
@@ -2285,6 +2306,22 @@ __metadata:
     _mocha: bin/_mocha
     mocha: bin/mocha
   checksum: 4185038f1d49c7c5ab2f8d77e42c182a77ed78f08f0ce713cc34919bc89b618ed9d6d4f24cbb92049f0d2ed03fb1a2a5b20e0fb07f8cf4a86ba83eb99dacde99
+  languageName: node
+  linkType: hard
+
+"moment-timezone@npm:^0.5.x":
+  version: 0.5.34
+  resolution: "moment-timezone@npm:0.5.34"
+  dependencies:
+    moment: ">= 2.9.0"
+  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
+  languageName: node
+  linkType: hard
+
+"moment@npm:>= 2.9.0, moment@npm:>=2.14.0":
+  version: 2.29.1
+  resolution: "moment@npm:2.29.1"
+  checksum: 1e14d5f422a2687996be11dd2d50c8de3bd577c4a4ca79ba5d02c397242a933e5b941655de6c8cb90ac18f01cc4127e55b4a12ae3c527a6c0a274e455979345e
   languageName: node
   linkType: hard
 
