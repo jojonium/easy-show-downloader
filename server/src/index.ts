@@ -3,6 +3,7 @@ import {logger} from './logger';
 import {getData} from './endpoints/get-data';
 import {config, prettyPrintConfig} from './config';
 import {postData} from './endpoints/post-data';
+import {getHealth} from './endpoints/get-health';
 
 export const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.get('/data', getData);
 app.post('/data', postData);
+app.get('/health', getHealth);
 
 logger.log('Starting server with config:\n' + prettyPrintConfig());
 
