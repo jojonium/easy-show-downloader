@@ -24,8 +24,8 @@ export const prettyPrintConfig = () =>
   transmission: {
     HOST: ${config.transmission.HOST},
     PORT: ${config.transmission.PORT},
-    USERNAME: ${config.transmission.USERNAME},
-    PASSWORD: ${config.transmission.PASSWORD},
+    USERNAME: '${config.transmission.USERNAME}',
+    PASSWORD: ${config.transmission.PASSWORD.length > 0 ? '[REDACTED]' : ''},
     SSL: ${config.transmission.SSL},
     URL: ${config.transmission.URL},
   }
