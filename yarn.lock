@@ -5,6 +5,12 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@easy-show-downloader/client@workspace:client":
+  version: 0.0.0-use.local
+  resolution: "@easy-show-downloader/client@workspace:client"
+  languageName: unknown
+  linkType: soft
+
 "@easy-show-downloader/common@workspace:^, @easy-show-downloader/common@workspace:common":
   version: 0.0.0-use.local
   resolution: "@easy-show-downloader/common@workspace:common"

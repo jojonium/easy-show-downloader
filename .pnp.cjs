@@ -21,6 +21,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."
       },
       {
+        "name": "@easy-show-downloader/client",
+        "reference": "workspace:client"
+      },
+      {
         "name": "@easy-show-downloader/common",
         "reference": "workspace:common"
       },
@@ -32,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)|$))$)",
     "fallbackExclusionList": [
+      ["@easy-show-downloader/client", ["workspace:client"]],
       ["@easy-show-downloader/common", ["workspace:common"]],
       ["@easy-show-downloader/server", ["workspace:server"]],
       ["easy-show-downloader", ["workspace:."]]
@@ -53,6 +58,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:9.1.3"],
             ["ts-mocha", "virtual:6536fa393006776fe0499925b7b0ef949dc5069457be596264337964bda250f2b33d1d16c908930e04542e15809f054da5cc9e85bb0ec252e15f7671c5c9c56a#npm:8.0.0"],
             ["typescript", "patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=493e53"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["@easy-show-downloader/client", [
+        ["workspace:client", {
+          "packageLocation": "./client/",
+          "packageDependencies": [
+            ["@easy-show-downloader/client", "workspace:client"]
           ],
           "linkType": "SOFT",
         }]

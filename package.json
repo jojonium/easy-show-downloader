@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "server",
-    "common"
+    "common",
+    "client"
   ],
   "devDependencies": {
     "@types/eslint": "^8",
