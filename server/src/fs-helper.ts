@@ -56,7 +56,11 @@ export const parseDataString = (s: string): Data => {
     };
   }
   const data = JSON.parse(s);
-  const showObjects: any[] = data['shows'] ?? [];
+  return parsePlainDataObject(data);
+};
+
+export const parsePlainDataObject = (o: {[key: string]: any}): Data => {
+  const showObjects: any[] = o['shows'] ?? [];
   // Check to make sure showObjects is an array.
   if (!Array.isArray(showObjects)) {
     throw new Error('Failed to parse data string. Shows list is invalid.');
@@ -64,7 +68,7 @@ export const parseDataString = (s: string): Data => {
   const shows: Show[] = showObjects.map((s) =>
     Show.fromJsonString(JSON.stringify(s)),
   );
-  let rssUrls: any[] = data['rssUrls'] ?? [];
+  let rssUrls: any[] = o['rssUrls'] ?? [];
   // Check to make sure rssUrls is a string array.
   if (!Array.isArray(rssUrls) || rssUrls.some((s) => typeof s !== 'string')) {
     throw new Error('Failed to parse data string. RSS URLs list is invalid.');
