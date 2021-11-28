@@ -35,7 +35,7 @@ function serve() {
 export default {
   input: 'src/main.ts',
   output: {
-    sourcemap: !production,
+    sourcemap: true,
     format: 'iife',
     name: 'app',
     file: 'public/build/bundle.js',
@@ -63,8 +63,8 @@ export default {
     }),
     commonjs(),
     typescript({
-      sourceMap: !production,
-      inlineSources: !production,
+      sourceMap: true,
+      inlineSources: true,
     }),
 
     // In dev mode, call `yarn run server:start` once

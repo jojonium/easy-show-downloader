@@ -1,13 +1,21 @@
 <script lang="ts">
   import type {Data} from '@easy-show-downloader/common/dist/data';
+  import {onMount} from "svelte";
+  import {getData} from "./api-helpers";
+
   export let name: string;
-  export let data: Data = {shows: [], rssUrls: []};
+  let data: Data = {shows: [], rssUrls: []};
+  $: showTitles = data.shows.map(s => s.title);
+
+  onMount(async () => {
+    data = await getData();
+  });
 </script>
 
 <main>
   <h1>Hello {name}!</h1>
   <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-  <p>Shows: {data.shows}</p>
+  <p>Shows: {showTitles}</p>
 </main>
 
 <style>
