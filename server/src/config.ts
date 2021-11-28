@@ -1,6 +1,7 @@
 export const config = {
   HOST: process.env['NODE_HOST'] ?? 'localhost',
   PORT: parseInt(process.env['NODE_PORT'] ?? '3000'),
+  STATIC_DIR: process.env['STATIC_DIR'] ?? '../client/public',
   LOG_STDOUT: !(process.env['LOG_STDOUT'] === 'false'),
   LOG_FILE: process.env['LOG_FILE'] ?? undefined,
   DATA_FILE: process.env['DATA_FILE'] ?? 'data.json',
@@ -17,18 +18,19 @@ export const config = {
 
 export const prettyPrintConfig = () =>
   `{
-  HOST: ${config.HOST},
+  HOST: '${config.HOST}'',
   PORT: ${config.PORT},
+  STATIC_DIR: '${config.STATIC_DIR}',
   LOG_STDOUT: ${config.LOG_STDOUT},
-  LOG_FILE: ${config.LOG_FILE},
-  DATA_FILE: ${config.DATA_FILE},
+  LOG_FILE: ${config.LOG_FILE ? `'${config.LOG_FILE}'` : 'undefined'},
+  DATA_FILE: '${config.DATA_FILE}',
   CRON_SCHEDULE: '${config.CRON_SCHEDULE}',
   transmission: {
-    HOST: ${config.transmission.HOST},
+    HOST: '${config.transmission.HOST}',
     PORT: ${config.transmission.PORT},
     USERNAME: '${config.transmission.USERNAME}',
     PASSWORD: ${config.transmission.PASSWORD.length > 0 ? '[REDACTED]' : ''},
     SSL: ${config.transmission.SSL},
-    URL: ${config.transmission.URL},
+    URL: '${config.transmission.URL}',
   }
 }`;

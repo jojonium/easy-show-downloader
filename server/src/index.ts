@@ -20,6 +20,11 @@ app.post('/api/data', postData);
 app.post('/api/download', postDownload);
 app.get('/api/health', getHealth);
 
+app.use(
+    express.static(config.STATIC_DIR,
+        {index: ['index.html'], extensions: ['html']}),
+);
+
 logger.log('Starting server with config:\n' + prettyPrintConfig());
 
 // Set up cron job if enabled.
