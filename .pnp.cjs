@@ -67,6 +67,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./client/",
           "packageDependencies": [
             ["@easy-show-downloader/client", "workspace:client"],
+            ["@easy-show-downloader/common", "workspace:common"],
             ["@rollup/plugin-commonjs", "virtual:169c929184f9ae380f8bb6567fff67f534a77b4785f6aa5c7633d16c9f9e486a20c4bbf883b56055858d305e832e428944c24d62becdd3e7bf1cf606665cf955#npm:21.0.1"],
             ["@rollup/plugin-node-resolve", "virtual:169c929184f9ae380f8bb6567fff67f534a77b4785f6aa5c7633d16c9f9e486a20c4bbf883b56055858d305e832e428944c24d62becdd3e7bf1cf606665cf955#npm:13.0.6"],
             ["@rollup/plugin-typescript", "virtual:169c929184f9ae380f8bb6567fff67f534a77b4785f6aa5c7633d16c9f9e486a20c4bbf883b56055858d305e832e428944c24d62becdd3e7bf1cf606665cf955#npm:8.3.0"],
