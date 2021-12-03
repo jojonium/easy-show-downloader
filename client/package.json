@@ -3,31 +3,20 @@
   "private": true,
   "packageManager": "yarn@3.2.0",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "build": "webpack",
     "lint": "eslint src --ext ts",
-    "client:build": "rollup -c",
-    "client:dev": "rollup -c -w",
-    "client:check": "svelte-check --tsconfig ./tsconfig.json",
+    "clean": "rm -rf public/build build tsconfig.tsbuildinfo",
+    "client:build": "webpack",
     "client:lint": "eslint src --ext ts"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-node-resolve": "^13.0.6",
-    "@rollup/plugin-typescript": "^8.3.0",
-    "@tsconfig/svelte": "^2.0.1",
     "@types/eslint": "^8",
     "eslint": "^8.3.0",
-    "rollup": "^2.60.1",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.5",
-    "rollup-plugin-svelte": "^7.1.0",
-    "svelte": "^3.44.2",
-    "svelte-check": "^2.2.10",
-    "svelte-preprocess": "^4.9.8",
+    "ts-loader": "^9.2.6",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "@easy-show-downloader/common": "workspace:^"

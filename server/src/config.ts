@@ -18,7 +18,7 @@ export const config = {
 
 export const prettyPrintConfig = () =>
   `{
-  HOST: '${config.HOST}'',
+  HOST: '${config.HOST}',
   PORT: ${config.PORT},
   STATIC_DIR: '${config.STATIC_DIR}',
   LOG_STDOUT: ${config.LOG_STDOUT},
