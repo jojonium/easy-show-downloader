@@ -1,0 +1,37 @@
+html {
+  margin: 0;
+  background-color: #232627;
+  font-family: monospace;
+  color: #fcfcfc;
+  font-size: 1.5em;
+}
+
+body {
+  margin: 1em;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading {
+  display: none;
+  color: #1ca350;
+  font-weight: bold;
+}
+
+.glow {
+  display: block;
+  animation: glow 1s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+  to {
+    text-shadow: 0 0 10px;
+  }
+}
