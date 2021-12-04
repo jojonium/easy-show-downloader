@@ -3,83 +3,37 @@
 A simple web application built on Node and TypeScript for automatically
 downloading new episodes of TV shows.
 
-This project is not very robust, flexible, or feature complete, because I made
-it primarily for myself and my own personal use case. That said, pull requests
-are welcome if you want to add features.
+# Running
 
-It's also not particularly well-written, efficient, or pretty, because I wrote
-it in approximately two days.
-
-## Running development server
-
-Edit `config.json`:
+This project uses yarn zero-installs, so after you clone the repo you can get
+started with 
 
 ```
-{
-  /* List of RSS URLs to search for torrents, e.g. HorribleSubs RSS feed */
-  "rssURLs": [], 
-
-  /* Root directory, containing a sub-folder for each show */
-  "showDirectory": "/mnt/media/Television",
-
-  "transmissionOptions": {
-    "host": "localhost",
-    "port": 9091,
-    "username": "username",
-    "password": "password",
-    "ssl": false,
-    "url": "/transmission/rpc"
-  }
- }
+$ yarn run build
+$ yarn run start
 ```
 
-Then just run the Node project:
+And you'll have the server up and running.
 
-```
-$ npm install
-$ npm run start:dev
-```
+# Configuration
 
-Navigate to `http://localhost:8080` to see it in action. You can use the web
-interface to add shows and manually trigger a check for new episodes. The server
-will also check for new episodes automatically each hour.
+This project is configured through environment variables. The only file that
+needs to persist on the disk is `data.json`, which contains information about
+the shows you want to download and the RSS feeds to get them from. Here is a
+list of the availableenvironment variables:
 
-## Production use
-
-I'll mention again that this is not super secure or robust and probably
-shouldn't be used in production. If you really want to though, simply build and
-run it:
-
-```
-$ npm run build
-$ npm start
-```
-
-## API documentation
-
-Bodies of POST methods should be JSONs. Response bodies are JSONs containing a
-"status" field with the HTTP status code and a "message" field, as well as
-optionally other fields.
-
-### POST `/api/shows`
-
-Updates the list of shows, replacing it with one sent in the request. Required
-fields: "shows", which is an array of strings. Each string should be a valid
-regular expression with two named capturing groups: `name`, which captures the
-name of the show, and `episode`, which captures the episode number.
-
-Returns 200 if successfully updated, 400 if the request was invalid, or 500 if
-an internal server error occurred.
-
-### GET `/api/shows`
-
-Returns a list of shows.
-
-Returns 200 along with a "shows" field containing an array of show names if
-successful, or 500 if an internal server error occurred.
-
-### POST `/api/download`
-
-Downloads all new episodes from the RSS feeds.
-
-Returns 200 if successful, or 500 if an internal server error occurred.
+Name | Type | Default | Notes
+-----|------|---------|-------
+`HOST` | string | `'localhost'` | Server host to listen on
+`PORT` | number | `3000` | Server port to listen on
+`STATIC_DIR` | string | `'../client/public'` | Directory to serve static website content from
+`LOG_STDOUT` | boolean | `true` | Whether to log to stdout
+`LOG_FILE` | string | `undefined` | File to write logs to. Logging to a file is disabled if omitted
+`DATA_FILE` | string | `'data.json'` | Path to the JSON file to store show data in
+`CRON_SCHEDULE` | string | `'0 53 * * * *'` | Schedule to check for new torrents. See [node-cron](https://www.npmjs.com/package/cron) for schedule options
+`TRANSMISSION_HOST` | string | `'localhost'` | Hostname of your Transmission instance
+`TRANSMISSION_PORT` | number | `9091` | Port of your Transmission instance
+`TRANSMISSION_USERNAME` | string | `''` | Username for authenticating with your Transmission instance
+`TRANSMISSION_PASSWORD` | string | `''` | Password for authenticating with your Transmission instance
+`TRANSMISSION_PROTOCOL` | string | `'http'` | Set to 'https' to use TLS when connecting to your Transmission instance
+`TRANSMISSION_URL` | string | `'/transmission/rpc'` | URL path of your Transmission instance

@@ -1,0 +1,24 @@
+{
+  "name": "@easy-show-downloader/client",
+  "private": true,
+  "packageManager": "yarn@3.2.0",
+  "scripts": {
+    "build": "webpack",
+    "lint": "eslint src --ext ts",
+    "clean": "rm -rf public/build build tsconfig.tsbuildinfo",
+    "client:build": "webpack",
+    "client:lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8",
+    "eslint": "^8.3.0",
+    "ts-loader": "^9.2.6",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@easy-show-downloader/common": "workspace:^"
+  }
+}

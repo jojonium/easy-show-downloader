@@ -1,44 +1,28 @@
 {
   "name": "easy-show-downloader",
-  "version": "2.0.0",
-  "description": "Web app for automatically downloading new episodes of TV shows",
-  "main": "dist/index.js",
+  "packageManager": "yarn@3.2.0",
+  "version": "3.0.0",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node dist/index.js",
-    "start:dev": "ts-node-dev --poll src/index.ts",
-    "test": "echo \"Tests are for nerds!\" && exit 1"
+    "start": "yarn run server:start",
+    "lint": "yarn workspaces foreach run lint",
+    "test": "NODE_ENV=test yarn workspaces foreach run test",
+    "build": "yarn workspaces foreach run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jojonium/easy-show-downloader.git"
-  },
-  "keywords": [
-    "torrent",
-    "transmission",
-    "web-app"
+  "workspaces": [
+    "server",
+    "common",
+    "client"
   ],
-  "author": "Joseph Petitti",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jojonium/easy-show-downloader/issues"
-  },
-  "homepage": "https://github.com/jojonium/easy-show-downloader#readme",
   "devDependencies": {
-    "@types/cron": "^1.7.1",
-    "@types/express": "^4.17.2",
-    "@types/node": "^13.1.4",
-    "@types/xml2js": "^0.4.5",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
-  },
-  "dependencies": {
-    "cron": "^1.7.2",
-    "express": "^4.17.1",
-    "rss-parser": "^3.7.3",
-    "transmission-promise": "^1.1.4"
+    "@types/eslint": "^8",
+    "@types/mocha": "^9",
+    "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^9.1.3",
+    "ts-mocha": "^8.0.0",
+    "typescript": "^4.5.2"
   }
 }
