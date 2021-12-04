@@ -1,21 +1,21 @@
-import {Show} from '@easy-show-downloader/common/dist/show';
+import {Data} from '@easy-show-downloader/common/dist/data';
 
-export const displayShows = (shows: Show[], parent: HTMLElement) => {
+export const displayShows = (data: Data, parent: HTMLElement) => {
   parent.innerHTML = '';
-  if (shows.length === 0) {
+  if (data.shows.length === 0) {
     const node = document.createElement('p');
     node.innerText = 'No shows.';
     parent.appendChild(node);
     return;
   }
 
-  for (const show of shows) {
+  for (const show of data.shows) {
     const deleteButton = document.createElement('button');
-    deleteButton.id = 'delete-button';
+    deleteButton.classList.add('delete-button');
     deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-      shows = shows.filter((s) => s !== show);
-      displayShows(shows, parent);
+    deleteButton.addEventListener('click', function () {
+      data.shows = data.shows.filter((s) => s !== show);
+      displayShows(data, parent);
     });
 
     const showItem = document.createElement('div');
@@ -24,7 +24,7 @@ export const displayShows = (shows: Show[], parent: HTMLElement) => {
     titleElt.setAttribute('type', 'text');
     titleElt.setAttribute('value', show.title);
     titleElt.setAttribute('placeholder', 'Title');
-    titleElt.addEventListener('change', function() {
+    titleElt.addEventListener('change', function () {
       show.title = this.value;
     });
     showItem.append(titleElt);
@@ -33,7 +33,7 @@ export const displayShows = (shows: Show[], parent: HTMLElement) => {
     regexElt.setAttribute('type', 'text');
     regexElt.setAttribute('value', show.regex.source);
     regexElt.setAttribute('placeholder', 'Regular Expression (optional)');
-    regexElt.addEventListener('change', function() {
+    regexElt.addEventListener('change', function () {
       if (this.value === '') {
         show.regex = new RegExp(show.title);
       } else {
@@ -46,7 +46,7 @@ export const displayShows = (shows: Show[], parent: HTMLElement) => {
     folderElt.setAttribute('type', 'text');
     folderElt.setAttribute('value', show.folder);
     folderElt.setAttribute('placeholder', 'Folder (optional)');
-    folderElt.addEventListener('change', function() {
+    folderElt.addEventListener('change', function () {
       show.folder = this.value;
     });
     showItem.append(folderElt);
@@ -55,7 +55,7 @@ export const displayShows = (shows: Show[], parent: HTMLElement) => {
     feedElt.setAttribute('type', 'text');
     feedElt.setAttribute('value', show.feedUrl ?? '');
     feedElt.setAttribute('placeholder', 'Preferred RSS URL (optional)');
-    feedElt.addEventListener('change', function() {
+    feedElt.addEventListener('change', function () {
       show.feedUrl = this.value || undefined;
     });
     showItem.append(feedElt);

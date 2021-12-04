@@ -2,6 +2,7 @@ import {getData, postData} from './api-helpers';
 import {Data} from '@easy-show-downloader/common/dist/data';
 import {Show} from '@easy-show-downloader/common/dist/show';
 import {displayShows} from './display-shows';
+import {displayRss} from './display-rss';
 
 let data: Data;
 
@@ -9,47 +10,45 @@ const refreshData = async () => {
   document.getElementById('shows-container')?.classList.add('hidden');
   document.getElementById('feeds-container')?.classList.add('hidden');
   document.querySelectorAll('.loading')
-      .forEach((elt) => elt.classList.add('glow'));
+    .forEach((elt) => elt.classList.add('glow'));
   data = await getData();
   console.log(data);
-  updateShowDisplay(data.shows);
-  updateFeedsDisplay(data.rssUrls);
+  updateShowDisplay(data);
+  updateFeedsDisplay(data);
   const mediaRootInput =
     document.getElementById('media-root-input') as HTMLInputElement;
   if (mediaRootInput) mediaRootInput.value = data.mediaRoot ?? '';
   document.getElementById('shows-container')?.classList.remove('hidden');
   document.getElementById('feeds-container')?.classList.remove('hidden');
   document.querySelectorAll('.loading')
-      .forEach((elt) => elt.classList.remove('glow'));
+    .forEach((elt) => elt.classList.remove('glow'));
 };
 
-const updateShowDisplay = (shows: Show[]) => {
+const updateShowDisplay = (data: Data) => {
   const parent = document.getElementById('shows-container');
   if (parent === null) throw new Error('Can\'t get shows container!');
-  displayShows(shows, parent);
+  displayShows(data, parent);
 };
 
-const updateFeedsDisplay = (rssFeeds: string[]) => {
+const updateFeedsDisplay = (data: Data) => {
   const parent = document.getElementById('feeds-container');
   if (parent === null) throw new Error('Can\'t get feeds container!');
-  if (rssFeeds.length === 0) {
-    const node = document.createElement('p');
-    node.innerText = 'No RSS feeds.';
-    parent.appendChild(node);
-    return;
-  }
-  // TODO Display RSS URLs.
+  displayRss(data, parent);
 };
 
 window.onload = async () => {
-  document.getElementById('add-show')?.addEventListener('click', function() {
+  document.getElementById('add-show')?.addEventListener('click', function () {
     data.shows.push(new Show('', new RegExp('')));
-    updateShowDisplay(data.shows);
+    updateShowDisplay(data);
+  });
+  document.getElementById('add-feed')?.addEventListener('click', function () {
+    data.rssUrls.push('');
+    updateFeedsDisplay(data);
   });
   const mediaRootInput =
     document.getElementById('media-root-input') as HTMLInputElement;
   if (mediaRootInput) {
-    mediaRootInput.addEventListener('change', function() {
+    mediaRootInput.addEventListener('change', function () {
       data.mediaRoot = this.value;
     });
   }
