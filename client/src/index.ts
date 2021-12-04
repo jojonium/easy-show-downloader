@@ -1,6 +1,7 @@
 import {getData} from './api-helpers';
 import {Data} from '@easy-show-downloader/common/dist/data';
 import {Show} from '@easy-show-downloader/common/dist/show';
+import {displayShows} from './display-shows';
 
 let data: Data;
 
@@ -22,13 +23,7 @@ const refreshData = async () => {
 const updateShowDisplay = (shows: Show[]) => {
   const parent = document.getElementById('shows-container');
   if (parent === null) throw new Error('Can\'t get shows container!');
-  if (shows.length === 0) {
-    const node = document.createElement('p');
-    node.innerText = 'No shows.';
-    parent.appendChild(node);
-    return;
-  }
-  // TODO Display shows.
+  displayShows(shows, parent);
 };
 
 const updateFeedsDisplay = (rssFeeds: string[]) => {
@@ -44,5 +39,9 @@ const updateFeedsDisplay = (rssFeeds: string[]) => {
 };
 
 window.onload = async () => {
+  document.getElementById('add-show')?.addEventListener('click', function () {
+    data.shows.push(new Show('', new RegExp('')));
+    updateShowDisplay(data.shows);
+  });
   await refreshData();
 };
