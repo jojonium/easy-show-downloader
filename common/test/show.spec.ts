@@ -6,7 +6,7 @@ describe('Show', () => {
     it('Should use a simple default regex', () => {
       const s = new Show('Neon Genesis Evangelion');
       expect(s.regex.toString()).to.equal(
-          new RegExp('Neon Genesis Evangelion').toString(),
+        new RegExp('Neon Genesis Evangelion').toString(),
       );
     });
 
@@ -19,10 +19,10 @@ describe('Show', () => {
       const s1 = new Show('Space Dandy');
       expect(s1.feedUrl).to.be.undefined;
       const s2 = new Show(
-          'Space Dandy',
-          new RegExp('Space Dandy'),
-          'Space Dandy/Season 02',
-          'https://example.com',
+        'Space Dandy',
+        new RegExp('Space Dandy'),
+        'Space Dandy/Season 02',
+        'https://example.com',
       );
       expect(s2.feedUrl).to.equal('https://example.com');
     });
@@ -30,10 +30,10 @@ describe('Show', () => {
 
   describe('#toJsonString()', () => {
     const s = new Show(
-        'Cowboy Bebop',
-        /^Cowboy Bebop.*$/,
-        'A random folder',
-        'https://example.com/rss.xml',
+      'Cowboy Bebop',
+      /^Cowboy Bebop.*$/,
+      'A random folder',
+      'https://example.com/rss.xml',
     );
 
     it('Should produce a one-line string', () => {
@@ -44,13 +44,15 @@ describe('Show', () => {
     it('Should produce a parsable JSON string', () => {
       expect(JSON.parse(s.toJsonString())).to.be.an('object');
       expect(JSON.parse(s.toJsonString()))
-          .to.haveOwnProperty('title')
-          .equal('Cowboy Bebop');
+        .to.haveOwnProperty('title')
+        .equal('Cowboy Bebop');
+      expect(JSON.parse(s.toJsonString()))
+        .to.haveOwnProperty('regex').equal('^Cowboy Bebop.*$');
     });
 
     it('Should store regular expressions without slashes', () => {
       expect(JSON.parse(s.toJsonString())['regex']).to.equal(
-          '^Cowboy Bebop.*$',
+        '^Cowboy Bebop.*$',
       );
     });
   });
@@ -66,10 +68,10 @@ describe('Show', () => {
 
     it('Should correctly parse the output of toJsonString()', () => {
       let str = new Show(
-          'FLCL',
-          /^FLCL.*1080p.*$/,
-          'FLCL',
-          'https://example.com/rss.xml',
+        'FLCL',
+        /^FLCL.*1080p.*$/,
+        'FLCL',
+        'https://example.com/rss.xml',
       ).toJsonString();
       let s = Show.fromJsonString(str);
       expect(s.title).to.equal('FLCL');
@@ -78,9 +80,9 @@ describe('Show', () => {
       expect(s.feedUrl).to.equal('https://example.com/rss.xml');
 
       str = new Show(
-          'FLCL',
-          /^FLCL.*1080p.*$/,
-          'FLCL',
+        'FLCL',
+        /^FLCL.*1080p.*$/,
+        'FLCL',
       ).toJsonString();
       s = Show.fromJsonString(str);
       expect(s.title).to.equal('FLCL');
@@ -89,8 +91,8 @@ describe('Show', () => {
       expect(s.feedUrl).to.be.undefined;
 
       str = new Show(
-          'FLCL',
-          /^FLCL.*1080p.*$/,
+        'FLCL',
+        /^FLCL.*1080p.*$/,
       ).toJsonString();
       s = Show.fromJsonString(str);
       expect(s.title).to.equal('FLCL');
