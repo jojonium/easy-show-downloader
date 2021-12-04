@@ -14,12 +14,11 @@ RUN adduser -S nodejs -u 1001
 ENV NODE_ENV production
 WORKDIR /app
 
-# COPY --from=builder /app/.yarn ./.yarn
+COPY --from=builder /app/.yarn ./.yarn
 COPY --from=builder /app/yarn.lock ./yarn.lock
 COPY --from=builder /app/.yarnrc.yml ./.yarnrc.yml
-# COPY --from=builder /app/.pnp.cjs ./.pnp.cjs
+COPY --from=builder /app/.pnp.cjs ./.pnp.cjs
 COPY --from=builder /app/package.json ./package.json
-RUN yarn install --production
 
 COPY --from=builder /app/client/public ./client/public
 COPY --from=builder /app/common/dist ./common/dist
