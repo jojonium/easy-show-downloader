@@ -3,6 +3,7 @@
   "packageManager": "yarn@3.2.0",
   "version": "3.0.0",
   "scripts": {
+    "start": "yarn run server:start",
     "lint": "yarn workspaces foreach run lint",
     "test": "NODE_ENV=test yarn workspaces foreach run test",
     "build": "yarn workspaces foreach run build"
