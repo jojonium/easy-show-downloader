@@ -54,11 +54,7 @@ window.onload = async () => {
   }
   document.getElementById('save')?.addEventListener('click', async () => {
     document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
-    try {
-      await postData(data);
-    } catch (e) {
-      console.error(e);
-    }
+    await postData(data);
     document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
   });
   await refreshData();
