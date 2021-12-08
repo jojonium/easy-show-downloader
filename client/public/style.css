@@ -6,13 +6,65 @@ html {
   font-size: 1.5em;
 }
 
-body {
-  margin: 1em;
-}
-
 hr {
   border: none;
-  border-bottom: 1px solid gray;
+  margin: 0.5em 0;
+  height: 1em;
+}
+
+p, h1, h2 {
+  margin: 0;
+}
+
+h1, h2 {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+p.log-line {
+  margin: 0;
+  margin-left: 1em;
+  text-indent: -1em;
+}
+
+.error {
+  color: red;
+}
+
+p.log-line::before {
+  content: "> ";
+}
+
+input[type=text], #feeds-container p, #shows-container p {
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  border: 2px solid #fcfcfc;
+  margin: 0.5em;
+  padding: 0.5em;
+  font-family: inherit;
+  max-width: 200px;
+}
+
+button {
+  background: none;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.1s;
+  text-shadow: 0 0 10px;
+  padding: 0;
+}
+button::before {
+  content: "[";
+}
+button::after {
+  content: "]";
+}
+button:hover {
+  color: #1ca350;
 }
 
 .hidden {
