@@ -61,3 +61,34 @@ export const postData = async (data: Data): Promise<void> => {
     log('Error! Failed to post data to server: ' + e?.message, true);
   }
 };
+
+/**
+ * Tells the server to download new episodes.
+ */
+export const postDownload = async (): Promise<void> => {
+  try {
+    const res = await fetch('/api/download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      }
+    });
+    let json: {[key: string]: any} = {};
+    try {
+      json = await res.json();
+    } catch (e) {}
+    if (res.status === 200) {
+      const count = json['torrentsAdded'] ?? 0;
+      log(`Added ${count} torrent${count !== 1 ? 's' : ''}.`);
+    } else {
+      console.error(json);
+      log(
+        `${res.status} Error! Server responded with error: ${json['message']} `,
+        true
+      );
+    }
+  } catch (e: any) {
+    console.error(e);
+    log('Error! Failed to contact server: ' + e?.message, true);
+  }
+};

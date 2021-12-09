@@ -1,4 +1,4 @@
-import {getData, postData} from './api-helpers';
+import {getData, postData, postDownload} from './api-helpers';
 import {Data} from '@easy-show-downloader/common/dist/data';
 import {Show} from '@easy-show-downloader/common/dist/show';
 import {displayShows} from './display-shows';
@@ -55,6 +55,11 @@ window.onload = async () => {
   document.getElementById('save')?.addEventListener('click', async () => {
     document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
     await postData(data);
+    document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
+  });
+  document.getElementById('download')?.addEventListener('click', async () => {
+    document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
+    await postDownload();
     document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
   });
   await refreshData();
