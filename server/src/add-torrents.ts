@@ -9,7 +9,7 @@ import path from 'path';
  * @param {string} mediaRoot Optional root directory to download to.
  */
 export const addTorrents = async (
-    showData: { [key: string]: { folder: string; links: string[] } },
+    showData: {[key: string]: {folder: string; links: string[]}},
     mediaRoot: string = '',
 ): Promise<number> => {
   let count = 0;
@@ -19,11 +19,10 @@ export const addTorrents = async (
     for (const link of showData[title]?.links ?? []) {
       // In automated tests we won't actually add the torrents.
       if (process.env['NODE_ENV'] !== 'test') {
+        let folder = (showData[title]?.folder ?? '').trim();
+        if (folder === '') folder = title;
         await t.addUrl(link, {
-          'download-dir': path.join(
-              mediaRoot,
-              showData[title]?.folder ?? title,
-          ),
+          'download-dir': path.join(mediaRoot, folder),
         });
       }
       count++;
