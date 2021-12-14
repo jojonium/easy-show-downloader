@@ -70,6 +70,10 @@ button::after {
 button:hover {
   color: #1ca350;
 }
+button:disabled, button:hover:disabled {
+  color: gray;
+  cursor: inherit;
+}
 
 .hidden {
   display: none;
