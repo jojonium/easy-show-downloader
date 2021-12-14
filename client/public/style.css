@@ -8,7 +8,7 @@ html {
 
 hr {
   border: none;
-  margin: 0.5em 0;
+  margin: 1em 0;
   height: 1em;
 }
 
@@ -35,15 +35,19 @@ p.log-line::before {
   content: "> ";
 }
 
-input[type=text], #feeds-container p, #shows-container p {
+#shows-container, #feeds-container {
+  padding: 1em 0;
+}
+
+input[type=text] {
   background: none;
   color: inherit;
-  font-size: inherit;
-  border: 2px solid #fcfcfc;
-  margin: 0.5em;
-  padding: 0.5em;
+  border: 1px solid gray;
+  margin: 0 1em 0 0;
+  padding: 0 3px;
   font-family: inherit;
-  max-width: 200px;
+  max-width: 300px;
+  font-size: 0.9em;
 }
 
 button {
