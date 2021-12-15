@@ -15,5 +15,6 @@ jobs:
         with:
           node-version: 16
       - run: yarn
-      - run: yarn run build
+      - run: yarn run common:build
+      - run: yarn run server:build
       - run: yarn run test
