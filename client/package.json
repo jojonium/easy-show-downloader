@@ -7,7 +7,8 @@
     "lint": "eslint src --ext ts",
     "clean": "rm -rf public/build build tsconfig.tsbuildinfo",
     "client:build": "webpack",
-    "client:lint": "eslint src --ext ts"
+    "client:lint": "eslint src --ext ts",
+    "client:clean": "rm -rf public/build build tsconfig.tsbuildinfo"
   },
   "devDependencies": {
     "@types/eslint": "^8",
