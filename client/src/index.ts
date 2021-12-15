@@ -52,15 +52,22 @@ window.onload = async () => {
       data.mediaRoot = this.value;
     });
   }
-  document.getElementById('save')?.addEventListener('click', async () => {
+  document.getElementById('save')?.addEventListener('click', async function () {
     document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
+    const oldText = this.innerText;
+    this.innerHTML = 'Saving...'.padEnd(oldText.length, '\xa0');
     await postData(data);
+    this.innerHTML = oldText;
     document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
   });
-  document.getElementById('download')?.addEventListener('click', async () => {
-    document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
-    await postDownload();
-    document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
-  });
+  document.getElementById('download')?.addEventListener('click',
+    async function () {
+      document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
+      const oldText = this.innerText;
+      this.innerHTML = 'Downloading...'.padEnd(oldText.length, '\xa0');
+      await postDownload();
+      this.innerHTML = oldText;
+      document.querySelectorAll('button').forEach((elt) => elt.disabled = false);
+    });
   await refreshData();
 };
