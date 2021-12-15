@@ -3,10 +3,16 @@
 A simple web application built on Node and TypeScript for automatically
 downloading new episodes of TV shows.
 
-# Running
+I made this for myself because existing solutions tended to be outdated, overly
+complicated, or full of too many features that I would never use. Easy Show
+Downloader is designed first and foremost to be simple and easy: it only
+supports Transmission as a torrent client, its web interface is fast and
+minimal, and it only supports scraping torrent magnet links from RSS feeds.
+
+## Running
 
 This project uses yarn zero-installs, so after you clone the repo you can get
-started with 
+started with:
 
 ```
 $ yarn run build
@@ -15,7 +21,13 @@ $ yarn run start
 
 And you'll have the server up and running.
 
-# Configuration
+Alternatively you can try it in a container:
+
+```
+$ docker pull ghcr.io/jojonium/easy-show-downloader:latest
+```
+
+## Configuration
 
 This project is configured through environment variables. The only file that
 needs to persist on the disk is `data.json`, which contains information about
