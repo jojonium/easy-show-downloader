@@ -10,11 +10,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Set up Node
+        uses: actions/setup-node@v1
         with:
           node-version: 16
-      - run: yarn
-      - run: yarn run common:build
-      - run: yarn run server:build
-      - run: yarn run test
+      - name: Install dependencies
+        run: yarn
+      - name: Yarn build common
+        run: yarn run common:build
+      - name: Yarn build server
+        run: yarn run server:build
+      - name: Run tests
+        run: yarn run test
