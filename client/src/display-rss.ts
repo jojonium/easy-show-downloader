@@ -13,7 +13,7 @@ export const displayRss = (data: Data, parent: HTMLElement) => {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
     deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function () {
+    deleteButton.addEventListener('click', function() {
       data.rssUrls = data.rssUrls.filter((_, j) => j !== i);
       displayRss(data, parent);
     });
@@ -26,8 +26,8 @@ export const displayRss = (data: Data, parent: HTMLElement) => {
     urlElt.setAttribute('value', data.rssUrls[i] ?? '');
     urlElt.classList.add('url');
     urlElt.setAttribute('placeholder', 'Title');
-    urlElt.addEventListener('change', function () {
-      data.rssUrls[i] = this.value;
+    urlElt.addEventListener('change', function() {
+      data.rssUrls[i] = urlElt.value;
     });
 
     feedItem.append(urlElt, deleteButton);

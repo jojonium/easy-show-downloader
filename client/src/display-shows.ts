@@ -13,7 +13,7 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
     deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function () {
+    deleteButton.addEventListener('click', function() {
       data.shows = data.shows.filter((s) => s !== show);
       displayShows(data, parent);
     });
@@ -25,8 +25,8 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
     titleElt.setAttribute('value', show.title);
     titleElt.classList.add('title');
     titleElt.setAttribute('placeholder', 'Title');
-    titleElt.addEventListener('change', function () {
-      show.title = this.value;
+    titleElt.addEventListener('change', function() {
+      show.title = titleElt.value;
     });
     showItem.append(titleElt);
 
@@ -35,11 +35,11 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
     regexElt.setAttribute('value', show.regex.source);
     regexElt.classList.add('regex');
     regexElt.setAttribute('placeholder', 'Regular Expression (optional)');
-    regexElt.addEventListener('change', function () {
-      if (this.value === '') {
+    regexElt.addEventListener('change', function() {
+      if (regexElt.value === '') {
         show.regex = new RegExp(show.title);
       } else {
-        show.regex = new RegExp(this.value);
+        show.regex = new RegExp(regexElt.value);
       }
     });
     showItem.append(regexElt);
@@ -49,8 +49,8 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
     folderElt.setAttribute('value', show.folder);
     folderElt.classList.add('folder');
     folderElt.setAttribute('placeholder', 'Folder (optional)');
-    folderElt.addEventListener('change', function () {
-      show.folder = this.value;
+    folderElt.addEventListener('change', function() {
+      show.folder = folderElt.value;
     });
     showItem.append(folderElt);
 
