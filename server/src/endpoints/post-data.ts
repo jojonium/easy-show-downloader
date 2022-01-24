@@ -13,10 +13,11 @@ export const postData = async (req: Request, res: Response) => {
     } catch (e) {
       logger.log(
           'Failure in POST /api/data. ' +
-          `Could not write data file to '${config.DATA_FILE}'.\n${e}`,
+        `Could not write data file to '${config.DATA_FILE}'.\n${e}`,
           'ERROR',
       );
       sendError(res, 500, 'Server failed to write show data.');
+      return;
     }
     res.status(200).end();
   } catch (e: any) {
