@@ -18,6 +18,9 @@ jobs:
   docker_build_push:
     name: Build and publish
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v2

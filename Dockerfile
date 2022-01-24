@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn rebuild && yarn build
+RUN yarn rebuild
+RUN yarn common:build
+RUN yarn server:build
+RUN yarn client:build
 
 FROM node:16-alpine as runner
 
