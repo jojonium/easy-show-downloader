@@ -25,9 +25,13 @@ p.log-line {
   margin: 0;
   margin-left: 1em;
   text-indent: -1em;
+  color: gray;
+  opacity: 100%;
+  height: 1em;
+  transition: opacity 1s, height 0.5s;
 }
 
-.error {
+p.log-line.error {
   color: red;
 }
 
