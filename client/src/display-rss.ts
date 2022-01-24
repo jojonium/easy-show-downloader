@@ -24,6 +24,7 @@ export const displayRss = (data: Data, parent: HTMLElement) => {
     const urlElt = document.createElement('input');
     urlElt.setAttribute('type', 'text');
     urlElt.setAttribute('value', data.rssUrls[i] ?? '');
+    urlElt.classList.add('url');
     urlElt.setAttribute('placeholder', 'Title');
     urlElt.addEventListener('change', function () {
       data.rssUrls[i] = this.value;

@@ -37,6 +37,16 @@ p.log-line::before {
 
 #shows-container, #feeds-container {
   padding: 1em 0;
+  max-width: 1000px;
+}
+
+.show-item, .feed-item {
+  width: 100%;
+  display: flex;
+}
+
+#shows-container input.regex, #feeds-container input.url {
+  flex-grow: 1;
 }
 
 input[type=text] {
