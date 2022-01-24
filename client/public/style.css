@@ -25,9 +25,13 @@ p.log-line {
   margin: 0;
   margin-left: 1em;
   text-indent: -1em;
+  color: gray;
+  opacity: 100%;
+  height: 1em;
+  transition: opacity 1s, height 0.5s;
 }
 
-.error {
+p.log-line.error {
   color: red;
 }
 
@@ -37,6 +41,16 @@ p.log-line::before {
 
 #shows-container, #feeds-container {
   padding: 1em 0;
+  max-width: 1000px;
+}
+
+.show-item, .feed-item {
+  width: 100%;
+  display: flex;
+}
+
+#shows-container input.regex, #feeds-container input.url {
+  flex-grow: 1;
 }
 
 input[type=text] {
@@ -57,7 +71,7 @@ button {
   color: inherit;
   font-family: inherit;
   cursor: pointer;
-  transition: color 0.1s;
+  transition: color 0.2s;
   text-shadow: 0 0 10px;
   padding: 0;
 }
@@ -73,6 +87,15 @@ button:hover {
 button:disabled, button:hover:disabled {
   color: gray;
   cursor: inherit;
+}
+button.delete-button:hover {
+  color: red;
+}
+button#save, button#download {
+  color: cyan;
+}
+button#save:hover, button#download:hover {
+  color: #1ca350;
 }
 
 .hidden {

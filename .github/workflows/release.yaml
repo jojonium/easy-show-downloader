@@ -2,8 +2,8 @@ name: Build and publish Docker image
 on:
   release:
     types: [published]
-  push:
-    tags: ['v*']
+#  push:
+#    tags: ['v*']
 # on:
 #   push:
 #     branches:

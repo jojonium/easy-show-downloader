@@ -24,9 +24,9 @@ export const getData = async (): Promise<Data> => {
     const json = await res.json();
     console.error(json);
     log(
-      `${res.status} Error! Failed to retrieve data from server: ` +
+        `${res.status} Error! Failed to retrieve data from server: ` +
       json['message'],
-      true
+        true,
     );
   }
   return {shows: [], rssUrls: []};
@@ -52,8 +52,8 @@ export const postData = async (data: Data): Promise<void> => {
       const json = await res.json();
       console.error(json);
       log(
-        `${res.status} Error! Failed to post data to server: ${json['message']}`,
-        true
+          `${res.status} Error! Failed to post data: ${json['message']}`,
+          true,
       );
     }
   } catch (e: any) {
@@ -71,7 +71,7 @@ export const postDownload = async (): Promise<void> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-      }
+      },
     });
     let json: {[key: string]: any} = {};
     try {
@@ -83,8 +83,8 @@ export const postDownload = async (): Promise<void> => {
     } else {
       console.error(json);
       log(
-        `${res.status} Error! Server responded with error: ${json['message']} `,
-        true
+          `${res.status} Error! Server responded with: ${json['message']} `,
+          true,
       );
     }
   } catch (e: any) {

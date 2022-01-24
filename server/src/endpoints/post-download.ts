@@ -15,10 +15,11 @@ export const postDownload = async (_: Request, res: Response) => {
   } catch (e) {
     logger.log(
         'Failure in POST /api/download. ' +
-        `Could not read data file at '${config.DATA_FILE}'.\n${e}`,
+      `Could not read data file at '${config.DATA_FILE}'.\n${e}`,
         'ERROR',
     );
     sendError(res, 500, 'Server failed to read show data.');
+    return;
   }
   let torrentData = {};
   try {
@@ -26,12 +27,13 @@ export const postDownload = async (_: Request, res: Response) => {
   } catch (e) {
     logger.log(
         'Failure in POST /api/download. Could not resolve torrents with \n' +
-        `rssFeeds: [${data.rssUrls.join(', ')}]\n` +
-        `shows:\n\t${data.shows.map((s) => s.toJsonString()).join('\n\t')}\n` +
-        e,
+      `rssFeeds: [${data.rssUrls.join(', ')}]\n` +
+      `shows:\n\t${data.shows.map((s) => s.toJsonString()).join('\n\t')}\n` +
+      e,
         'ERROR',
     );
     sendError(res, 500, 'Server resolve a list of torrent links.');
+    return;
   }
   try {
     const count = await addTorrents(torrentData, data.mediaRoot);
@@ -39,7 +41,7 @@ export const postDownload = async (_: Request, res: Response) => {
   } catch (e) {
     logger.log(
         'Failure in POST /api/download. ' +
-        `Could not add torrents to the client.\n${e}`,
+      `Could not add torrents to the client.\n${e}`,
         'ERROR',
     );
     sendError(res, 500, 'Server failed to add torrents to the client.');
