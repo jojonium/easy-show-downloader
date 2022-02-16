@@ -9,7 +9,7 @@ import {Data} from '@easy-show-downloader/common/dist/data';
 
 export const postDownload = async (_: Request, res: Response) => {
   logger.log('Checking for new torrents to download.');
-  let data: Data = {shows: [], rssUrls: []};
+  let data: Data;
   try {
     data = await readDataFile(config.DATA_FILE);
   } catch (e) {
