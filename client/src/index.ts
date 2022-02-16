@@ -4,20 +4,20 @@ import {Show} from '@easy-show-downloader/common/dist/show';
 import {displayShows} from './display-shows';
 import {displayRss} from './display-rss';
 
-let data: Data;
+let globalData: Data;
 
 const refreshData = async () => {
   document.getElementById('shows-container')?.classList.add('hidden');
   document.getElementById('feeds-container')?.classList.add('hidden');
   document.querySelectorAll('.loading')
       .forEach((elt) => elt.classList.add('glow'));
-  data = await getData();
-  console.log(data);
-  updateShowDisplay(data);
-  updateFeedsDisplay(data);
+  globalData = await getData();
+  console.log(globalData);
+  updateShowDisplay(globalData);
+  updateFeedsDisplay(globalData);
   const mediaRootInput =
     document.getElementById('media-root-input') as HTMLInputElement;
-  if (mediaRootInput) mediaRootInput.value = data.mediaRoot ?? '';
+  if (mediaRootInput) mediaRootInput.value = globalData.mediaRoot ?? '';
   document.getElementById('shows-container')?.classList.remove('hidden');
   document.getElementById('feeds-container')?.classList.remove('hidden');
   document.querySelectorAll('.loading')
@@ -38,18 +38,18 @@ const updateFeedsDisplay = (data: Data) => {
 
 window.onload = async () => {
   document.getElementById('add-show')?.addEventListener('click', function() {
-    data.shows.push(new Show('', new RegExp('')));
-    updateShowDisplay(data);
+    globalData.shows.push(new Show('', /.*/));
+    updateShowDisplay(globalData);
   });
   document.getElementById('add-feed')?.addEventListener('click', function() {
-    data.rssUrls.push('');
-    updateFeedsDisplay(data);
+    globalData.rssUrls.push('');
+    updateFeedsDisplay(globalData);
   });
   const mediaRootInput =
     document.getElementById('media-root-input') as HTMLInputElement;
   if (mediaRootInput) {
     mediaRootInput.addEventListener('change', function() {
-      data.mediaRoot = mediaRootInput.value;
+      globalData.mediaRoot = mediaRootInput.value;
     });
   }
   const saveButton = document.getElementById('save');
@@ -58,7 +58,7 @@ window.onload = async () => {
       document.querySelectorAll('button').forEach((elt) => elt.disabled = true);
       const oldText = saveButton.innerText;
       saveButton.innerHTML = 'Saving...'.padEnd(oldText.length, '\xa0');
-      await postData(data);
+      await postData(globalData);
       saveButton.innerHTML = oldText;
       document.querySelectorAll('button')
           .forEach((elt) => elt.disabled = false);
