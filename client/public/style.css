@@ -41,16 +41,18 @@ p.log-line::before {
 
 #shows-container, #feeds-container {
   padding: 1em 0;
-  max-width: 1000px;
+  width: 100%;
 }
 
 .show-item, .feed-item {
   width: 100%;
   display: flex;
+  padding-right: 10em;
+  box-sizing: border-box;
 }
 
-#shows-container input.regex, #feeds-container input.url {
-  flex-grow: 1;
+#shows-container input.regex {
+  flex-grow: 2;
 }
 
 input[type=text] {
@@ -60,8 +62,9 @@ input[type=text] {
   margin: 0 1em 0 0;
   padding: 0 3px;
   font-family: inherit;
-  max-width: 300px;
+  min-width: 300px;
   font-size: 0.9em;
+  flex-grow: 1;
 }
 
 button {
