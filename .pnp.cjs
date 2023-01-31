@@ -1520,7 +1520,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cookiejar", "npm:2.1.4"],\
             ["is-ip", "npm:2.0.0"],\
             ["methods", "npm:1.1.2"],\
-            ["qs", "npm:6.10.1"],\
+            ["qs", "npm:6.11.0"],\
             ["superagent", "npm:3.8.3"]\
           ],\
           "linkType": "HARD"\
@@ -4116,14 +4116,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["qs", [\
-        ["npm:6.10.1", {\
-          "packageLocation": "./.yarn/cache/qs-npm-6.10.1-12d3ab7795-00e390dbf9.zip/node_modules/qs/",\
-          "packageDependencies": [\
-            ["qs", "npm:6.10.1"],\
-            ["side-channel", "npm:1.0.4"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:6.11.0", {\
           "packageLocation": "./.yarn/cache/qs-npm-6.11.0-caf1bc9dea-6e1f29dd53.zip/node_modules/qs/",\
           "packageDependencies": [\
@@ -4653,7 +4645,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["formidable", "npm:1.2.6"],\
             ["methods", "npm:1.1.2"],\
             ["mime", "npm:1.6.0"],\
-            ["qs", "npm:6.10.1"],\
+            ["qs", "npm:6.11.0"],\
             ["readable-stream", "npm:2.3.7"]\
           ],\
           "linkType": "HARD"\
