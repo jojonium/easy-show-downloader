@@ -23,7 +23,8 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
 
     const folderElt = document.createElement('input');
     folderElt.setAttribute('type', 'text');
-    folderElt.setAttribute('value', show.folder);
+    const folder = show.folder ? show.folder : show.title;
+    folderElt.setAttribute('value', folder);
     folderElt.classList.add('folder');
     folderElt.setAttribute('placeholder', 'Folder');
     folderElt.addEventListener('change', function() {
