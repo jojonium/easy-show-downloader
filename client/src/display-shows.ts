@@ -20,39 +20,30 @@ export const displayShows = (data: Data, parent: HTMLElement) => {
 
     const showItem = document.createElement('div');
     showItem.classList.add('show-item');
-    const titleElt = document.createElement('input');
-    titleElt.setAttribute('type', 'text');
-    titleElt.setAttribute('value', show.title);
-    titleElt.classList.add('title');
-    titleElt.setAttribute('placeholder', 'Title');
-    titleElt.addEventListener('change', function() {
-      show.title = titleElt.value;
-    });
-    showItem.append(titleElt);
-
-    const regexElt = document.createElement('input');
-    regexElt.setAttribute('type', 'text');
-    regexElt.setAttribute('value', show.regex.source);
-    regexElt.classList.add('regex');
-    regexElt.setAttribute('placeholder', 'Regular Expression (optional)');
-    regexElt.addEventListener('change', function() {
-      if (regexElt.value === '') {
-        show.regex = new RegExp(show.title);
-      } else {
-        show.regex = new RegExp(regexElt.value);
-      }
-    });
-    showItem.append(regexElt);
 
     const folderElt = document.createElement('input');
     folderElt.setAttribute('type', 'text');
     folderElt.setAttribute('value', show.folder);
     folderElt.classList.add('folder');
-    folderElt.setAttribute('placeholder', 'Folder (optional)');
+    folderElt.setAttribute('placeholder', 'Folder');
     folderElt.addEventListener('change', function() {
       show.folder = folderElt.value;
+      const slash = folderElt.value.indexOf('/');
+      if (slash === -1) show.title = folderElt.value;
+      else show.title = folderElt.value.substring(0, slash);
     });
     showItem.append(folderElt);
+
+    const regexElt = document.createElement('input');
+    regexElt.setAttribute('type', 'text');
+    regexElt.setAttribute('value', show.regex.source);
+    regexElt.classList.add('regex');
+    regexElt.setAttribute('placeholder', 'Regular Expression');
+    regexElt.addEventListener('change', function() {
+      show.regex = new RegExp(regexElt.value);
+    });
+    showItem.append(regexElt);
+
 
     showItem.append(deleteButton);
 
