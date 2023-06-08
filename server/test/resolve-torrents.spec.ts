@@ -31,25 +31,25 @@ describe('resolveTorrents()', () => {
     const r = await resolveTorrents(data);
     expect(r['Dragon Quest']?.links).to.have.lengthOf(7);
     expect(r['Dragon Quest']?.links[0]).to.equal(
-        'https://nyaa.si/download/1460617.torrent',
+      'https://nyaa.si/download/1460617.torrent',
     );
     expect(r['Dragon Quest']?.links[1]).to.equal(
-        'https://nyaa.si/download/1460612.torrent',
+      'https://nyaa.si/download/1460612.torrent',
     );
     expect(r['Dragon Quest']?.links[2]).to.equal(
-        'https://nyaa.si/download/1460611.torrent',
+      'https://nyaa.si/download/1460611.torrent',
     );
     expect(r['Dragon Quest']?.links[3]).to.equal(
-        'https://nyaa.si/download/1460610.torrent',
+      'https://nyaa.si/download/1460610.torrent',
     );
     expect(r['Dragon Quest']?.links[4]).to.equal(
-        'https://nyaa.si/download/1460609.torrent',
+      'https://nyaa.si/download/1460609.torrent',
     );
     expect(r['Dragon Quest']?.links[5]).to.equal(
-        'https://nyaa.si/download/1460607.torrent',
+      'https://nyaa.si/download/1460607.torrent',
     );
     expect(r['Dragon Quest']?.links[6]).to.equal(
-        'https://nyaa.si/download/1460606.torrent',
+      'https://nyaa.si/download/1460606.torrent',
     );
     expect(r['Dragon Quest']?.folder).to.equal('Dragon Quest');
   });
@@ -62,13 +62,13 @@ describe('resolveTorrents()', () => {
     const r = await resolveTorrents(data);
     expect(r['Dragon Quest']?.links).to.have.lengthOf(3);
     expect(r['Dragon Quest']?.links[0]).to.equal(
-        'https://nyaa.si/download/1460617.torrent',
+      'https://nyaa.si/download/1460617.torrent',
     );
     expect(r['Dragon Quest']?.links[1]).to.equal(
-        'https://nyaa.si/download/1460612.torrent',
+      'https://nyaa.si/download/1460612.torrent',
     );
     expect(r['Dragon Quest']?.links[2]).to.equal(
-        'https://nyaa.si/download/1460610.torrent',
+      'https://nyaa.si/download/1460610.torrent',
     );
     expect(r['Dragon Quest']?.folder).to.equal('Folder Name');
   });
@@ -77,16 +77,16 @@ describe('resolveTorrents()', () => {
     const data = {
       shows: [
         new Show(
-            'Dragon Quest',
-            /Dragon Quest.*NVENC.*1080p/,
-            undefined,
-            `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
+          'Dragon Quest',
+          /Dragon Quest.*NVENC.*1080p/,
+          undefined,
+          `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
         ),
         new Show(
-            'Shin Tetsujin 28-gou',
-            undefined,
-            undefined,
-            `http://${config.HOST}:${config.PORT}/test-rss-2.xml`,
+          'Shin Tetsujin 28-gou',
+          undefined,
+          undefined,
+          `http://${config.HOST}:${config.PORT}/test-rss-2.xml`,
         ),
       ],
       rssUrls: [
@@ -97,7 +97,7 @@ describe('resolveTorrents()', () => {
     const r = await resolveTorrents(data);
     expect(r['Shin Tetsujin 28-gou']?.links).to.have.lengthOf(1);
     expect(r['Shin Tetsujin 28-gou']?.links[0]).to.equal(
-        'https://correct-link-test',
+      'https://correct-link-test',
     );
   });
 
@@ -114,5 +114,30 @@ describe('resolveTorrents()', () => {
     expect(r['Fake show']?.links).to.be.empty;
     expect(r['Another fake show']?.folder).to.equal('Another fake show');
     expect(r['Another fake show']?.links).to.be.empty;
+  });
+
+  it('Should still resolve torrents from successful feeds if one feed fails', async () => {
+    const data = {
+      shows: [new Show('Shin Tetsujin 28-gou')],
+      rssUrls: [
+        `http://${config.HOST}:${config.PORT}/fake-url-404.xml`,
+        `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
+      ],
+    };
+    const r = await resolveTorrents(data);
+    expect(r['Shin Tetsujin 28-gou']?.links).to.have.lengthOf(1);
+  });
+
+  it('Should gracefully return an empty list if all feeds fail', async () => {
+    const data = {
+      shows: [new Show('Dragon Quest')],
+      rssUrls: [
+        `http://${config.HOST}:${config.PORT}/fake-url-404.xml`,
+        `http://${config.HOST}:${config.PORT}/another-fake-url-404.xml`,
+        `http://${config.HOST}:${config.PORT}/this-one-will-fail.xml`
+      ],
+    };
+    const r = await resolveTorrents(data);
+    expect(r['Dragon Quest']?.links).to.be.empty;
   });
 });
