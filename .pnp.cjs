@@ -134,7 +134,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-google", "virtual:6536fa393006776fe0499925b7b0ef949dc5069457be596264337964bda250f2b33d1d16c908930e04542e15809f054da5cc9e85bb0ec252e15f7671c5c9c56a#npm:0.14.0"],\
             ["express", "npm:4.18.2"],\
             ["mocha", "npm:10.2.0"],\
-            ["rss-parser", "npm:3.12.0"],\
+            ["rss-parser", "npm:3.13.0"],\
             ["transmission-promise", "npm:1.1.5"],\
             ["ts-mocha", "virtual:6536fa393006776fe0499925b7b0ef949dc5069457be596264337964bda250f2b33d1d16c908930e04542e15809f054da5cc9e85bb0ec252e15f7671c5c9c56a#npm:10.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"]\
@@ -4230,12 +4230,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["rss-parser", [\
-        ["npm:3.12.0", {\
-          "packageLocation": "./.yarn/cache/rss-parser-npm-3.12.0-65446c1f86-aa0f0eb2e3.zip/node_modules/rss-parser/",\
+        ["npm:3.13.0", {\
+          "packageLocation": "./.yarn/cache/rss-parser-npm-3.13.0-eb7c12b2b0-7c6ab67738.zip/node_modules/rss-parser/",\
           "packageDependencies": [\
-            ["rss-parser", "npm:3.12.0"],\
+            ["rss-parser", "npm:3.13.0"],\
             ["entities", "npm:2.2.0"],\
-            ["xml2js", "npm:0.4.23"]\
+            ["xml2js", "npm:0.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5173,10 +5173,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["xml2js", [\
-        ["npm:0.4.23", {\
-          "packageLocation": "./.yarn/cache/xml2js-npm-0.4.23-93a8b2e10b-ca0cf2dfbf.zip/node_modules/xml2js/",\
+        ["npm:0.5.0", {\
+          "packageLocation": "./.yarn/cache/xml2js-npm-0.5.0-06e57a2771-1aa71d62e5.zip/node_modules/xml2js/",\
           "packageDependencies": [\
-            ["xml2js", "npm:0.4.23"],\
+            ["xml2js", "npm:0.5.0"],\
             ["sax", "npm:1.2.4"],\
             ["xmlbuilder", "npm:11.0.1"]\
           ],\
