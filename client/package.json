@@ -1,7 +1,7 @@
 {
   "name": "@easy-show-downloader/client",
   "private": true,
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.6.1",
   "scripts": {
     "build": "webpack",
     "lint": "eslint src --ext ts",
