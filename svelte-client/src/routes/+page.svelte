@@ -1,2 +1,22 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+  import ShowList from '../ShowList.svelte';
+  import FeedList from '../FeedList.svelte';
+  import { getData } from '$lib/api-helpers';
+
+  let dataPromise = getData();
+</script>
+
+<h1>Easy Show Downloader</h1>
+
+{#await dataPromise}
+  <p>Loading data...</p>
+{:then data}
+  <input type="text" id="media-root-input" value={data.mediaRoot}>
+
+  <ShowList shows={data.shows}/>
+
+  <FeedList rssUrls={data.rssUrls}/>
+{:catch someError}
+  <p>Error fetching data: {someError.message}</p>
+{/await}
+

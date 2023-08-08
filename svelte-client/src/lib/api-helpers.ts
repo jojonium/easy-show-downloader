@@ -1,8 +1,8 @@
 import {
-  Data,
+  type Data,
   parsePlainDataObject,
   stringifyData,
-} from '@easy-show-downloader/common/dist/data';
+} from '@easy-show-downloader/common/src/data';
 import {log} from './log';
 
 /**
@@ -17,8 +17,9 @@ export const getData = async (): Promise<Data> => {
       const data = parsePlainDataObject(json);
       log('Retreived data from server.');
       return data;
-    } catch (e: any) {
-      log('Error! Failed to parse data from server: ' + e?.message, true);
+    } catch (e: unknown) {
+      const message = (e instanceof Error) ? e.message : "" + e
+      log('Error! Failed to parse data from server: ' + message, true);
     }
   } else {
     const json = await res.json();
@@ -56,9 +57,10 @@ export const postData = async (data: Data): Promise<void> => {
           true,
       );
     }
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(e);
-    log('Error! Failed to post data to server: ' + e?.message, true);
+    const message = (e instanceof Error) ? e.message : "" + e
+    log('Error! Failed to post data to server: ' + message, true);
   }
 };
 
@@ -73,10 +75,10 @@ export const postDownload = async (): Promise<void> => {
         'Content-Type': 'application/json;charset=utf-8',
       },
     });
-    let json: {[key: string]: any} = {};
+    let json: {torrentsAdded?: number, message?: string} = {};
     try {
       json = await res.json();
-    } catch (e) {}
+    } catch (e) { /* continue */ }
     if (res.status === 200) {
       const count = json['torrentsAdded'] ?? 0;
       log(`Added ${count} torrent${count !== 1 ? 's' : ''}.`);
@@ -87,8 +89,9 @@ export const postDownload = async (): Promise<void> => {
           true,
       );
     }
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(e);
-    log('Error! Failed to contact server: ' + e?.message, true);
+    const message = (e instanceof Error) ? e.message : "" + e
+    log('Error! Failed to contact server: ' + message, true);
   }
 };
