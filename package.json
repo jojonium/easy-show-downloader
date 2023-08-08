@@ -12,7 +12,7 @@
   "workspaces": [
     "server",
     "common",
-    "client"
+    "svelte-client"
   ],
   "devDependencies": {
     "@types/eslint": "^8",
