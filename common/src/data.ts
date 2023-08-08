@@ -67,3 +67,10 @@ export const parsePlainDataObject = (o: {[key: string]: any}): Data => {
     rssUrls: rssUrls,
   };
 };
+
+/** An empty data object, useful as a placeholder or for testing. */
+export const blankData = {
+  shows: [],
+  rssUrls: [],
+  mediaRoot: '',
+};

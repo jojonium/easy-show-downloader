@@ -5,18 +5,20 @@ import {
 } from '@easy-show-downloader/common/src/data';
 import {log} from './log';
 
+const API_HOST = import.meta.env.VITE_API_HOST ?? '';
+
 /**
  * Fetches data from the server, resolving with the result or rejecting with an
  * Error containing a descriptive message.
  * @return {Promise<Data>}
  */
 export const getData = async (): Promise<Data> => {
-  const apiHost = import.meta.env.VITE_API_HOST ?? '';
-  const res = await fetch(`${apiHost}/api/data`);
+  const res = await fetch(`${API_HOST}/api/data`);
   console.log(res);
   if (res.status === 200) {
     const json = await res.json();
     const data = parsePlainDataObject(json);
+    console.log(data);
     return data;
   } else {
     let message = `${res.status} Error! Failed to retrieve data from server`;
