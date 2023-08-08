@@ -11,7 +11,8 @@ import {log} from './log';
  * @return {Promise<Data>}
  */
 export const getData = async (): Promise<Data> => {
-  const res = await fetch('/api/data');
+  const apiHost = import.meta.env.VITE_API_HOST ?? '';
+  const res = await fetch(`${apiHost}/api/data`);
   console.log(res);
   if (res.status === 200) {
     const json = await res.json();
@@ -23,7 +24,7 @@ export const getData = async (): Promise<Data> => {
       const json = await res.json();
       console.error(json);
       message += ': ' + json['message'];
-    } catch (_) { /* Continue */ }
+    } catch (_) { /* Continue */}
     throw new Error(message);
   }
 };
@@ -48,8 +49,8 @@ export const postData = async (data: Data): Promise<void> => {
       const json = await res.json();
       console.error(json);
       log(
-          `${res.status} Error! Failed to post data: ${json['message']}`,
-          true,
+        `${res.status} Error! Failed to post data: ${json['message']}`,
+        true,
       );
     }
   } catch (e: unknown) {
@@ -73,15 +74,15 @@ export const postDownload = async (): Promise<void> => {
     let json: {torrentsAdded?: number, message?: string} = {};
     try {
       json = await res.json();
-    } catch (e) { /* continue */ }
+    } catch (e) { /* continue */}
     if (res.status === 200) {
       const count = json['torrentsAdded'] ?? 0;
       log(`Added ${count} torrent${count !== 1 ? 's' : ''}.`);
     } else {
       console.error(json);
       log(
-          `${res.status} Error! Server responded with: ${json['message']} `,
-          true,
+        `${res.status} Error! Server responded with: ${json['message']} `,
+        true,
       );
     }
   } catch (e: unknown) {

@@ -4,9 +4,14 @@
   import { getData } from '$lib/api-helpers';
 
   let dataPromise = getData();
+  const viteMode = import.meta.env.MODE;
 </script>
 
 <h1>Easy Show Downloader</h1>
+
+{#if viteMode === 'development'}
+<p>Development mode</p>
+{/if}
 
 {#await dataPromise}
   <p>Loading data...</p>

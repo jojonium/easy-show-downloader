@@ -2,7 +2,7 @@
 	"name": "@easy-show-downloader/svelte-client",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -15,6 +15,7 @@
 		"@sveltejs/kit": "^1.20.4",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"concurrently": "^8.2.0",
 		"eslint": "^8.28.0",
 		"eslint-plugin-svelte": "^2.30.0",
 		"svelte": "^4.0.5",
