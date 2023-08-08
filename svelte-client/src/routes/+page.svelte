@@ -17,6 +17,6 @@
 
   <FeedList rssUrls={data.rssUrls}/>
 {:catch someError}
-  <p>Error fetching data: {someError.message}</p>
+  <p>{someError.message}</p>
 {/await}
 

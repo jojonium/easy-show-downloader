@@ -6,31 +6,26 @@ import {
 import {log} from './log';
 
 /**
- * Fetches data from the server, resolving with the result.
+ * Fetches data from the server, resolving with the result or rejecting with an
+ * Error containing a descriptive message.
  * @return {Promise<Data>}
  */
 export const getData = async (): Promise<Data> => {
   const res = await fetch('/api/data');
+  console.log(res);
   if (res.status === 200) {
+    const json = await res.json();
+    const data = parsePlainDataObject(json);
+    return data;
+  } else {
+    let message = `${res.status} Error! Failed to retrieve data from server`;
     try {
       const json = await res.json();
-      const data = parsePlainDataObject(json);
-      log('Retreived data from server.');
-      return data;
-    } catch (e: unknown) {
-      const message = (e instanceof Error) ? e.message : "" + e
-      log('Error! Failed to parse data from server: ' + message, true);
-    }
-  } else {
-    const json = await res.json();
-    console.error(json);
-    log(
-        `${res.status} Error! Failed to retrieve data from server: ` +
-      json['message'],
-        true,
-    );
+      console.error(json);
+      message += ': ' + json['message'];
+    } catch (_) { /* Continue */ }
+    throw new Error(message);
   }
-  return {shows: [], rssUrls: []};
 };
 
 /**
