@@ -22,6 +22,7 @@
 
 <ul>
   <li class="show header">
+    <span class="delete"> </span>
     <span>Folder</span> <span>Regex</span>
   </li>
   {#each shows as {title, regex, folder, feedUrl}, i}
@@ -38,7 +39,7 @@
         value={regex.source}
         placeholder="Regular expression"
         id="show-regex-input-{i}"
-        on:input={(e) => { regex = regexHandler(e); console.log(shows) }}
+        on:input={(e) => {regex = regexHandler(e)}}
       >
     </li>
   {/each}
@@ -57,7 +58,7 @@
   li.show * {
     flex-grow: 1;
   }
-  li.show button.delete {
+  li.show .delete {
     flex-grow: 0;
     width: 2em;
   }
