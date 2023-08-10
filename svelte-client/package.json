@@ -3,6 +3,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
+		"client:dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

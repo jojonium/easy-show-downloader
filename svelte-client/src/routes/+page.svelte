@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Easy Show Downloader</title>
+</svelte:head>
+
 <script lang="ts">
   import { browser } from '$app/environment';
   import { getData } from '$lib/api-helpers';
@@ -5,6 +9,7 @@
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
   import ShowList from '../ShowList.svelte';
+  import { version } from '$app/environment';
 
   let dataPromise: Promise<Data> = Promise.resolve(blankData);
   onMount(async () => {
@@ -13,11 +18,12 @@
   const viteMode = import.meta.env.MODE;
 </script>
 
-<h1>Easy Show Downloader</h1>
-
-{#if viteMode === 'development'}
-  <p>Development mode</p>
-{/if}
+<header>
+  <h1>Easy Show Downloader - v{version}</h1>
+  {#if viteMode === 'development'}
+    <p>Development mode</p>
+  {/if}
+</header>
 
 {#await dataPromise}
   <p>Loading data...</p>
