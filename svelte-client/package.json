@@ -17,7 +17,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"concurrently": "^8.2.0",
-		"eslint": "^8.28.0",
+		"eslint": "^8.46.0",
 		"eslint-plugin-svelte": "^2.30.0",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
