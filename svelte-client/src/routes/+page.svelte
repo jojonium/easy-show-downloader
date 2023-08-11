@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script lang="ts">
-  import { getData, postData } from '$lib/api-helpers';
+  import { getData, postData, postDownload } from '$lib/api-helpers';
   import { type Data, blankData} from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
@@ -26,7 +26,22 @@
 
   const save = async () => {
     saving = true;
-    await postData(data);
+    try {
+      await postData(data);
+    } catch (e: unknown) {
+      console.error(e);
+    }
+    saving = false;
+  }
+
+  const downloadNew = async () => {
+    saving = true;
+    try {
+      const numAdded = await postDownload();
+      console.log(`Added ${numAdded} torrent(s)`);
+    } catch (e: unknown) {
+      console.error(e);
+    }
     saving = false;
   }
 
@@ -43,13 +58,14 @@
 </header>
 
 <button id="save" on:click={save} disabled={saving}>Save to server</button>
+<button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
 
 <hr>
 
 <div>
 {#await dataPromise}
   <p>Loading data...</p>
-{:then _}
+{:then}
   <span>Media root:</span> <input 
     type="text"
     id="media-root-input"

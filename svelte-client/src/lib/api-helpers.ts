@@ -3,7 +3,6 @@ import {
   parsePlainDataObject,
   stringifyData,
 } from '@easy-show-downloader/common/src/data';
-import {log} from './log';
 
 const API_HOST = import.meta.env.VITE_API_HOST ?? '';
 
@@ -19,11 +18,11 @@ export const getData = async (): Promise<Data> => {
     const data = parsePlainDataObject(json);
     return data;
   } else {
-    let message = `${res.status} Error! Failed to retrieve data from server`;
+    let message = `${res.status} Error from server!`;
     try {
       const json = await res.json();
       console.error(json);
-      message += ': ' + json['message'];
+      message += ' "' + json['message'] + '"';
     } catch (_) { /* Continue */}
     throw new Error(message);
   }
@@ -45,44 +44,37 @@ export const postData = async (data: Data): Promise<void> => {
   if (res.status === 200) {
     return;
   } else {
-    let message = `${res.status} Error! Failed to post data to the server`;
+    let message = `${res.status} Error from server!`;
     try {
       const json = await res.json();
       console.error(json);
-      message += ': ' + json['message'];
+      message += ' "' + json['message'] + '"';
     } catch (_) { /* Continue */}
     throw new Error(message);
   }
 };
 
 /**
- * Tells the server to download new episodes.
+ * Tells the server to download new episodes. Throws an error if the error
+ * responds with an error.
+ * @returns {number} the number of torrents added
  */
-export const postDownload = async (): Promise<void> => {
-  try {
-    const res = await fetch('/api/download', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-    let json: {torrentsAdded?: number, message?: string} = {};
+export const postDownload = async (): Promise<number> => {
+  const res = await fetch(`${API_HOST}/api/download`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  });
+  if (res.status === 200) {
+    return (await res.json())['torrentsAdded'];
+  } else {
+    let message = `${res.status} Error from server!`;
     try {
-      json = await res.json();
-    } catch (e) { /* continue */}
-    if (res.status === 200) {
-      const count = json['torrentsAdded'] ?? 0;
-      log(`Added ${count} torrent${count !== 1 ? 's' : ''}.`);
-    } else {
+      const json = await res.json();
       console.error(json);
-      log(
-        `${res.status} Error! Server responded with: ${json['message']} `,
-        true,
-      );
-    }
-  } catch (e: unknown) {
-    console.error(e);
-    const message = (e instanceof Error) ? e.message : "" + e
-    log('Error! Failed to contact server: ' + message, true);
+      message += ' "' + json['message'] + '"';
+    } catch (_) { /* Continue */}
+    throw new Error(message);
   }
 };
