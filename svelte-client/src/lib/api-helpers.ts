@@ -14,11 +14,9 @@ const API_HOST = import.meta.env.VITE_API_HOST ?? '';
  */
 export const getData = async (): Promise<Data> => {
   const res = await fetch(`${API_HOST}/api/data`);
-  console.log(res);
   if (res.status === 200) {
     const json = await res.json();
     const data = parsePlainDataObject(json);
-    console.log(data);
     return data;
   } else {
     let message = `${res.status} Error! Failed to retrieve data from server`;
@@ -37,28 +35,23 @@ export const getData = async (): Promise<Data> => {
  * @param {Data} data
  */
 export const postData = async (data: Data): Promise<void> => {
-  try {
-    const res = await fetch('/api/data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: stringifyData(data),
-    });
-    if (res.status === 200) {
-      log('Saved data to server.');
-    } else {
+  const res = await fetch(`${API_HOST}/api/data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: stringifyData(data),
+  });
+  if (res.status === 200) {
+    return;
+  } else {
+    let message = `${res.status} Error! Failed to post data to the server`;
+    try {
       const json = await res.json();
       console.error(json);
-      log(
-        `${res.status} Error! Failed to post data: ${json['message']}`,
-        true,
-      );
-    }
-  } catch (e: unknown) {
-    console.error(e);
-    const message = (e instanceof Error) ? e.message : "" + e
-    log('Error! Failed to post data to server: ' + message, true);
+      message += ': ' + json['message'];
+    } catch (_) { /* Continue */}
+    throw new Error(message);
   }
 };
 

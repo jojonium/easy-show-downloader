@@ -1,5 +1,6 @@
 <script lang="ts">
   export let rssUrls: string[] = []
+  export let disabled = false;
 
   const addFeed = () => {
     rssUrls = [...rssUrls, ''];
@@ -20,8 +21,8 @@
     </li>
   {#each rssUrls as url, i}
     <li class="feed">
-      <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeFeed(i)}>X</button>
-      <input type="text" bind:value={url} id={'rss-feed-' + i}>
+      <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeFeed(i)} {disabled}>X</button>
+      <input type="text" bind:value={url} id={'rss-feed-' + i} {disabled}>
     </li>
   {/each}
 </ul>
@@ -30,7 +31,7 @@
   <p>No RSS feeds</p>
 {/if}
 
-<button id="add-show" on:click={addFeed}>Add RSS feed</button>
+<button id="add-show" on:click={addFeed} {disabled}>Add RSS feed</button>
 
 <style>
   li.feed input {

@@ -2,6 +2,7 @@
   import { Show } from "@easy-show-downloader/common/src/show";
 
   export let shows: Show[] = []
+  export let disabled = false;
 
   const addShow = () => {
     shows = [...shows, new Show('', /.*/)];
@@ -27,12 +28,13 @@
   </li>
   {#each shows as {title, regex, folder, feedUrl}, i}
     <li class="show">
-      <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)}>X</button>
+      <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)} {disabled}>X</button>
       <input 
         type="text"
         bind:value={folder}
         placeholder="Folder" 
         id="show-folder-input-{i}"
+        {disabled}
       >
       <input
         type="text"
@@ -40,6 +42,7 @@
         placeholder="Regular expression"
         id="show-regex-input-{i}"
         on:input={(e) => {regex = regexHandler(e)}}
+        {disabled}
       >
     </li>
   {/each}
@@ -49,7 +52,7 @@
   <p>No shows</p>
 {/if}
 
-<button id="add-show" on:click={addShow}>Add show</button>
+<button id="add-show" on:click={addShow} {disabled}>Add show</button>
 
 <style>
   li.show {

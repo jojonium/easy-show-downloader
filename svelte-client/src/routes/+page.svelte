@@ -3,19 +3,36 @@
 </svelte:head>
 
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import { getData } from '$lib/api-helpers';
+  import { getData, postData } from '$lib/api-helpers';
   import { type Data, blankData} from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
   import ShowList from '../ShowList.svelte';
   import { version } from '$app/environment';
 
-  let dataPromise: Promise<Data> = Promise.resolve(blankData);
-  onMount(async () => {
-    dataPromise = getData();
-  })
   const viteMode = import.meta.env.MODE;
+
+  let dataPromise: Promise<Data> = Promise.resolve(blankData);
+  let data: Data;
+  let saving = false;
+
+  const refreshData = () => {
+    dataPromise = getData();
+    dataPromise.then((d) => {
+      data = d;
+      if (!data.mediaRoot) data.mediaRoot = '';
+    });
+  };
+
+  const save = async () => {
+    saving = true;
+    await postData(data);
+    saving = false;
+  }
+
+  onMount(() => {
+    refreshData();
+  });
 </script>
 
 <header>
@@ -25,15 +42,26 @@
   {/if}
 </header>
 
+<button id="save" on:click={save} disabled={saving}>Save to server</button>
+
+<hr>
+
+<div>
 {#await dataPromise}
   <p>Loading data...</p>
-{:then data}
-  <span>Media root:</span> <input type="text" id="media-root-input" value={data.mediaRoot ?? ""}>
+{:then _}
+  <span>Media root:</span> <input 
+    type="text"
+    id="media-root-input"
+    bind:value={data.mediaRoot}
+    disabled={saving}
+  >
 
-  <ShowList shows={data.shows}/>
+  <ShowList bind:shows={data.shows} disabled={saving}/>
 
-  <FeedList rssUrls={data.rssUrls}/>
+  <FeedList bind:rssUrls={data.rssUrls} disabled={saving}/>
 {:catch someError}
-  <p>{someError.message}</p>
+  <p style="red">{someError.message}</p>
 {/await}
+</div>
 
