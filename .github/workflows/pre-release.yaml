@@ -1,4 +1,4 @@
-name: Build and publish Docker image
+name: Test and publish pre-release image
 on:
   push:
     tags: ['v*-beta*', 'v*-alpha*']
