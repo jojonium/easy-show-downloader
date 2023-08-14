@@ -1,7 +1,7 @@
 name: Build and publish Docker image
 on:
   push:
-    tags: ['v*-beta', 'v*-alpha']
+    tags: ['v*-beta*', 'v*-alpha*']
     branches: [ '!master' ]
 
 env:
