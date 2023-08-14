@@ -32,23 +32,3 @@
 {/if}
 
 <button id="add-show" on:click={addFeed} {disabled}>Add RSS feed</button>
-
-<style>
-  li.feed input {
-    min-width: 50em;
-    max-width: 80%;
-  }
-  li.feed {
-    display: flex;
-  }
-  li.feed * {
-    flex-grow: 1;
-  }
-  li.feed .delete {
-    flex-grow: 0;
-    width: 2em;
-  }
-  ul {
-    padding: 0;
-  }
-</style>

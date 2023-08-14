@@ -12,9 +12,9 @@
   import Log from '../Log.svelte';
 
   const viteMode = import.meta.env.MODE;
+  let initialized = false;
   let logger: Log;
 
-  let dataPromise: Promise<Data> = Promise.resolve(blankData);
   let modified = {
     mediaRoot: false,
     shows: false,
@@ -33,9 +33,9 @@
   let data: Data = blankData;
   let saving = false;
 
-  const refreshData = () => {
-    dataPromise = getData();
-    dataPromise.then((d) => {
+  const refreshData = async () => {
+    try {
+      const d = await getData();
       data = d;
       if (!data.mediaRoot) data.mediaRoot = '';
       cached = {
@@ -45,12 +45,13 @@
       }
       logger.log("Refreshed data from server.");
       saving = false;
-    }).catch((e) => {
+    } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
         logger.error(e.message);
       }
-    });
+    }
+    initialized = true;
   };
 
   const save = async () => {
@@ -85,25 +86,28 @@
 </script>
 
 <header>
-  <h1>Easy Show Downloader - v{version}</h1>
-  {#if viteMode === 'development'}
-    <p>Development mode</p>
-  {/if}
+  <h1>Easy Show Downloader v{version}
+    {#if viteMode === 'development'}
+      - <span style="color: #1ca350;">Development mode</span>
+    {/if}
+  </h1>
 </header>
+
+<hr>
 
 <button 
   id="save"
   on:click={save}
   disabled={saving || !anyModified}
->{anyModified ? 'Save to server' : 'No changes'}</button>
+>{anyModified ? 'Save to server' : 'No changes    '}</button>
 <button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
 
 <hr>
 
-<div>
-{#await dataPromise}
+<div class="main-content">
+{#if !initialized}
   <p>Loading data...</p>
-{:then}
+{:else}
   <span>Media root:</span> <input 
     type="text"
     id="media-root-input"
@@ -111,13 +115,17 @@
     disabled={saving}
   >
 
+  <hr>
+
   <ShowList bind:shows={data.shows} disabled={saving}/>
 
+  <hr>
+
   <FeedList bind:rssUrls={data.rssUrls} disabled={saving}/>
-{:catch someError}
-  <p style="red">{someError.message}</p>
-{/await}
+{/if}
 </div>
+
+<hr>
 
 <div>
   <Log bind:this={logger} />

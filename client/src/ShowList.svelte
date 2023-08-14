@@ -23,8 +23,8 @@
 
 <ul>
   <li class="show header">
-    <span class="delete"> </span>
-    <span>Folder</span> <span>Regex</span>
+    <div class="delete"> </div>
+    <div class="th">Folder</div> <div class="th">Regex</div>
   </li>
   {#each shows as {title, regex, folder, feedUrl}, i}
     <li class="show">
@@ -53,19 +53,3 @@
 {/if}
 
 <button id="add-show" on:click={addShow} {disabled}>Add show</button>
-
-<style>
-  li.show {
-    display: flex;
-  }
-  li.show * {
-    flex-grow: 1;
-  }
-  li.show .delete {
-    flex-grow: 0;
-    width: 2em;
-  }
-  ul {
-    padding: 0;
-  }
-</style>

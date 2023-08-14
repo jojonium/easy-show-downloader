@@ -1,0 +1,81 @@
+html {
+  margin: 0;
+  background-color: #232627;
+  font-family: monospace;
+  color: #fcfcfc;
+  font-size: 20px;
+}
+
+hr {
+  border: none;
+  margin: 0.5em 0;
+  height: 1em;
+}
+
+p, h1, h2, h3 {
+  margin: 0;
+}
+
+
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.main-content ul {
+  padding: 0;
+  margin: 0;
+}
+
+.main-content ul li {
+  display: flex;
+}
+
+.main-content ul li * {
+  flex-grow: 1;
+}
+
+.main-content ul li *.delete {
+  flex-grow: 0;
+  width: 2em;
+}
+
+input[type=text] {
+  background: none;
+  color: inherit;
+  border: 1px solid gray;
+  padding: 0 3px;
+  font-family: inherit;
+  min-width: 300px;
+  font-size: 0.9em;
+}
+
+button#add-show, button#add-feed {
+  margin-left: 2em;
+}
+
+
+button {
+  background: none;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-shadow: 0 0 10px;
+  padding: 0;
+}
+button::before {
+  content: "[";
+}
+button::after {
+  content: "]";
+}
+button:hover {
+  color: #1ca350;
+}
+button:disabled, button:hover:disabled {
+  color: gray;
+  cursor: inherit;
+}
