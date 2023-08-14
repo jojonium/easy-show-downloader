@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import { getData, postData, postDownload } from '$lib/api-helpers';
-  import { type Data, blankData} from '@easy-show-downloader/common/src/data';
+  import { type Data, blankData, stringifyData} from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
   import ShowList from '../ShowList.svelte';
@@ -13,7 +13,22 @@
   const viteMode = import.meta.env.MODE;
 
   let dataPromise: Promise<Data> = Promise.resolve(blankData);
-  let data: Data;
+  let modified = {
+    mediaRoot: false,
+    shows: false,
+    rssUrls: false
+  };
+  let anyModified =  false;
+  let cached = {
+    mediaRoot: '',
+    shows: '',
+    rssUrls: ''
+  };
+  $: modified.mediaRoot = data.mediaRoot !== cached.mediaRoot;
+  $: modified.shows = JSON.stringify(data.shows) !== cached.shows;
+  $: modified.rssUrls = JSON.stringify(data.rssUrls) !== cached.rssUrls;
+  $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
+  let data: Data = blankData;
   let saving = false;
 
   const refreshData = () => {
@@ -21,6 +36,12 @@
     dataPromise.then((d) => {
       data = d;
       if (!data.mediaRoot) data.mediaRoot = '';
+      cached = {
+        mediaRoot: data.mediaRoot,
+        shows: JSON.stringify(data.shows),
+        rssUrls: JSON.stringify(data.rssUrls)
+      }
+      saving = false;
     });
   };
 
@@ -28,10 +49,10 @@
     saving = true;
     try {
       await postData(data);
+      refreshData();
     } catch (e: unknown) {
       console.error(e);
     }
-    saving = false;
   }
 
   const downloadNew = async () => {
@@ -45,9 +66,7 @@
     saving = false;
   }
 
-  onMount(() => {
-    refreshData();
-  });
+  onMount(refreshData);
 </script>
 
 <header>
@@ -57,7 +76,11 @@
   {/if}
 </header>
 
-<button id="save" on:click={save} disabled={saving}>Save to server</button>
+<button 
+  id="save"
+  on:click={save}
+  disabled={saving || !anyModified}
+>{anyModified ? 'Save to server' : 'No changes'}</button>
 <button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
 
 <hr>
