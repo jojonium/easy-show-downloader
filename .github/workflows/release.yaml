@@ -21,8 +21,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'yarn'
       - name: Install dependencies
-        run: yarn
+        run: yarn install --immutable
       - name: Yarn build common
         run: yarn run common:build
       - name: Yarn build server
