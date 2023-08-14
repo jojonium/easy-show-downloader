@@ -1,5 +1,5 @@
 {
-	"name": "@easy-show-downloader/svelte-client",
+	"name": "@easy-show-downloader/client",
 	"private": true,
 	"scripts": {
 		"dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
@@ -10,8 +10,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint .",
-        "clean": "rm -r ./build",
-        "client:clean": "rm -r ./build"
+		"clean": "rm -r ./build",
+		"client:clean": "rm -r ./build"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",

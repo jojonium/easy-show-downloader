@@ -11,10 +11,10 @@ minimal, and it only supports scraping torrent magnet links from RSS feeds.
 
 ## Running
 
-This project uses yarn zero-installs, so after you clone the repo you can get
-started with:
+After you clone the repo you can get started with:
 
 ```
+$ yarn run install
 $ yarn run build
 $ yarn run start
 ```
@@ -25,6 +25,15 @@ Alternatively you can try it in a container:
 
 ```
 $ docker pull ghcr.io/jojonium/easy-show-downloader:latest
+```
+
+## Development
+
+This will start a live-reloading dev version of the client on port 5173, and the
+back-end on port 3000.
+
+```
+$ yarn run client:dev
 ```
 
 ## Configuration
