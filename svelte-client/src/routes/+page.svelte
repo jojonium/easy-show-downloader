@@ -9,8 +9,10 @@
   import FeedList from '../FeedList.svelte';
   import ShowList from '../ShowList.svelte';
   import { version } from '$app/environment';
+  import Log from '../Log.svelte';
 
   const viteMode = import.meta.env.MODE;
+  let logger: Log;
 
   let dataPromise: Promise<Data> = Promise.resolve(blankData);
   let modified = {
@@ -41,7 +43,13 @@
         shows: JSON.stringify(data.shows),
         rssUrls: JSON.stringify(data.rssUrls)
       }
+      logger.log("Refreshed data from server.");
       saving = false;
+    }).catch((e) => {
+      console.error(e);
+      if (e instanceof Error && 'message' in e) {
+        logger.error(e.message);
+      }
     });
   };
 
@@ -49,9 +57,13 @@
     saving = true;
     try {
       await postData(data);
+      logger.log('Saved data to server.')
       refreshData();
     } catch (e: unknown) {
       console.error(e);
+      if (e instanceof Error && 'message' in e) {
+        logger.error(e.message);
+      }
     }
   }
 
@@ -59,9 +71,12 @@
     saving = true;
     try {
       const numAdded = await postDownload();
-      console.log(`Added ${numAdded} torrent(s)`);
+      logger.log(`Added ${numAdded} torrent${numAdded !== 1 ? 's' : ''}.`);
     } catch (e: unknown) {
       console.error(e);
+      if (e instanceof Error && 'message' in e) {
+        logger.error(e.message);
+      }
     }
     saving = false;
   }
@@ -104,3 +119,6 @@
 {/await}
 </div>
 
+<div>
+  <Log bind:this={logger} />
+</div>
