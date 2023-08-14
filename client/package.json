@@ -5,10 +5,13 @@
 		"dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
 		"client:dev": "yarn run server:build && concurrently \"yarn run server:start\" \"vite dev\"",
 		"build": "vite build",
+		"client:build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "eslint ."
+		"lint": "eslint .",
+        "clean": "rm -r ./build",
+        "client:clean": "rm -r ./build"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",

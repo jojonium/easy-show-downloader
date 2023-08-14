@@ -79,9 +79,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@easy-show-downloader/svelte-client@workspace:^, @easy-show-downloader/svelte-client@workspace:svelte-client":
+"@easy-show-downloader/svelte-client@workspace:^, @easy-show-downloader/svelte-client@workspace:client":
   version: 0.0.0-use.local
-  resolution: "@easy-show-downloader/svelte-client@workspace:svelte-client"
+  resolution: "@easy-show-downloader/svelte-client@workspace:client"
   dependencies:
     "@easy-show-downloader/common": "workspace:^"
     "@sveltejs/adapter-auto": ^2.0.0
