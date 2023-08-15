@@ -32,7 +32,6 @@
   $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
   let saveMessage = 'Save to server';
   $: saveMessage = anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
-  $: saveMessage = anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
   let downloadMessage = 'Download new episodes';
   let data: Data = blankData;
   let saving = false;
