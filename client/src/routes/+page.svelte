@@ -86,21 +86,23 @@
 </script>
 
 <header>
-  <h1>Easy Show Downloader v{version}
+  <h1 class="line">Easy Show Downloader v{version}
     {#if viteMode === 'development'}
-      - <span style="color: #1ca350;">Development mode</span>
+      &lt;<span style="color: yellow;">Development mode</span>&gt;
     {/if}
   </h1>
 </header>
 
 <hr>
 
-<button 
-  id="save"
-  on:click={save}
-  disabled={saving || !anyModified}
->{anyModified ? 'Save to server' : 'No changes    '}</button>
-<button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
+<div class="line">
+  <button 
+    id="save"
+    on:click={save}
+    disabled={saving || !anyModified}
+  >{anyModified ? 'Save to server' : 'No changes    '}</button>
+  <button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
+</div>
 
 <hr>
 
@@ -108,12 +110,14 @@
 {#if !initialized}
   <p>Loading data...</p>
 {:else}
-  <span>Media root:</span> <input 
-    type="text"
-    id="media-root-input"
-    bind:value={data.mediaRoot}
-    disabled={saving}
-  >
+  <div class="line">
+    <span>Media root:</span> <input 
+      type="text"
+      id="media-root-input"
+      bind:value={data.mediaRoot}
+      disabled={saving}
+    >
+  </div>
 
   <hr>
 

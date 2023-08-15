@@ -1,30 +1,43 @@
 html {
-  margin: 0;
   background-color: #232627;
   font-family: monospace;
   color: #fcfcfc;
   font-size: 20px;
 }
 
+* {
+  margin: 0;
+}
+
+body {
+  margin: 0.2em;
+}
+
 hr {
   border: none;
-  margin: 0.5em 0;
-  height: 1em;
+  height: 2.2em;
 }
 
 p, h1, h2, h3 {
   margin: 0;
 }
 
+.line {
+  height: 1em;
+  margin: 0 0 .2em 0;
+}
 
 h1, h2, h3 {
   font-size: inherit;
   font-weight: bold;
 }
 
+.indent {
+  margin-left: 4ex;
+}
+
 .main-content ul {
   padding: 0;
-  margin: 0;
 }
 
 .main-content ul li {
@@ -33,27 +46,33 @@ h1, h2, h3 {
 
 .main-content ul li * {
   flex-grow: 1;
+  margin-right: 0.2em;
+  flex-basis: 0;
 }
 
 .main-content ul li *.delete {
   flex-grow: 0;
-  width: 2em;
+  flex-basis: 4ex;
+  margin-right: 0;
+  line-height: 1em;
+}
+
+.main-content ul li *.delete:hover {
+  color: red;
+}
+
+input#media-root-input {
+  min-width: 40ex;
 }
 
 input[type=text] {
-  background: none;
+  background: #111;
+  border: none;
   color: inherit;
-  border: 1px solid gray;
-  padding: 0 3px;
+  padding: 0;
   font-family: inherit;
-  min-width: 300px;
-  font-size: 0.9em;
+  font-size: 1em;
 }
-
-button#add-show, button#add-feed {
-  margin-left: 2em;
-}
-
 
 button {
   background: none;

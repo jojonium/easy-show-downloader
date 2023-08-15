@@ -20,11 +20,11 @@
   }
 </script>
 
-<h3>Log</h3>
+<h3 class="line">Log</h3>
 
-<ul>
+<ul class="indent">
   {#each entries as {message, level}}
-    <li>
+    <li class="line">
       <p class={level}>{message}</p>
     </li>
   {/each}
@@ -36,5 +36,9 @@
   }
   .ERROR {
     color: red;
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
   }
 </style>
