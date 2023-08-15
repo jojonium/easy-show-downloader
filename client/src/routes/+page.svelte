@@ -31,10 +31,13 @@
   $: modified.rssUrls = JSON.stringify(data.rssUrls) !== cached.rssUrls;
   $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
   let saveMessage = 'Save to server';
-  $: saveMessage = anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
+  $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
+    : anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
   let downloadMessage = 'Download new episodes';
+  $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
   let data: Data = blankData;
   let saving = false;
+  let downloading = false;
 
   const refreshData = async () => {
     try {
@@ -47,7 +50,6 @@
         rssUrls: JSON.stringify(data.rssUrls)
       }
       console.log("Refreshed data from server.");
-      saving = false;
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
@@ -69,11 +71,11 @@
         logger.error(e.message);
       }
     }
+    saving = false;
   }
 
   const downloadNew = async () => {
-    saving = true;
-    downloadMessage = 'Downloading...'.padEnd(21, '\u00A0');
+    downloading = true;
     try {
       const numAdded = await postDownload();
       logger.log(`Added ${numAdded} torrent${numAdded !== 1 ? 's' : ''}.`);
@@ -83,8 +85,7 @@
         logger.error(e.message);
       }
     }
-    saving = false;
-    downloadMessage = 'Download new episodes';
+    downloading = false;
   }
 
   onMount(refreshData);
@@ -104,11 +105,11 @@
   <button 
     id="save"
     on:click={save}
-    disabled={saving || !anyModified}
+    disabled={saving || downloading || !anyModified}
   >{@html saveMessage}</button>
   <button id="download-new"
     on:click={downloadNew}
-    disabled={saving}
+    disabled={saving || downloading}
   >{@html downloadMessage}</button>
 </div>
 
@@ -123,17 +124,17 @@
       type="text"
       id="media-root-input"
       bind:value={data.mediaRoot}
-      disabled={saving}
+      disabled={saving || downloading}
     >
   </div>
 
   <hr>
 
-  <ShowList bind:shows={data.shows} disabled={saving}/>
+  <ShowList bind:shows={data.shows} disabled={saving || downloading}/>
 
   <hr>
 
-  <FeedList bind:rssUrls={data.rssUrls} disabled={saving}/>
+  <FeedList bind:rssUrls={data.rssUrls} disabled={saving || downloading}/>
 {/if}
 </div>
 
