@@ -64,7 +64,7 @@
     try {
       await postData(data);
       logger.log('Saved data to server.')
-      refreshData();
+      await refreshData();
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
