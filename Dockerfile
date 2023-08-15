@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 RUN --mount=type=cache,target=/app/.yarn/cache yarn install --immutable
-RUN yarn run common:build && \
+RUN --mount=type=cache,target=/app/.yarn/cache yarn run common:build && \
     yarn run server:build && \
     yarn run client:build && \
     yarn workspaces focus @easy-show-downloader/server --production && \
