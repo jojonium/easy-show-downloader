@@ -30,6 +30,10 @@
   $: modified.shows = JSON.stringify(data.shows) !== cached.shows;
   $: modified.rssUrls = JSON.stringify(data.rssUrls) !== cached.rssUrls;
   $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
+  let saveMessage = 'Save to server';
+  $: saveMessage = anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
+  $: saveMessage = anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
+  let downloadMessage = 'Download new episodes';
   let data: Data = blankData;
   let saving = false;
 
@@ -43,7 +47,7 @@
         shows: JSON.stringify(data.shows),
         rssUrls: JSON.stringify(data.rssUrls)
       }
-      logger.log("Refreshed data from server.");
+      console.log("Refreshed data from server.");
       saving = false;
     } catch (e: unknown) {
       console.error(e);
@@ -70,6 +74,7 @@
 
   const downloadNew = async () => {
     saving = true;
+    downloadMessage = 'Downloading...'.padEnd(21, '\u00A0');
     try {
       const numAdded = await postDownload();
       logger.log(`Added ${numAdded} torrent${numAdded !== 1 ? 's' : ''}.`);
@@ -80,6 +85,7 @@
       }
     }
     saving = false;
+    downloadMessage = 'Download new episodes';
   }
 
   onMount(refreshData);
@@ -100,8 +106,11 @@
     id="save"
     on:click={save}
     disabled={saving || !anyModified}
-  >{anyModified ? 'Save to server' : 'No changes    '}</button>
-  <button id="download-new" on:click={downloadNew} disabled={saving}>Download new episodes</button>
+  >{@html saveMessage}</button>
+  <button id="download-new"
+    on:click={downloadNew}
+    disabled={saving}
+  >{@html downloadMessage}</button>
 </div>
 
 <hr>

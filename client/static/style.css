@@ -57,7 +57,7 @@ h1, h2, h3 {
   line-height: 1em;
 }
 
-.main-content ul li *.delete:hover {
+button.delete:hover {
   color: red;
 }
 
@@ -66,12 +66,17 @@ input#media-root-input {
 }
 
 input[type=text] {
-  background: #111;
+  background-color: #111;
   border: none;
   color: inherit;
   padding: 0;
   font-family: inherit;
   font-size: 1em;
+}
+
+input:disabled {
+  background-color: #232627;
+  color: gray;
 }
 
 button {
@@ -94,7 +99,7 @@ button::after {
 button:hover {
   color: #1ca350;
 }
-button:disabled, button:hover:disabled {
+button:disabled, button:hover:disabled, button.delete:hover:disabled {
   color: gray;
   cursor: inherit;
 }
