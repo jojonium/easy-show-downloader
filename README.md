@@ -47,7 +47,7 @@ Name | Type | Default | Notes
 -----|------|---------|-------
 `NODE_HOST` | string | `'localhost'` | Server host to listen on
 `NODE_PORT` | number | `3000` | Server port to listen on
-`STATIC_DIR` | string | `'../client/public'` | Directory to serve static website content from
+`STATIC_DIR` | string | `'../client/build'` | Directory to serve static website content from
 `LOG_STDOUT` | boolean | `true` | Whether to log to stdout
 `LOG_FILE` | string | `undefined` | File to write logs to. Logging to a file is disabled if omitted
 `DATA_FILE` | string | `'data.json'` | Path to the JSON file to store show data in

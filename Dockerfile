@@ -25,7 +25,7 @@ COPY --from=builder --chown=nodejs:nodejs /app .
 
 RUN yarn cache clean
 
-ENV STATIC_DIR /app/client/public
+ENV STATIC_DIR /app/client/build
 ENV PORT 3000
 ENV LOG_STDOUT true
 ENV DATA_FILE /data/data.json
