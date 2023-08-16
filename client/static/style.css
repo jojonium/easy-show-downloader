@@ -41,17 +41,21 @@ h1, h2, h3 {
   max-width: 1000px;
 }
 
-.main-content ul li {
+div.transition-height {
+  transition: height 400ms;
+}
+
+.main-content ul li, div.header {
   display: flex;
 }
 
-.main-content ul li * {
+.main-content ul li *, div.header * {
   flex-grow: 1;
   margin-right: 0.2em;
   flex-basis: 0;
 }
 
-.main-content ul li *.delete {
+.main-content ul li *.delete, div.header *.delete {
   flex-grow: 0;
   flex-basis: 4ex;
   margin-right: 0;

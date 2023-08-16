@@ -6,6 +6,9 @@
   export let shows: Show[] = []
   export let disabled = false;
 
+  let listHeight = '1.2em';
+  $: listHeight = shows.length === 0 ? '0' : ((shows.length + 1) * 1.2) + 'em';
+
   const addShow = () => {
     shows = [...shows, new Show('', /.*/)];
   }
@@ -24,36 +27,36 @@
 <h3 class="line">Shows</h3>
 
 <div class="indent">
-  <ul>
-    <li class="show header line">
-      <div class="delete"> </div>
-      <div class="th">Folder</div> <div class="th">Regex</div>
-    </li>
-    {#each shows as {title, regex, folder, feedUrl}, i (i)}
-      <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
-        <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)} {disabled}>X</button>
-        <input 
-          type="text"
-          bind:value={folder}
-          placeholder="Folder" 
-          id="show-folder-input-{i}"
-          {disabled}
-        >
-        <input
-          type="text"
-          value={regex.source}
-          placeholder="Regular expression"
-          id="show-regex-input-{i}"
-          on:input={(e) => {regex = regexHandler(e)}}
-          {disabled}
-        >
-      </li>
-    {/each}
-  </ul>
-
-  {#if shows.length === 0}
-    <p>No shows</p>
-  {/if}
+  <div style="height: {listHeight}" class="transition-height">
+    {#if shows.length > 0}
+      <div class="show header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
+        <span class="delete"><!-- placeholder --></span>
+        <span>Folder</span> <span>Regex</span>
+      </div>
+    {/if}
+    <ul>
+      {#each shows as {title, regex, folder, feedUrl}, i (i)}
+        <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
+          <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)} {disabled}>X</button>
+          <input 
+            type="text"
+            bind:value={folder}
+            placeholder="Folder" 
+            id="show-folder-input-{i}"
+            {disabled}
+          >
+          <input
+            type="text"
+            value={regex.source}
+            placeholder="Regular expression"
+            id="show-regex-input-{i}"
+            on:input={(e) => {regex = regexHandler(e)}}
+            {disabled}
+          >
+        </li>
+      {/each}
+    </ul>
+  </div>
 
   <div class="indent line">
     <button id="add-show" on:click={addShow} {disabled}>Add show</button>
