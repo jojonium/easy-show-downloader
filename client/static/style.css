@@ -58,10 +58,6 @@ h1, h2, h3 {
   line-height: 1em;
 }
 
-.animate-list {
-  transition: all 40s;
-}
-
 button.delete:hover {
   color: red;
 }
