@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { fly } from 'svelte/transition';
+  import { flip } from 'svelte/animate';
+
   export let rssUrls: string[] = []
   export let disabled = false;
 
@@ -16,12 +19,12 @@
 
 <div class="indent">
   <ul>
-      <li class="feed header line">
-        <span class="delete"></span>
-        <span>URL</span>
-      </li>
-    {#each rssUrls as url, i}
-      <li class="feed line">
+    <li class="feed header line">
+      <span class="delete"></span>
+      <span>URL</span>
+    </li>
+    {#each rssUrls as url, i (i)}
+      <li class="feed line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
         <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeFeed(i)} {disabled}>X</button>
         <input type="text" bind:value={url} id={'rss-feed-' + i} {disabled}>
       </li>

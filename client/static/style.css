@@ -2,7 +2,7 @@ html {
   background-color: #232627;
   font-family: monospace;
   color: #fcfcfc;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 * {
@@ -38,6 +38,7 @@ h1, h2, h3 {
 
 .main-content ul {
   padding: 0;
+  max-width: 1000px;
 }
 
 .main-content ul li {
@@ -57,6 +58,10 @@ h1, h2, h3 {
   line-height: 1em;
 }
 
+.animate-list {
+  transition: all 40s;
+}
+
 button.delete:hover {
   color: red;
 }
@@ -72,6 +77,8 @@ input[type=text] {
   padding: 0;
   font-family: inherit;
   font-size: 1em;
+  line-height: 1em;
+  transition: color 0.2s;
 }
 
 input:disabled {

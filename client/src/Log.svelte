@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fly } from 'svelte/transition';
+
   type LogLevel = 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
   type Entry = {
     message: string,
@@ -24,7 +26,7 @@
 
 <ul class="indent">
   {#each entries as {message, level}}
-    <li class="line">
+    <li class="line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
       <p class={level}>{message}</p>
     </li>
   {/each}
