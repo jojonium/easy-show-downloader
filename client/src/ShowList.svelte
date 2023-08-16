@@ -26,7 +26,7 @@
 
 <h3 class="line">Shows</h3>
 
-<div class="indent">
+<div class="indent list-holder">
   <div style="height: {listHeight}" class="transition-height">
     {#if shows.length > 0}
       <div class="show header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>

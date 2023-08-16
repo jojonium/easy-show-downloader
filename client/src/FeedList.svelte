@@ -20,7 +20,7 @@
 
 <h3 class="line">RSS Feeds</h3>
 
-<div class="indent">
+<div class="indent list-holder">
   <div style="height: {listHeight}" class="transition-height">
     {#if rssUrls.length > 0}
       <div class="feed header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>

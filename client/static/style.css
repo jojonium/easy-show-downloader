@@ -36,26 +36,29 @@ h1, h2, h3 {
   margin-left: 4ex;
 }
 
-.main-content ul {
-  padding: 0;
+.list-holder {
   max-width: 1000px;
+}
+
+.list-holder ul {
+  padding: 0;
 }
 
 div.transition-height {
   transition: height 400ms;
 }
 
-.main-content ul li, div.header {
+.list-holder li, div.header {
   display: flex;
 }
 
-.main-content ul li *, div.header * {
+.list-holder li *, div.header * {
   flex-grow: 1;
   margin-right: 0.2em;
   flex-basis: 0;
 }
 
-.main-content ul li *.delete, div.header *.delete {
+.list-holder li *.delete, div.header *.delete {
   flex-grow: 0;
   flex-basis: 4ex;
   margin-right: 0;
