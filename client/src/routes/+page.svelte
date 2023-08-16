@@ -3,13 +3,13 @@
 </svelte:head>
 
 <script lang="ts">
+  import { version } from '$app/environment';
   import { getData, postData, postDownload } from '$lib/api-helpers';
-  import { type Data, blankData, stringifyData} from '@easy-show-downloader/common/src/data';
+  import { blankData, type Data } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
-  import ShowList from '../ShowList.svelte';
-  import { version } from '$app/environment';
   import Log from '../Log.svelte';
+  import ShowList from '../ShowList.svelte';
 
   const viteMode = import.meta.env.MODE;
   let initialized = false;
@@ -106,11 +106,11 @@
     id="save"
     on:click={save}
     disabled={saving || downloading || !anyModified}
-  >{@html saveMessage}</button>
+  >{saveMessage}</button>
   <button id="download-new"
     on:click={downloadNew}
     disabled={saving || downloading}
-  >{@html downloadMessage}</button>
+  >{downloadMessage}</button>
 </div>
 
 <hr>

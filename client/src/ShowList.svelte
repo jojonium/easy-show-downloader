@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition';
-  import { flip } from 'svelte/animate';
   import { Show } from "@easy-show-downloader/common/src/show";
+  import { flip } from 'svelte/animate';
+  import { fly } from 'svelte/transition';
 
   export let shows: Show[] = []
   export let disabled = false;
@@ -35,7 +35,7 @@
       </div>
     {/if}
     <ul>
-      {#each shows as {title, regex, folder, feedUrl}, i (i)}
+      {#each shows as {regex, folder}, i (i)}
         <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
           <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)} {disabled}>X</button>
           <input 
