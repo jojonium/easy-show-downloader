@@ -1,21 +1,13 @@
 <script lang="ts">
-  import { Show } from "@easy-show-downloader/common/src/show";
+  import type { DataStore } from "$lib/data-store";
   import { flip } from 'svelte/animate';
   import { fly } from 'svelte/transition';
 
-  export let shows: Show[] = []
+  export let dataStore: DataStore;
   export let disabled = false;
 
   let listHeight = '1.2em';
-  $: listHeight = shows.length === 0 ? '0' : ((shows.length + 1) * 1.2) + 'em';
-
-  const addShow = () => {
-    shows = [...shows, new Show('', /.*/)];
-  }
-
-  const removeShow = (i: number) => {
-    shows = shows.filter((_, j) => j !== i);
-  }
+  $: listHeight = $dataStore.shows.length === 0 ? '0' : (($dataStore.shows.length + 1) * 1.2) + 'em';
 
   const regexHandler = (e: Event): RegExp => {
     let newVal = "";
@@ -28,16 +20,16 @@
 
 <div class="indent list-holder">
   <div style="height: {listHeight}" class="transition-height">
-    {#if shows.length > 0}
+    {#if $dataStore.shows.length > 0}
       <div class="show header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
         <span class="delete"><!-- placeholder --></span>
         <span>Folder</span> <span>Regex</span>
       </div>
     {/if}
     <ul>
-      {#each shows as {regex, folder}, i (i)}
+      {#each $dataStore.shows as {regex, folder}, i (i)}
         <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
-          <button class="delete" id="delete-{i}" title="Delete" on:click={() => removeShow(i)} {disabled}>X</button>
+          <button class="delete" id="delete-{i}" title="Delete" on:click={() => dataStore.removeShow(i)} {disabled}>X</button>
           <input 
             type="text"
             bind:value={folder}
@@ -59,6 +51,6 @@
   </div>
 
   <div class="indent line">
-    <button id="add-show" on:click={addShow} {disabled}>Add show</button>
+    <button id="add-show" on:click={dataStore.addShow} {disabled}>Add show</button>
   </div>
 </div>

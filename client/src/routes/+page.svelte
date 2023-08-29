@@ -5,7 +5,8 @@
 <script lang="ts">
   import { version } from '$app/environment';
   import { getData, postData, postDownload } from '$lib/api-helpers';
-  import { blankData, type Data } from '@easy-show-downloader/common/src/data';
+  import { createDataStore } from '$lib/data-store';
+  import { blankData } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
   import Log from '../Log.svelte';
@@ -26,28 +27,27 @@
     shows: '',
     rssUrls: ''
   };
-  $: modified.mediaRoot = data.mediaRoot !== cached.mediaRoot;
-  $: modified.shows = JSON.stringify(data.shows) !== cached.shows;
-  $: modified.rssUrls = JSON.stringify(data.rssUrls) !== cached.rssUrls;
+  $: modified.mediaRoot = $dataStore.mediaRoot !== cached.mediaRoot;
+  $: modified.shows = JSON.stringify($dataStore.shows) !== cached.shows;
+  $: modified.rssUrls = JSON.stringify($dataStore.rssUrls) !== cached.rssUrls;
   $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
   let saveMessage = 'Save to server';
   $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
     : anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
   let downloadMessage = 'Download new episodes';
   $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
-  let data: Data = blankData;
+  let dataStore = createDataStore(blankData);
   let saving = false;
   let downloading = false;
 
   const refreshData = async () => {
     try {
       const d = await getData();
-      data = d;
-      if (!data.mediaRoot) data.mediaRoot = '';
+      dataStore = createDataStore(d);
       cached = {
-        mediaRoot: data.mediaRoot,
-        shows: JSON.stringify(data.shows),
-        rssUrls: JSON.stringify(data.rssUrls)
+        mediaRoot: $dataStore.mediaRoot ?? '',
+        shows: JSON.stringify($dataStore.shows),
+        rssUrls: JSON.stringify($dataStore.rssUrls)
       }
       console.log("Refreshed data from server.");
     } catch (e: unknown) {
@@ -62,7 +62,7 @@
   const save = async () => {
     saving = true;
     try {
-      await postData(data);
+      await postData($dataStore);
       logger.log('Saved data to server.')
       await refreshData();
     } catch (e: unknown) {
@@ -123,18 +123,18 @@
     <span>Media root:</span> <input 
       type="text"
       id="media-root-input"
-      bind:value={data.mediaRoot}
+      bind:value={$dataStore.mediaRoot}
       disabled={saving || downloading}
     >
   </div>
 
   <hr>
 
-  <ShowList bind:shows={data.shows} disabled={saving || downloading}/>
+  <ShowList dataStore={dataStore} disabled={saving || downloading}/>
 
   <hr>
 
-  <FeedList bind:rssUrls={data.rssUrls} disabled={saving || downloading}/>
+  <FeedList dataStore={dataStore} disabled={saving || downloading}/>
 {/if}
 </div>
 
