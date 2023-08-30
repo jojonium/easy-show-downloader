@@ -23,8 +23,9 @@ p, h1, h2, h3 {
 }
 
 .line {
-  height: 1em;
-  margin: 0 0 .2em 0;
+  box-sizing: content-box;
+  height: 1.4em;
+  margin: 0 0 0.2em 0;
 }
 
 h1, h2, h3 {
@@ -36,8 +37,15 @@ h1, h2, h3 {
   margin-left: 4ex;
 }
 
+@media screen and (max-width: 800px) {
+  .indent.list-holder {
+    margin-left: 0;
+  }
+}
+  
+
 .list-holder {
-  max-width: 1000px;
+  max-width: 1400px;
 }
 
 .list-holder ul {
@@ -60,28 +68,32 @@ div.transition-height {
 
 .list-holder li *.delete, div.header *.delete {
   flex-grow: 0;
+  flex-shrink: 0;
   flex-basis: 4ex;
   margin-right: 0;
-  line-height: 1em;
 }
 
 button.delete:hover {
   color: red;
 }
 
-input#media-root-input {
-  min-width: 40ex;
-}
-
 input[type=text] {
   background-color: #111;
   border: none;
   color: inherit;
-  padding: 0;
   font-family: inherit;
   font-size: 1em;
   line-height: 1em;
   transition: color 0.2s;
+  min-width: 0;
+}
+
+input[type=text].folder, span.folder {
+  flex-grow: 1;
+}
+
+input[type=text].regex, span.regex {
+  flex-grow: 1.5;
 }
 
 input:disabled {
@@ -92,13 +104,13 @@ input:disabled {
 button {
   background: none;
   border: none;
+  padding: 0;
   font-size: inherit;
   color: inherit;
   font-family: inherit;
   cursor: pointer;
   transition: color 0.2s;
   text-shadow: 0 0 10px;
-  padding: 0;
 }
 button::before {
   content: "[";

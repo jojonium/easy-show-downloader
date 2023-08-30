@@ -2,12 +2,13 @@
   import type { DataStore } from "$lib/data-store";
   import { flip } from 'svelte/animate';
   import { fly } from 'svelte/transition';
+  import { LINE_HEIGHT } from "$lib/constants";
 
   export let dataStore: DataStore;
   export let disabled = false;
 
-  let listHeight = '1.2em';
-  $: listHeight = $dataStore.shows.length === 0 ? '0' : (($dataStore.shows.length + 1) * 1.2) + 'em';
+  let listHeight = LINE_HEIGHT + 'em';
+  $: listHeight = $dataStore.shows.length === 0 ? '0' : (($dataStore.shows.length + 1) * LINE_HEIGHT) + 'em';
 
   const regexHandler = (e: Event): RegExp => {
     let newVal = "";
@@ -21,9 +22,9 @@
 <div class="indent list-holder">
   <div style="height: {listHeight}" class="transition-height">
     {#if $dataStore.shows.length > 0}
-      <div class="show header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
+      <div class="header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
         <span class="delete"><!-- placeholder --></span>
-        <span>Folder</span> <span>Regex</span>
+        <span class="folder">Folder</span> <span class="regex">Regex</span>
       </div>
     {/if}
     <ul>
@@ -35,6 +36,7 @@
             bind:value={folder}
             placeholder="Folder" 
             id="show-folder-input-{i}"
+            class="folder"
             {disabled}
           >
           <input
@@ -42,6 +44,7 @@
             value={regex.source}
             placeholder="Regular expression"
             id="show-regex-input-{i}"
+            class="regex"
             on:input={(e) => {regex = regexHandler(e)}}
             {disabled}
           >

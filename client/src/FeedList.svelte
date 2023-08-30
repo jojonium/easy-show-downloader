@@ -2,12 +2,13 @@
   import type { DataStore } from "$lib/data-store";
   import { flip } from 'svelte/animate';
   import { fly } from 'svelte/transition';
+  import { LINE_HEIGHT } from "$lib/constants";
 
   export let dataStore: DataStore;
   export let disabled = false;
 
-  let listHeight = '1.2em';
-  $: listHeight = $dataStore.rssUrls.length === 0 ? '0' : (($dataStore.rssUrls.length + 1) * 1.2) + 'em';
+  let listHeight = LINE_HEIGHT + 'em';
+  $: listHeight = $dataStore.rssUrls.length === 0 ? '0' : (($dataStore.rssUrls.length + 1) * LINE_HEIGHT) + 'em';
 </script>
 
 <h3 class="line">RSS Feeds</h3>
