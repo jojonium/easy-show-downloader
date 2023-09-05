@@ -115,10 +115,11 @@
   <p>Loading data...</p>
 {:else}
   <div class="line media-root-holder">
-    <div>Media root:</div> <input 
+    <div>Media root:&nbsp;</div> <input 
       type="text"
       id="media-root-input"
       bind:value={$dataStore.mediaRoot}
+      title="Each show will be downloaded to a subfolder in this root directory"
       disabled={saving || downloading}
     >
   </div>
