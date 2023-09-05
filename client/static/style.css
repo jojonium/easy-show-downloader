@@ -88,6 +88,11 @@ input[type=text] {
   min-width: 0;
 }
 
+input[type=text].regex-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.5)
+}
+
 div.media-root-holder {
   display: flex;
   white-space: nowrap;

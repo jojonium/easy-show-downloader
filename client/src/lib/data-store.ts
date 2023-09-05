@@ -7,7 +7,7 @@ import { writable, type Subscriber, type Invalidator, type Unsubscriber } from '
  * on the client side, plus IDs.
  */
 export type ClientSideData = {
-  shows: {folder: string, regex: RegExp, id: number}[],
+  shows: {folder: string, regex: RegExp, err: boolean, id: number}[],
   rssUrls: {url: string, id: number}[],
   mediaRoot: string
 }
@@ -26,7 +26,7 @@ export function createDataStore(initial: Data): DataStore {
   let ri = 1;
   const csd: ClientSideData = {
     shows: initial.shows.map(s => {
-      return {folder: s.folder, regex: s.regex, id: si++};
+      return {folder: s.folder, regex: s.regex, err: false, id: si++};
     }),
     rssUrls: initial.rssUrls.map(r => {
       return {url: r, id: ri++};
@@ -40,7 +40,7 @@ export function createDataStore(initial: Data): DataStore {
     set,
     addShow: () => {
       update($data => {
-        return {...$data, shows: [...$data.shows, {folder: '', regex: /.*/, id: si++}]};
+        return {...$data, shows: [...$data.shows, {folder: '', regex: /.*/, err: false, id: si++}]};
       });
     },
     addFeed: () => {
@@ -78,7 +78,7 @@ export const stringify = (
   return {
     mediaRoot: d.mediaRoot,
     shows: JSON.stringify(d.shows.map(s => {
-      return {...s, regex: s.regex.source};
+      return {folder: s.folder, id: s.id, regex: s.regex.source};
     })),
     rssUrls: JSON.stringify(d.rssUrls)
   };

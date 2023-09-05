@@ -11,11 +11,20 @@
   let listHeight = LINE_HEIGHT + 'em';
   $: listHeight = $dataStore.shows.length === 0 ? '0' : (($dataStore.shows.length + 1) * LINE_HEIGHT) + 'em';
 
-  // Inputs are strings and need to be converted into RegExp objects.
-  const regexHandler = (e: Event): RegExp => {
-    let newVal = "";
-    if (e.target !== null) newVal = (e.target as HTMLInputElement).value;
-    return new RegExp(newVal);
+  /**
+   * Inputs are strings and need to be converted into RegExp objects. If the
+   * new string does not create a valid RegExp, the old regex is returned and
+   * the err flag is set.
+  */
+  const regexHandler = (e: Event, old: string): {regex: RegExp, err: boolean} => {
+    if (e.target === null) throw new Error("This shouldn't happen");
+    const target = e.target as HTMLInputElement;
+    try {
+      const regex = new RegExp(target.value);
+      return {regex, err: false};
+    } catch (e: unknown) {
+      return {regex: new RegExp(old), err: true};
+    }
   }
 </script>
 
@@ -30,7 +39,7 @@
       </div>
     {/if}
     <ul>
-      {#each $dataStore.shows as {regex, folder, id} (id)}
+      {#each $dataStore.shows as {regex, err, folder, id} (id)}
         <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
           <button class="delete" id="delete-{id}" title="Delete" on:click={() => id && dataStore.removeShow(id)} {disabled}>X</button>
           <input 
@@ -43,11 +52,16 @@
           >
           <input
             type="text"
-            value={regex.source}
+            value={regex.source === '(?:)' ? '' : regex.source}
             placeholder="Regular expression"
             id="show-regex-input-{id}"
             class="regex"
-            on:input={(e) => {regex = regexHandler(e)}}
+            class:regex-error={err}
+            on:input={(event) => {
+              let {regex: r, err: e} = regexHandler(event, regex.source);
+              regex = r;
+              err = e;
+            }}
             {disabled}
           >
         </li>
