@@ -66,7 +66,7 @@ div.transition-height {
   flex-basis: 0;
 }
 
-.list-holder li *.delete, div.header *.delete {
+.list-holder li div.delete, div.header div.delete {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 4ex;
@@ -86,6 +86,10 @@ input[type=text] {
   line-height: 1em;
   transition: color 0.2s;
   min-width: 0;
+}
+
+input[type=text], span.folder, span.regex {
+  padding: 1px 2px;
 }
 
 input[type=text].regex-error {

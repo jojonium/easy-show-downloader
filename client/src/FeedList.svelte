@@ -18,14 +18,16 @@
   <div style="height: {listHeight}" class="transition-height">
     {#if $dataStore.rssUrls.length > 0}
       <div class="feed header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
-        <span class="delete"><!-- placeholder --></span>
+        <div class="delete"><!-- placeholder --></div>
         <span>URL</span>
       </div>
     {/if}
     <ul>
       {#each $dataStore.rssUrls as {url, id} (id)}
         <li class="feed line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
-          <button class="delete" id="delete-{id}" title="Delete" on:click={() => dataStore.removeFeed(id)} {disabled}>X</button>
+          <div class="button-holder delete">
+            <button class="delete" id="delete-{id}" title="Delete" on:click={() => dataStore.removeFeed(id)} {disabled}>X</button>
+          </div>
           <input
             type="text"
             bind:value={url}

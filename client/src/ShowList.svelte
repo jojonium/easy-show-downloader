@@ -34,14 +34,16 @@
   <div style="height: {listHeight}" class="transition-height">
     {#if $dataStore.shows.length > 0}
       <div class="header line" in:fly={{ y: -10 }} out:fly={{ y: -10 }}>
-        <span class="delete"><!-- placeholder --></span>
+        <div class="delete"><!-- placeholder --></div>
         <span class="folder">Folder</span> <span class="regex">Regex</span>
       </div>
     {/if}
     <ul>
       {#each $dataStore.shows as {regex, err, folder, id} (id)}
         <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
-          <button class="delete" id="delete-{id}" title="Delete" on:click={() => id && dataStore.removeShow(id)} {disabled}>X</button>
+          <div class="button-holder delete">
+            <button class="delete" id="delete-{id}" title="Delete" on:click={() => id && dataStore.removeShow(id)} {disabled}>X</button>
+          </div>
           <input 
             type="text"
             bind:value={folder}
