@@ -43,7 +43,6 @@ h1, h2, h3 {
   }
 }
   
-
 .list-holder {
   max-width: 1400px;
 }
@@ -53,7 +52,7 @@ h1, h2, h3 {
 }
 
 div.transition-height {
-  transition: height 400ms;
+  transition: height 400ms ease-out;
 }
 
 .list-holder li, div.header {
@@ -86,6 +85,15 @@ input[type=text] {
   line-height: 1em;
   transition: color 0.2s;
   min-width: 0;
+}
+
+div.media-root-holder {
+  display: flex;
+  white-space: nowrap;
+}
+
+input[type=text]#media-root-input {
+  flex-basis: 400px;
 }
 
 input[type=text].folder, span.folder {

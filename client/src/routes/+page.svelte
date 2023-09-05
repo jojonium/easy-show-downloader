@@ -5,7 +5,7 @@
 <script lang="ts">
   import { version } from '$app/environment';
   import { getData, postData, postDownload } from '$lib/api-helpers';
-  import { createDataStore } from '$lib/data-store';
+  import { createDataStore, toServerFormat } from '$lib/data-store';
   import { blankData } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
@@ -43,6 +43,7 @@
   const refreshData = async () => {
     try {
       const d = await getData();
+      for (const s of d.shows) s.id = Math.random();
       dataStore = createDataStore(d);
       cached = {
         mediaRoot: $dataStore.mediaRoot ?? '',
@@ -50,6 +51,7 @@
         rssUrls: JSON.stringify($dataStore.rssUrls)
       }
       console.log("Refreshed data from server.");
+      console.log($dataStore);
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
@@ -62,9 +64,8 @@
   const save = async () => {
     saving = true;
     try {
-      await postData($dataStore);
+      await postData(toServerFormat($dataStore));
       logger.log('Saved data to server.')
-      await refreshData();
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
@@ -119,8 +120,8 @@
 {#if !initialized}
   <p>Loading data...</p>
 {:else}
-  <div class="line">
-    <span>Media root:</span> <input 
+  <div class="line media-root-holder">
+    <div>Media root:</div> <input 
       type="text"
       id="media-root-input"
       bind:value={$dataStore.mediaRoot}

@@ -28,14 +28,14 @@
       </div>
     {/if}
     <ul>
-      {#each $dataStore.shows as {regex, folder}, i (i)}
+      {#each $dataStore.shows as {regex, folder, id} (id)}
         <li class="show line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
-          <button class="delete" id="delete-{i}" title="Delete" on:click={() => dataStore.removeShow(i)} {disabled}>X</button>
+          <button class="delete" id="delete-{id}" title="Delete" on:click={() => id && dataStore.removeShow(id)} {disabled}>X</button>
           <input 
             type="text"
             bind:value={folder}
             placeholder="Folder" 
-            id="show-folder-input-{i}"
+            id="show-folder-input-{id}"
             class="folder"
             {disabled}
           >
@@ -43,7 +43,7 @@
             type="text"
             value={regex.source}
             placeholder="Regular expression"
-            id="show-regex-input-{i}"
+            id="show-regex-input-{id}"
             class="regex"
             on:input={(e) => {regex = regexHandler(e)}}
             {disabled}
