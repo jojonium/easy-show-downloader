@@ -18,6 +18,8 @@
   let dataStore = createDataStore(blankData);
   let saving = false;
   let downloading = false;
+  let regexErrors = false;
+  $: regexErrors = $dataStore.shows.some(s => s.err);
 
   // Cache initial data so "Save" button only becomes enabled when something is changed.
   let anyModified =  false;
@@ -30,7 +32,8 @@
   $: anyModified = checkModified(cached, $dataStore);
 
   let saveMessage = 'Save to server';
-  $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
+  $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0')
+    : regexErrors ? 'Fix errors'.padEnd(14, '\u00A0')
     : (initialized && anyModified) ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
   let downloadMessage = 'Download new episodes';
   $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
@@ -97,7 +100,7 @@
   <button 
     id="save"
     on:click={save}
-    disabled={!initialized || saving || downloading || !anyModified}
+    disabled={!initialized || regexErrors || saving || downloading || !anyModified}
   >{saveMessage}</button>
   <button id="download-new"
     on:click={downloadNew}

@@ -26,7 +26,13 @@
       {#each $dataStore.rssUrls as {url, id} (id)}
         <li class="feed line" in:fly={{ y: -10 }} out:fly={{ y: -10 }} animate:flip>
           <button class="delete" id="delete-{id}" title="Delete" on:click={() => dataStore.removeFeed(id)} {disabled}>X</button>
-          <input type="text" bind:value={url} id={'rss-feed-' + id} {disabled}>
+          <input
+            type="text"
+            bind:value={url}
+            placeholder="RSS feed URL"
+            id={'rss-feed-' + id}
+            {disabled}
+          >
         </li>
       {/each}
     </ul>

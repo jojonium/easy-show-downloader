@@ -32,7 +32,7 @@ export function createDataStore(initial: Data): DataStore {
       return {url: r, id: ri++};
     }),
     mediaRoot: initial.mediaRoot ?? ''
-  }
+  };
   const { subscribe, update, set } = writable(csd);
 
   return {
