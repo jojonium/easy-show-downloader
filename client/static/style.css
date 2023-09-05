@@ -15,7 +15,8 @@ body {
 
 hr {
   border: none;
-  height: 2.2em;
+  height: 1.4em;
+  margin: 0 0 0.2em 0;
 }
 
 p, h1, h2, h3 {
