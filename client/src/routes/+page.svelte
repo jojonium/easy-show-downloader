@@ -15,43 +15,38 @@
   const viteMode = import.meta.env.MODE;
   let initialized = false;
   let logger: Log;
-
-  let modified = {
-    mediaRoot: false,
-    shows: false,
-    rssUrls: false
-  };
-  let anyModified =  false;
-  let cached = {
-    mediaRoot: '',
-    shows: '',
-    rssUrls: ''
-  };
-  $: modified.mediaRoot = $dataStore.mediaRoot !== cached.mediaRoot;
-  $: modified.shows = JSON.stringify($dataStore.shows) !== cached.shows;
-  $: modified.rssUrls = JSON.stringify($dataStore.rssUrls) !== cached.rssUrls;
-  $: anyModified = modified.mediaRoot || modified.shows || modified.rssUrls;
-  let saveMessage = 'Save to server';
-  $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
-    : anyModified ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
-  let downloadMessage = 'Download new episodes';
-  $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
   let dataStore = createDataStore(blankData);
   let saving = false;
   let downloading = false;
+
+  // Cache initial data so "Save" button only becomes enabled when something is changed.
+  let anyModified =  false;
+  let cached = { mediaRoot: '', shows: '', rssUrls: '' };
+  $: anyModified = $dataStore.mediaRoot !== cached.mediaRoot
+    || JSON.stringify($dataStore.shows) !== cached.shows
+    || JSON.stringify($dataStore.rssUrls) !== cached.rssUrls;
+
+  let saveMessage = 'Save to server';
+  $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
+    : (initialized && anyModified) ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
+  let downloadMessage = 'Download new episodes';
+  $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
+
+  const cacheData = () => {
+    cached = {
+      mediaRoot: $dataStore.mediaRoot ?? '',
+      shows: JSON.stringify($dataStore.shows),
+      rssUrls: JSON.stringify($dataStore.rssUrls)
+    }
+  }
 
   const refreshData = async () => {
     try {
       const d = await getData();
       for (const s of d.shows) s.id = Math.random();
       dataStore = createDataStore(d);
-      cached = {
-        mediaRoot: $dataStore.mediaRoot ?? '',
-        shows: JSON.stringify($dataStore.shows),
-        rssUrls: JSON.stringify($dataStore.rssUrls)
-      }
+      cacheData();
       console.log("Refreshed data from server.");
-      console.log($dataStore);
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error && 'message' in e) {
@@ -65,6 +60,7 @@
     saving = true;
     try {
       await postData(toServerFormat($dataStore));
+      cacheData();
       logger.log('Saved data to server.')
     } catch (e: unknown) {
       console.error(e);
@@ -106,7 +102,7 @@
   <button 
     id="save"
     on:click={save}
-    disabled={saving || downloading || !anyModified}
+    disabled={!initialized || saving || downloading || !anyModified}
   >{saveMessage}</button>
   <button id="download-new"
     on:click={downloadNew}

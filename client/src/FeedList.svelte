@@ -7,6 +7,7 @@
   export let dataStore: DataStore;
   export let disabled = false;
 
+  // Manually set height so CSS transitions work.
   let listHeight = LINE_HEIGHT + 'em';
   $: listHeight = $dataStore.rssUrls.length === 0 ? '0' : (($dataStore.rssUrls.length + 1) * LINE_HEIGHT) + 'em';
 </script>

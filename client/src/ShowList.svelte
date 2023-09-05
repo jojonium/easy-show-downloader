@@ -7,9 +7,11 @@
   export let dataStore: DataStore;
   export let disabled = false;
 
+  // Manually set height so CSS transitions work.
   let listHeight = LINE_HEIGHT + 'em';
   $: listHeight = $dataStore.shows.length === 0 ? '0' : (($dataStore.shows.length + 1) * LINE_HEIGHT) + 'em';
 
+  // Inputs are strings and need to be converted into RegExp objects.
   const regexHandler = (e: Event): RegExp => {
     let newVal = "";
     if (e.target !== null) newVal = (e.target as HTMLInputElement).value;
