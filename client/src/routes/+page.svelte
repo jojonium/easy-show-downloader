@@ -5,7 +5,7 @@
 <script lang="ts">
   import { version } from '$app/environment';
   import { getData, postData, postDownload } from '$lib/api-helpers';
-  import { createDataStore, toServerFormat } from '$lib/data-store';
+  import { createDataStore, stringify, toServerFormat, type ClientSideData } from '$lib/data-store';
   import { blankData } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import FeedList from '../FeedList.svelte';
@@ -21,10 +21,13 @@
 
   // Cache initial data so "Save" button only becomes enabled when something is changed.
   let anyModified =  false;
-  let cached = { mediaRoot: '', shows: '', rssUrls: '' };
-  $: anyModified = $dataStore.mediaRoot !== cached.mediaRoot
-    || JSON.stringify($dataStore.shows) !== cached.shows
-    || JSON.stringify($dataStore.rssUrls) !== cached.rssUrls;
+  type Cache = { mediaRoot: string, shows: string, rssUrls: string };
+  let cached: Cache = { mediaRoot: '', shows: '', rssUrls: '' };
+  const checkModified = (prev: Cache, next: ClientSideData) => {
+    const {mediaRoot, shows, rssUrls} = stringify(next);
+    return mediaRoot !== prev.mediaRoot || shows !== prev.shows || rssUrls !== prev.rssUrls;
+  };
+  $: anyModified = checkModified(cached, $dataStore);
 
   let saveMessage = 'Save to server';
   $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0') 
@@ -32,20 +35,12 @@
   let downloadMessage = 'Download new episodes';
   $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
 
-  const cacheData = () => {
-    cached = {
-      mediaRoot: $dataStore.mediaRoot ?? '',
-      shows: JSON.stringify($dataStore.shows),
-      rssUrls: JSON.stringify($dataStore.rssUrls)
-    }
-  }
-
   const refreshData = async () => {
     try {
       const d = await getData();
       for (const s of d.shows) s.id = Math.random();
       dataStore = createDataStore(d);
-      cacheData();
+      cached = stringify($dataStore);
       console.log("Refreshed data from server.");
     } catch (e: unknown) {
       console.error(e);
@@ -60,7 +55,7 @@
     saving = true;
     try {
       await postData(toServerFormat($dataStore));
-      cacheData();
+      cached = stringify($dataStore);
       logger.log('Saved data to server.')
     } catch (e: unknown) {
       console.error(e);

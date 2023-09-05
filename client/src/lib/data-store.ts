@@ -71,3 +71,15 @@ export const toServerFormat = (d: ClientSideData): Data => {
     rssUrls: d.rssUrls.map(r => r.url)
   };
 }
+
+export const stringify = (
+  d: ClientSideData
+): {mediaRoot: string, shows: string, rssUrls: string} => {
+  return {
+    mediaRoot: d.mediaRoot,
+    shows: JSON.stringify(d.shows.map(s => {
+      return {...s, regex: s.regex.source};
+    })),
+    rssUrls: JSON.stringify(d.rssUrls)
+  };
+}
