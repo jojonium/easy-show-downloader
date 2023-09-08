@@ -1,0 +1,145 @@
+html {
+  background-color: #232627;
+  font-family: monospace;
+  color: #fcfcfc;
+  font-size: 18px;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  margin: 0.2em;
+}
+
+hr {
+  border: none;
+  height: 1.4em;
+  margin: 0 0 0.2em 0;
+}
+
+p, h1, h2, h3 {
+  margin: 0;
+}
+
+.line {
+  box-sizing: content-box;
+  height: 1.4em;
+  margin: 0 0 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.indent {
+  margin-left: 4ex;
+}
+
+@media screen and (max-width: 800px) {
+  .indent.list-holder {
+    margin-left: 0;
+  }
+}
+  
+.list-holder {
+  max-width: 1400px;
+}
+
+.list-holder ul {
+  padding: 0;
+}
+
+div.transition-height {
+  transition: height 400ms ease-out;
+}
+
+.list-holder li, div.header {
+  display: flex;
+}
+
+.list-holder li *, div.header * {
+  flex-grow: 1;
+  margin-right: 0.2em;
+  flex-basis: 0;
+}
+
+.list-holder li div.delete, div.header div.delete {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 4ex;
+  margin-right: 0;
+}
+
+button.delete:hover {
+  color: red;
+}
+
+input[type=text] {
+  background-color: #111;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1em;
+  transition: color 0.2s;
+  min-width: 0;
+}
+
+input[type=text], span.folder, span.regex {
+  padding: 1px 2px;
+}
+
+input[type=text].regex-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.5)
+}
+
+div.media-root-holder {
+  display: flex;
+  white-space: nowrap;
+}
+
+input[type=text]#media-root-input {
+  flex-basis: 400px;
+}
+
+input[type=text].folder, span.folder {
+  flex-grow: 1;
+}
+
+input[type=text].regex, span.regex {
+  flex-grow: 1.5;
+}
+
+input:disabled {
+  background-color: #232627;
+  color: gray;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-shadow: 0 0 10px;
+}
+button::before {
+  content: "[";
+}
+button::after {
+  content: "]";
+}
+button:hover {
+  color: #1ca350;
+}
+button:disabled, button:hover:disabled, button.delete:hover:disabled {
+  color: gray;
+  cursor: inherit;
+}

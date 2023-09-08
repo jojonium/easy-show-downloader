@@ -1,38 +1,61 @@
-name: Build and publish Docker image
+name: Test and publish image
 on:
   push:
-    tags: ['v*']
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-alpha.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  test:
+    name: Run yarn tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Yarn build common
+        run: yarn run common:build
+      - name: Yarn build server
+        run: yarn run server:build
+      - name: Run tests
+        run: yarn run test
   docker_build_push:
     name: Build and publish
-    if: github.event.base_ref=='refs/heads/master' # skip if tag not on master
     runs-on: ubuntu-latest
+    needs: test # Only run if tests pass
+    if: ${{ github.event.base_ref != 'refs/heads/master' || contains(github.ref, 'alpha') }} || contains(github.ref, 'beta') }}
     permissions:
       packages: write
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Log in to the container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=semver,pattern={{version}}
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true

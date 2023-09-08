@@ -11,10 +11,10 @@ minimal, and it only supports scraping torrent magnet links from RSS feeds.
 
 ## Running
 
-This project uses yarn zero-installs, so after you clone the repo you can get
-started with:
+After you clone the repo you can get started with:
 
 ```
+$ yarn run install
 $ yarn run build
 $ yarn run start
 ```
@@ -25,6 +25,15 @@ Alternatively you can try it in a container:
 
 ```
 $ docker pull ghcr.io/jojonium/easy-show-downloader:latest
+```
+
+## Development
+
+This will start a live-reloading dev version of the client on port 5173, and the
+back-end on port 3000.
+
+```
+$ yarn run client:dev
 ```
 
 ## Configuration
@@ -38,7 +47,7 @@ Name | Type | Default | Notes
 -----|------|---------|-------
 `NODE_HOST` | string | `'localhost'` | Server host to listen on
 `NODE_PORT` | number | `3000` | Server port to listen on
-`STATIC_DIR` | string | `'../client/public'` | Directory to serve static website content from
+`STATIC_DIR` | string | `'../client/build'` | Directory to serve static website content from
 `LOG_STDOUT` | boolean | `true` | Whether to log to stdout
 `LOG_FILE` | string | `undefined` | File to write logs to. Logging to a file is disabled if omitted
 `DATA_FILE` | string | `'data.json'` | Path to the JSON file to store show data in
