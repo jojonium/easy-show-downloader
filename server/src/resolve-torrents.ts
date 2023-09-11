@@ -9,13 +9,15 @@ import {logger} from './logger';
  * @param {Data} data
  */
 export const resolveTorrents = async (
-    data: Data,
+  data: Data,
 ): Promise<{[key: string]: {folder: string; links: string[]}}> => {
   const parser = new Parser();
   const matchingLinks: {[key: string]: {folder: string; links: string[]}} =
     {};
   for (const s of data.shows) {
-    matchingLinks[s.title] = {
+    let key = s.title;
+    if (key === '') key = s.folder;
+    matchingLinks[key] = {
       folder: s.folder,
       links: [],
     };
@@ -25,19 +27,21 @@ export const resolveTorrents = async (
     try {
       const feed = await parser.parseURL(url);
       const shows = data.shows.filter(
-          (s) => s.feedUrl === undefined || s.feedUrl === url,
+        (s) => s.feedUrl === undefined || s.feedUrl === url,
       );
       for (const item of feed.items) {
         for (const show of shows) {
           if (show.regex.test(item.title ?? '') && item.link) {
-            matchingLinks[show.title]?.links.push(item.link);
+            let key = show.title;
+            if (key === '') key = show.folder;
+            matchingLinks[key]?.links.push(item.link);
           }
         }
       }
     } catch (err) {
       logger.log(`Problem fetching or parsing RSS URL "${url}":\n` +
         err,
-      'WARN');
+        'WARN');
       continue;
     }
   }
