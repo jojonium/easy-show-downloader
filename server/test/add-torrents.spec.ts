@@ -29,9 +29,9 @@ describe('addTorrents()', () => {
       shows: [new Show('Dragon Quest')],
       rssUrls: [`http://${config.HOST}:${config.PORT}/test-rss-1.xml`],
     };
-    const r = await resolveTorrents(data);
-    expect(r['Dragon Quest']?.links).to.have.lengthOf(7);
-    const c = await addTorrents(r);
+    const links = await resolveTorrents(data);
+    expect(links).to.have.lengthOf(7);
+    const c = await addTorrents(links);
     expect(c).to.equal(7);
   });
 
@@ -40,9 +40,9 @@ describe('addTorrents()', () => {
       shows: [new Show('Fake show')],
       rssUrls: [`http://${config.HOST}:${config.PORT}/test-rss-1.xml`],
     };
-    const r = await resolveTorrents(data);
-    expect(r['Fake show']?.links).to.be.empty;
-    const c = await addTorrents(r);
+    const links = await resolveTorrents(data);
+    expect(links).to.be.empty;
+    const c = await addTorrents(links);
     expect(c).to.equal(0);
   });
 });

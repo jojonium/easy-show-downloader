@@ -4,37 +4,31 @@ import {logger} from './logger';
 
 /**
  * Reads the RSS feeds and shows specified in the data file and finds all
- * matching torrents, returning a map of show titles to folder names and
- * matching torrent links.
+ * matching torrents, returning a list of links and the folders to download them
+ * to.
  * @param {Data} data
  */
 export const resolveTorrents = async (
     data: Data,
-): Promise<{[key: string]: {folder: string; links: string[]}}> => {
+): Promise<Array<{folder: string, link: string}>> => {
   const parser = new Parser();
-  const matchingLinks: {[key: string]: {folder: string; links: string[]}} =
-    {};
-  for (const s of data.shows) {
-    let key = s.title;
-    if (key === '') key = s.folder;
-    matchingLinks[key] = {
-      folder: s.folder,
-      links: [],
-    };
-  }
+  const links: {folder: string, link: string}[] = [];
 
   for (const url of data.rssUrls) {
     try {
-      const feed = await parser.parseURL(url);
       const shows = data.shows.filter(
           (s) => s.feedUrl === undefined || s.feedUrl === url,
       );
+      if (shows.length === 0) continue; // No shows actually want this feed.
+
+      const feed = await parser.parseURL(url);
       for (const item of feed.items) {
         for (const show of shows) {
-          if (show.regex.test(item.title ?? '') && item.link) {
-            let key = show.title;
-            if (key === '') key = show.folder;
-            matchingLinks[key]?.links.push(item.link);
+          if (item.title && item.link && show.regex.test(item.title)) {
+            links.push({
+              folder: (show.folder),
+              link: item.link,
+            });
           }
         }
       }
@@ -45,5 +39,5 @@ export const resolveTorrents = async (
       continue;
     }
   }
-  return matchingLinks;
+  return links;
 };
