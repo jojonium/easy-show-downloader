@@ -9,7 +9,7 @@ import {logger} from './logger';
  * @param {Data} data
  */
 export const resolveTorrents = async (
-  data: Data,
+    data: Data,
 ): Promise<{[key: string]: {folder: string; links: string[]}}> => {
   const parser = new Parser();
   const matchingLinks: {[key: string]: {folder: string; links: string[]}} =
@@ -27,7 +27,7 @@ export const resolveTorrents = async (
     try {
       const feed = await parser.parseURL(url);
       const shows = data.shows.filter(
-        (s) => s.feedUrl === undefined || s.feedUrl === url,
+          (s) => s.feedUrl === undefined || s.feedUrl === url,
       );
       for (const item of feed.items) {
         for (const show of shows) {
@@ -41,7 +41,7 @@ export const resolveTorrents = async (
     } catch (err) {
       logger.log(`Problem fetching or parsing RSS URL "${url}":\n` +
         err,
-        'WARN');
+      'WARN');
       continue;
     }
   }
