@@ -21,7 +21,7 @@ export const postDownload = async (_: Request, res: Response) => {
     sendError(res, 500, 'Server failed to read show data.');
     return;
   }
-  let torrentData = {};
+  let torrentData = [];
   try {
     torrentData = await resolveTorrents(data);
   } catch (e) {
