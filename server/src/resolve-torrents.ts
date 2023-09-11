@@ -15,7 +15,9 @@ export const resolveTorrents = async (
   const matchingLinks: {[key: string]: {folder: string; links: string[]}} =
     {};
   for (const s of data.shows) {
-    matchingLinks[s.title] = {
+    let key = s.title;
+    if (key === '') key = s.folder;
+    matchingLinks[key] = {
       folder: s.folder,
       links: [],
     };
@@ -30,7 +32,9 @@ export const resolveTorrents = async (
       for (const item of feed.items) {
         for (const show of shows) {
           if (show.regex.test(item.title ?? '') && item.link) {
-            matchingLinks[show.title]?.links.push(item.link);
+            let key = show.title;
+            if (key === '') key = show.folder;
+            matchingLinks[key]?.links.push(item.link);
           }
         }
       }

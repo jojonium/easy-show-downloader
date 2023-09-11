@@ -140,4 +140,16 @@ describe('resolveTorrents()', () => {
     const r = await resolveTorrents(data);
     expect(r['Dragon Quest']?.links).to.be.empty;
   });
+
+  it('Should handle empty "title" fields by falling back to the folder as unique identifier', async () => {
+    const data = {
+      shows: [new Show('', /Dragon Quest.*NVENC.*1080p/, 'Dragon Quest/Season 02')],
+      rssUrls: [
+        `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
+      ],
+    };
+    const r = await resolveTorrents(data);
+    expect(r['Dragon Quest']).to.be.undefined;
+    expect(r['Dragon Quest/Season 02']?.links).to.have.lengthOf(1);
+  });
 });
