@@ -1,7 +1,7 @@
 {
   "name": "easy-show-downloader",
   "packageManager": "yarn@3.6.1",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "scripts": {
     "start": "yarn run server:start",
     "lint": "yarn workspaces foreach run lint",
