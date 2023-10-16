@@ -32,7 +32,7 @@ export const postDownload = async (_: Request, res: Response) => {
       e,
         'ERROR',
     );
-    sendError(res, 500, 'Server resolve a list of torrent links.');
+    sendError(res, 500, 'Server failed to resolve a list of torrent links.');
     return;
   }
   try {
