@@ -8,6 +8,7 @@
   import { createDataStore, stringify, toServerFormat, type ClientSideData } from '$lib/data-store';
   import { blankData } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
+  import { slide } from 'svelte/transition';
   import FeedList from '../FeedList.svelte';
   import Log from '../Log.svelte';
   import ShowList from '../ShowList.svelte';
@@ -34,9 +35,11 @@
   let saveMessage = 'Save to server';
   $: saveMessage = saving ? 'Saving...'.padEnd(14, '\u00A0')
     : regexErrors ? 'Fix errors'.padEnd(14, '\u00A0')
-    : (initialized && anyModified) ? 'Save to server' : 'No changes'.padEnd(14, '\u00A0');
+    : (initialized && anyModified) ? 'Save to server' : '\u00A0\u00A0No changes\u00A0\u00A0';
   let downloadMessage = 'Download new episodes';
-  $: downloadMessage = downloading ? 'Downloading...'.padEnd(21, '\u00A0') : 'Download new episodes';
+  $: downloadMessage = downloading
+    ? '\u00A0\u00A0\u00A0\u00A0\u00A0Downloading\u00A0\u00A0\u00A0\u00A0\u00A0'
+    : 'Download new episodes';
 
   const refreshData = async () => {
     try {
@@ -96,16 +99,32 @@
 
 <hr>
 
-<div class="line">
-  <button 
-    id="save"
-    on:click={save}
-    disabled={!initialized || regexErrors || saving || downloading || !anyModified}
-  >{saveMessage}</button>
-  <button id="download-new"
+<div class="line" style="display: flex;">
+    <button 
+      id="save"
+      class="variable-text"
+      on:click={save}
+      disabled={!initialized || regexErrors || saving || downloading || !anyModified}
+    >
+      <div class="inner">
+      {#key saveMessage}
+        <span transition:slide>{saveMessage}</span>
+      {/key}
+      </div>
+  </button>
+  <span>&nbsp;</span>
+  <button
+    id="download-new"
+    class="variable-text"
     on:click={downloadNew}
     disabled={saving || downloading}
-  >{downloadMessage}</button>
+  >
+    <div class="inner">
+      {#key downloadMessage}
+        <span transition:slide>{downloadMessage}</span>
+      {/key}
+    </div>
+  </button>
 </div>
 
 <hr>
