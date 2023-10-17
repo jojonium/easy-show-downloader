@@ -77,6 +77,17 @@ button.delete:hover {
   color: red;
 }
 
+button.variable-text {
+  display: flex;
+  flex-direction: row;
+}
+
+button.variable-text div.inner {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 input[type=text] {
   background-color: #111;
   border: none;
