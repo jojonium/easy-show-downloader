@@ -5,8 +5,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN --mount=type=cache,target=/app/.yarn/cache yarn install --immutable
-RUN --mount=type=cache,target=/app/.yarn/cache yarn run common:build && \
+RUN --mount=type=cache,target=/app/.yarn/cache yarn YARN_CACHE_FOLDER=/app/.yarn/cache install --immutable
+RUN yarn run common:build && \
     yarn run server:build && \
     yarn run client:build && \
     yarn workspaces focus @easy-show-downloader/server --production && \
@@ -16,14 +16,11 @@ RUN --mount=type=cache,target=/app/.yarn/cache yarn run common:build && \
 FROM node:18-alpine as runner
 
 ENV NODE_ENV production
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodejs -u 1001 && mkdir /data && chown -R nodejs:nodejs /data 
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001 && mkdir /data && chown -R nodejs:nodejs /data
 
 WORKDIR /app
 
 COPY --from=builder --chown=nodejs:nodejs /app .
-
-RUN yarn cache clean
 
 ENV STATIC_DIR /app/client/build
 ENV PORT 3000
