@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/app/.yarn/cache yarn YARN_CACHE_FOLDER=/app/.yarn
 RUN yarn run common:build && \
     yarn run server:build && \
     yarn run client:build && \
-    yarn workspaces focus @easy-show-downloader/server --production && \
+    #yarn workspaces focus @easy-show-downloader/server --production && \
     rm -rf node_modules/.cache
 
 # Run container
