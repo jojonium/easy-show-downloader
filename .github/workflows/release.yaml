@@ -9,7 +9,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  CI: "true"
 
 jobs:
   test:
