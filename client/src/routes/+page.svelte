@@ -44,7 +44,6 @@
   const refreshData = async () => {
     try {
       const d = await getData();
-      for (const s of d.shows) s.id = Math.random();
       dataStore = createDataStore(d);
       cached = stringify($dataStore);
       console.log("Refreshed data from server.");
