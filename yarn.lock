@@ -1706,7 +1706,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "easy-show-downloader@workspace:."
   dependencies:
-    "@sveltejs/kit": ^1.27.3
     "@types/eslint": ^8
     "@types/mocha": ^9
     "@types/node": ^20.9.0
@@ -1715,10 +1714,8 @@ __metadata:
     eslint: ^8.53.0
     eslint-config-google: ^0.14.0
     mocha: ^10.2.0
-    svelte: ^4.2.2
     ts-mocha: ^10.0.0
     typescript: ^5.2.2
-    vite: ^4.5.0
   languageName: unknown
   linkType: soft
 
