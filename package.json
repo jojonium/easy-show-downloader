@@ -16,6 +16,7 @@
     "client"
   ],
   "devDependencies": {
+    "@sveltejs/kit": "^1.27.3",
     "@types/eslint": "^8",
     "@types/mocha": "^9",
     "@types/node": "^20.9.0",
@@ -26,6 +27,7 @@
     "mocha": "^10.2.0",
     "svelte": "^4.2.2",
     "ts-mocha": "^10.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0"
   }
 }
