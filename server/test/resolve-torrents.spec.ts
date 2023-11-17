@@ -103,7 +103,7 @@ describe('resolveTorrents()', () => {
     const links = await resolveTorrents(data);
     expect(links).to.deep.include({
       folder: 'Shin Tetsujin 28-gou',
-      link: 'https://correct-link-test',
+      link: 'https://correct-link-test.torrent',
     });
   });
 
@@ -173,7 +173,7 @@ describe('resolveTorrents()', () => {
           shows: [
             new Show(
                 '',
-                /^Engineering Catastrophes S07E\d+.*1080p.*/,
+                /^Engineering Catastrophes.*1080p.*/,
                 'Engineering Catastrophes',
             ),
           ],
