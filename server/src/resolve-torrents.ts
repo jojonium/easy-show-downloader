@@ -11,7 +11,9 @@ import {logger} from './logger';
 export const resolveTorrents = async (
     data: Data,
 ): Promise<Array<{folder: string, link: string}>> => {
-  const parser = new Parser();
+  const parser = new Parser({
+    customFields: {item: ['torrent:magnetURI']},
+  });
   const links: {folder: string, link: string}[] = [];
 
   for (const url of data.rssUrls) {
@@ -24,11 +26,19 @@ export const resolveTorrents = async (
       const feed = await parser.parseURL(url);
       for (const item of feed.items) {
         for (const show of shows) {
-          if (item.title && item.link && show.regex.test(item.title)) {
-            links.push({
-              folder: (show.folder),
-              link: item.link,
-            });
+          if (item.title && show.regex.test(item.title)) {
+            // Found a match. Search for a torrent link in the <link> and
+            // <torrent:magnetURI> fields.
+            for (const attempt of [item.link, item['torrent:magnetURI']]) {
+              if (attempt && isTorrent(attempt)) {
+                links.push({
+                  folder: (show.folder),
+                  link: attempt,
+                });
+                // Don't add multiple links to the same item.
+                break;
+              }
+            }
           }
         }
       }
@@ -41,3 +51,8 @@ export const resolveTorrents = async (
   }
   return links;
 };
+
+
+const isTorrent = (x: string): boolean =>
+  x.startsWith('magnet:') || x.endsWith('.torrent');
+

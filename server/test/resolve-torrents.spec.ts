@@ -103,7 +103,7 @@ describe('resolveTorrents()', () => {
     const links = await resolveTorrents(data);
     expect(links).to.deep.include({
       folder: 'Shin Tetsujin 28-gou',
-      link: 'https://correct-link-test',
+      link: 'https://correct-link-test.torrent',
     });
   });
 
@@ -163,6 +163,29 @@ describe('resolveTorrents()', () => {
         expect(links).to.deep.equal([{
           folder: 'Dragon Quest/S02',
           link: 'https://nyaa.si/download/1460617.torrent',
+        }]);
+      });
+
+  it(
+      'Sould find magnet links in fields other than <link>',
+      async () => {
+        const data = {
+          shows: [
+            new Show(
+                '',
+                /^Engineering Catastrophes.*1080p.*/,
+                'Engineering Catastrophes',
+            ),
+          ],
+          rssUrls: [
+            `http://${config.HOST}:${config.PORT}/test-rss-3.xml`,
+          ],
+        };
+        const links = await resolveTorrents(data);
+        expect(links).to.deep.equal([{
+          folder: 'Engineering Catastrophes',
+          // eslint-disable-next-line max-len
+          link: 'magnet:?xt=urn:btih:CB934F52DCC2720860187075008904D5F36E244D&dn=Engineering.Catastrophes.S07E05.1080p.WEB.h264-DUHSCOVERY%5Beztv.re%5D.mkv&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337',
         }]);
       });
 });
