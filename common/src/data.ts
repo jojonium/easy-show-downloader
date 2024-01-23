@@ -19,9 +19,8 @@ export const stringifyData = (data: Data): string => {
     ...data,
     shows: data.shows.map((s) => {
       return {
-        title: s.title,
-        regex: s.regex.source,
         folder: s.folder,
+        regex: s.regex.source,
         feedUrl: s.feedUrl ?? null,
       };
     }),

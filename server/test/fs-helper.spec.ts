@@ -30,7 +30,7 @@ describe('fs-helpers', () => {
       expect(result.rssUrls).to.have.lengthOf(1);
       expect(result.rssUrls[0]).to.equal('https://example.com/rss.xml');
       expect(result.shows).to.have.lengthOf(2);
-      expect(result.shows[0]?.title).to.equal('Gunbuster');
+      expect(result.shows[0]?.folder).to.equal('Gunbuster');
       expect(result.shows[0]?.feedUrl).to.be.undefined;
       expect(result.shows[1]?.folder).to.equal('Diebuster');
       expect(result.mediaRoot).to.equal('/mnt/media');
@@ -79,7 +79,7 @@ describe('fs-helpers', () => {
 
     it('Should correctly parse a valid data string', () => {
       const result = parseDataString(
-          '{"shows":[{"title":"Cowboy Bebop"}],"rssUrls":["asdf.com"]}',
+          '{"shows":[{"folder":"Cowboy Bebop"}],"rssUrls":["asdf.com"]}',
       );
       expect(result.rssUrls).to.have.lengthOf(1);
       expect(result.rssUrls[0]).to.equal('asdf.com');
@@ -110,7 +110,7 @@ describe('fs-helpers', () => {
       expect(result1.shows).to.be.empty;
 
       const result2 = parseDataString(
-          '{"shows":[{"title":"Cowboy Bebop"}]}',
+          '{"shows":[{"folder":"Cowboy Bebop"}]}',
       );
       expect(result2.rssUrls).to.be.empty;
       expect(result2.shows).to.have.lengthOf(1);

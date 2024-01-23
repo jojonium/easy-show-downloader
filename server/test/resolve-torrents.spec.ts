@@ -62,7 +62,7 @@ describe('resolveTorrents()', () => {
 
   it('Should handle more complex regular expressions', async () => {
     const data = {
-      shows: [new Show('Dragon Quest', /Dragon Quest.*1080p/, 'Folder Name')],
+      shows: [new Show('Dragon Quest', /Dragon Quest.*1080p/)],
       rssUrls: [`http://${config.HOST}:${config.PORT}/test-rss-1.xml`],
     };
     const links = await resolveTorrents(data);
@@ -76,7 +76,7 @@ describe('resolveTorrents()', () => {
     expect(links[2].link).to.equal(
         'https://nyaa.si/download/1460610.torrent',
     );
-    expect(links.every(({folder}) => folder === 'Folder Name'));
+    expect(links.every(({folder}) => folder === 'Dragon Quest'));
   });
 
   it('Should only find matches in a show\'s preferred feed', async () => {
@@ -85,12 +85,10 @@ describe('resolveTorrents()', () => {
         new Show(
             'Dragon Quest',
             /Dragon Quest.*NVENC.*1080p/,
-            undefined,
             `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
         ),
         new Show(
             'Shin Tetsujin 28-gou',
-            undefined,
             undefined,
             `http://${config.HOST}:${config.PORT}/test-rss-2.xml`,
         ),
@@ -148,33 +146,13 @@ describe('resolveTorrents()', () => {
   });
 
   it(
-      'Should handle empty "title" fields by falling back to the folder' +
-    ' as unique identifier',
-      async () => {
-        const data = {
-          shows: [
-            new Show('', /Dragon Quest.*NVENC.*1080p/, 'Dragon Quest/S02'),
-          ],
-          rssUrls: [
-            `http://${config.HOST}:${config.PORT}/test-rss-1.xml`,
-          ],
-        };
-        const links = await resolveTorrents(data);
-        expect(links).to.deep.equal([{
-          folder: 'Dragon Quest/S02',
-          link: 'https://nyaa.si/download/1460617.torrent',
-        }]);
-      });
-
-  it(
       'Sould find magnet links in fields other than <link>',
       async () => {
         const data = {
           shows: [
             new Show(
-                '',
-                /^Engineering Catastrophes.*1080p.*/,
                 'Engineering Catastrophes',
+                /^Engineering Catastrophes.*1080p.*/,
             ),
           ],
           rssUrls: [
