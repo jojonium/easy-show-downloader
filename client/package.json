@@ -14,10 +14,10 @@
 		"client:clean": "rm -r ./build"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.1.1",
-		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.30.3",
-		"@sveltejs/vite-plugin-svelte": "^2.5.3",
+		"@sveltejs/adapter-auto": "^3.1.1",
+		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/kit": "^2.4.3",
+		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@typescript-eslint/eslint-plugin": "^6.19.1",
 		"@typescript-eslint/parser": "^6.19.1",
 		"concurrently": "^8.2.2",
@@ -27,7 +27,7 @@
 		"svelte-check": "^3.6.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
-		"vite": "^4.5.2"
+		"vite": "^5.0.12"
 	},
 	"dependencies": {
 		"@easy-show-downloader/common": "workspace:^"
