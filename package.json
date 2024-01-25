@@ -1,14 +1,14 @@
 {
   "name": "easy-show-downloader",
-  "packageManager": "yarn@3.6.1",
-  "version": "4.0.9",
+  "packageManager": "yarn@4.0.2",
+  "version": "4.1.0",
   "scripts": {
     "start": "yarn run server:start",
     "dev": "yarn run client:dev",
-    "lint": "yarn workspaces foreach run lint",
-    "test": "NODE_ENV=test yarn workspaces foreach run test",
-    "build": "yarn workspaces foreach run build",
-    "clean": "yarn workspaces foreach run clean"
+    "lint": "yarn workspaces foreach -A run lint",
+    "test": "NODE_ENV=test yarn workspaces foreach -A run test",
+    "build": "yarn workspaces foreach -A run build",
+    "clean": "yarn workspaces foreach -A run clean"
   },
   "workspaces": [
     "server",

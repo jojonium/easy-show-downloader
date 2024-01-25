@@ -1,6 +1,6 @@
-import type { Data } from '@easy-show-downloader/common/src/data';
-import { Show } from '@easy-show-downloader/common/src/show';
-import { writable, type Subscriber, type Invalidator, type Unsubscriber } from 'svelte/store';
+import type {Data} from '@easy-show-downloader/common/src/data';
+import {Show} from '@easy-show-downloader/common/src/show';
+import {writable, type Subscriber, type Invalidator, type Unsubscriber} from 'svelte/store';
 
 /**
  * Modified version of Data from common/src with only the fields we care about
@@ -25,15 +25,15 @@ export function createDataStore(initial: Data): DataStore {
   let si = 1;
   let ri = 1;
   const csd: ClientSideData = {
-    shows: initial.shows.map(s => {
+    shows: initial.shows.map((s: Show) => {
       return {folder: s.folder, regex: s.regex, err: false, id: si++};
     }),
-    rssUrls: initial.rssUrls.map(r => {
+    rssUrls: initial.rssUrls.map((r: string) => {
       return {url: r, id: ri++};
     }),
     mediaRoot: initial.mediaRoot ?? ''
   };
-  const { subscribe, update, set } = writable(csd);
+  const {subscribe, update, set} = writable(csd);
 
   return {
     subscribe,
@@ -67,7 +67,7 @@ export function createDataStore(initial: Data): DataStore {
 export const toServerFormat = (d: ClientSideData): Data => {
   return {
     mediaRoot: d.mediaRoot,
-    shows: d.shows.map(s => new Show('', s.regex, s.folder)),
+    shows: d.shows.map(s => new Show(s.folder, s.regex)),
     rssUrls: d.rssUrls.map(r => r.url)
   };
 }

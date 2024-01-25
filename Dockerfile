@@ -1,5 +1,5 @@
 # Build container
-FROM node:18-alpine as builder
+FROM node:20-alpine as builder
 ENV NODE_ENV production
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN yarn run build && \
     rm -rf node_modules/.cache
 
 # Run container
-FROM node:18-alpine as runner
+FROM node:20-alpine as runner
 
 ENV NODE_ENV production
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001 && mkdir /data && chown -R nodejs:nodejs /data

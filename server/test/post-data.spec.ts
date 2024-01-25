@@ -52,10 +52,9 @@ describe('POST /api/data', () => {
         .post('/api/data')
         .send(JSON.parse(stringifyData({
           shows: [
-            new Show('New Show', undefined, 'New Show Folder'),
+            new Show('New Show', undefined),
             new Show(
                 'Only on Nyaa',
-                undefined,
                 undefined,
                 'https://nyaa.se',
             ),
@@ -65,10 +64,9 @@ describe('POST /api/data', () => {
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.have.lengthOf(2);
-    expect(written.shows[0]?.title).to.equal('New Show');
+    expect(written.shows[0]?.folder).to.equal('New Show');
     expect(written.shows[0]?.regex.source).to.equal('New Show');
-    expect(written.shows[0]?.folder).to.equal('New Show Folder');
-    expect(written.shows[1]?.title).to.equal('Only on Nyaa');
+    expect(written.shows[1]?.folder).to.equal('Only on Nyaa');
     expect(written.shows[1]?.feedUrl).to.equal('https://nyaa.se');
     expect(written.rssUrls).to.have.lengthOf(2);
     expect(written.rssUrls[0]).to.equal('https://example.com');
@@ -83,7 +81,7 @@ describe('POST /api/data', () => {
         .send({
           shows: [
             {test: 'wrong'},
-            new Show('Only on Nyaa', undefined, undefined, 'https://nyaa.se'),
+            new Show('Only on Nyaa', undefined, 'https://nyaa.se'),
           ],
           rssUrls: ['https://example.com', 'https://nyaa.se'],
         });
