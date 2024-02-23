@@ -1,7 +1,7 @@
 {
   "name": "easy-show-downloader",
-  "packageManager": "yarn@4.0.2",
-  "version": "4.1.0",
+  "packageManager": "yarn@4.1.0",
+  "version": "4.1.1",
   "scripts": {
     "start": "yarn run server:start",
     "dev": "yarn run client:dev",
@@ -23,7 +23,7 @@
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
-    "mocha": "^10.2.0",
+    "mocha": "^10.3.0",
     "ts-mocha": "^10.0.0",
     "typescript": "^5.3.3"
   }
