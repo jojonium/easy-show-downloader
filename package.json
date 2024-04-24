@@ -1,6 +1,6 @@
 {
   "name": "easy-show-downloader",
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.1.1",
   "version": "4.1.1",
   "scripts": {
     "start": "yarn run server:start",
