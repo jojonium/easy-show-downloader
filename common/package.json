@@ -16,12 +16,12 @@
     "@types/chai": "^4.3.11",
     "@types/eslint": "^8",
     "@types/mocha": "^10",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.19.1",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
     "chai": "^4",
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
-    "mocha": "^10.4.0",
+    "mocha": "^10.7.0",
     "ts-mocha": "^10.0.0",
     "typescript": "^5.3.3"
   }
