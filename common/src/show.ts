@@ -29,14 +29,14 @@ export class Show {
    * @return {Show}
    */
   public static fromJsonString(s: string): Show {
-    const o = JSON.parse(s) as {[key: string]: any};
+    const o = JSON.parse(s);
     if (o['folder'] === undefined) {
       throw new Error(`Error parsing folder: "${o['folder']}"`);
     }
     return new Show(
-        o['folder'],
-        new RegExp(o['regex'] ?? o['folder']),
-        o['feedUrl'] ?? undefined,
+      o['folder'],
+      new RegExp(o['regex'] ?? o['folder']),
+      o['feedUrl'] ?? undefined,
     );
   }
 }

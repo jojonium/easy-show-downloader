@@ -5,24 +5,21 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src",
     "test": "NODE_ENV=test ts-mocha",
     "common:build": "tsc",
     "common:clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "common:lint": "eslint src --ext ts",
+    "common:lint": "eslint src",
     "common:test": "NODE_ENV=test ts-mocha"
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",
-    "@types/eslint": "^8",
+    "@types/eslint": "^9",
     "@types/mocha": "^10",
-    "@typescript-eslint/eslint-plugin": "^8.4.0",
-    "@typescript-eslint/parser": "^8.4.0",
     "chai": "^4",
     "eslint": "^9.9.1",
-    "eslint-config-google": "^0.14.0",
     "mocha": "^10.7.0",
     "ts-mocha": "^10.0.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.4"
   }
 }

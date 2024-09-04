@@ -12,21 +12,22 @@ export const postData = async (req: Request, res: Response) => {
       await writeDataFile(config.DATA_FILE, data);
     } catch (e) {
       logger.log(
-          'Failure in POST /api/data. ' +
+        'Failure in POST /api/data. ' +
         `Could not write data file to '${config.DATA_FILE}'.\n${e}`,
-          'ERROR',
+        'ERROR',
       );
       sendError(res, 500, 'Server failed to write show data.');
       return;
     }
     res.status(200).end();
-  } catch (e: any) {
-    logger.log(`Failure in POST /api/data. Invalid request.'.\n${e}`, 'ERROR');
+  } catch (e) {
+    const err = e as {message: string};
+    logger.log(`Failure in POST /api/data. Invalid request.'.\n${err}`, 'ERROR');
     sendError(
-        res,
-        400,
-        'Invalid request. Failed to parse data object from body.',
-        {body: req.body, error: e.message},
+      res,
+      400,
+      'Invalid request. Failed to parse data object from body.',
+      {body: req.body, error: err.message},
     );
   }
 };
