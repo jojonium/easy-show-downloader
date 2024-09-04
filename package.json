@@ -16,15 +16,15 @@
     "client"
   ],
   "devDependencies": {
-    "@types/eslint": "^8",
+    "@eslint/js": "^9.9.1",
+    "@types/eslint": "^9",
     "@types/mocha": "^10",
     "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^7.17.0",
-    "@typescript-eslint/parser": "^7.17.0",
-    "eslint": "^8.56.0",
-    "eslint-config-google": "^0.14.0",
+    "eslint": "^9.9.1",
+    "globals": "^15.9.0",
     "mocha": "^10.7.0",
     "ts-mocha": "^10.0.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0"
   }
 }

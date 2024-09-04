@@ -22,7 +22,7 @@
     try {
       const regex = new RegExp(target.value);
       return {regex, err: false};
-    } catch (e: unknown) {
+    } catch (_error) {
       return {regex: new RegExp(old), err: true};
     }
   }

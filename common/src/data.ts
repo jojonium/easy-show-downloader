@@ -45,6 +45,8 @@ export const parseDataString = (s: string): Data => {
   return parsePlainDataObject(data);
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// This function is suppsoed to parse plain objects so we need explicit any
 export const parsePlainDataObject = (o: {[key: string]: any}): Data => {
   const showObjects: any[] = o['shows'] ?? [];
   // Check to make sure showObjects is an array.
@@ -66,6 +68,7 @@ export const parsePlainDataObject = (o: {[key: string]: any}): Data => {
     rssUrls: rssUrls,
   };
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /** An empty data object, useful as a placeholder or for testing. */
 export const blankData = {

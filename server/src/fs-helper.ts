@@ -14,8 +14,9 @@ export const readDataFile = async (path: fs.PathLike): Promise<Data> => {
   try {
     const fileContents = (await fs.promises.readFile(path)).toString();
     return parseDataString(fileContents);
-  } catch (e: any) {
-    if (e && e['code'] === 'ENOENT') {
+  } catch (e) {
+    const err = e as {message: string, code: string};
+    if (err && err.code === 'ENOENT') {
       return {
         shows: [],
         rssUrls: [],
@@ -28,8 +29,8 @@ export const readDataFile = async (path: fs.PathLike): Promise<Data> => {
 };
 
 export const writeDataFile = async (
-    path: fs.PathLike,
-    data: Data,
+  path: fs.PathLike,
+  data: Data,
 ): Promise<void> => {
   await fs.promises.writeFile(path, stringifyData(data));
 };
