@@ -2,9 +2,12 @@
   import Header from '../../Header.svelte';
   import { postBulkDownload } from '$lib/api-helpers';
   import { slide } from 'svelte/transition';
+  import Log from '../../Log.svelte';
 
   let folder = '';
   let rssUrl = '';
+
+  let logger: Log;
 
   let downloadMessage = 'Download all episodes';
   $: downloadMessage = downloading
@@ -16,14 +19,13 @@
   const bulkDownload = async () => {
     downloading = true;
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       const numAdded = await postBulkDownload(folder, rssUrl);
-      //logger.log(`Added ${numAdded} torrent${numAdded !== 1 ? 's' : ''}.`);
+      logger.log(`Added ${numAdded} torrent${numAdded !== 1 ? 's' : ''}.`);
     } catch (e: unknown) {
       console.error(e);
-      //if (e instanceof Error && 'message' in e) {
-        //logger.error(e.message);
-      //}
+      if (e instanceof Error && 'message' in e) {
+        logger.error(e.message);
+      }
     }
     downloading = false;
   }
@@ -71,3 +73,9 @@
     {/key}
   </div>
 </button>
+
+<hr>
+
+<div>
+  <Log bind:this={logger} />
+</div>
