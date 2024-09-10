@@ -45,7 +45,7 @@ now (instead of waiting for the next time the cron job would fire). On success
 returns `200` with a JSON body like `{"torrentsAdded": 3}`. Returns `500` on a
 server error, along with a message explaining what failed.
 
-### POST `/api/bulk-download
+### POST `/api/bulk-download`
 
 Downloads ALL torrents from an RSS feed to a single folder. The request body
 should be a JSON in the format `{"folder": string, "rssUrl": string}`. The
