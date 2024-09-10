@@ -44,3 +44,11 @@ This request has no body, but instructs the server to download matching torrents
 now (instead of waiting for the next time the cron job would fire). On success
 returns `200` with a JSON body like `{"torrentsAdded": 3}`. Returns `500` on a
 server error, along with a message explaining what failed.
+
+### POST `/api/bulk-download
+
+Downloads ALL torrents from an RSS feed to a single folder. The request body
+should be a JSON in the format `{"folder": string, "rssUrl": string}`. The
+specified folder is appended to the server data's `mediaRoot`. Returns a `200`
+with the number of torrents added on success, `400` on invalid requests, or
+`500` on server error.
