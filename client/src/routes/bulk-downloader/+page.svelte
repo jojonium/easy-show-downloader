@@ -33,30 +33,35 @@
 
 <Header title="Bulk Download - Easy Show Downloader"></Header>
 
-<p>Use this form to download all torrents from an RSS feed to a single folder under your media root.</p>
+<p>
+  Use this form for a one-time download of all torrents from an RSS feed to a
+  single folder under your media root.
+</p>
 
 <hr>
 
-<div class="line standalone-input-holder">
-  <label for="folder-input">Folder:&nbsp;</label>
-  <input 
-    type="text"
-    bind:value={folder}
-    placeholder="Folder" 
-    id="folder-input"
-    class="standalone"
-  >
-</div>
+<div class="list-holder">
+  <div class="line flex">
+    <label for="folder-input">Folder:&nbsp;&nbsp;</label>
+    <input 
+      type="text"
+      bind:value={folder}
+      placeholder="Folder" 
+      id="folder-input"
+      class="standalone"
+    >
+  </div>
 
-<div class="line standalone-input-holder">
-  <label for="rss-url-input">RSS&nbsp;URL:&nbsp;</label>
-  <input 
-    type="text"
-    bind:value={rssUrl}
-    placeholder="RSS feed URL" 
-    id="rss-url-input"
-    class="standalone"
-  >
+  <div class="line flex">
+    <label for="rss-url-input">RSS&nbsp;URL:&nbsp;</label>
+    <input 
+      type="text"
+      bind:value={rssUrl}
+      placeholder="RSS feed URL" 
+      id="rss-url-input"
+      class="standalone"
+    >
+  </div>
 </div>
 
 <hr>

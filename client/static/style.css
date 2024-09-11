@@ -99,17 +99,9 @@ input[type=text] {
   min-width: 0;
 }
 
-div.standalone-input-holder {
-  display: flex;
-  max-width: 1000px;
-}
-
-div.standalone-input-holder label  {
-  flex: 1;
-}
-
-div.standalone-input-holder input {
-  flex: 10;
+input[type=text].standalone {
+  flex-grow: 1;
+  max-width: 56.6em;
 }
 
 input[type=text], span.folder, span.regex {
