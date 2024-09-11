@@ -78,3 +78,32 @@ export const postDownload = async (): Promise<number> => {
     throw new Error(message);
   }
 };
+
+/**
+ * Tells the server to download ALL episodes from a single RSS feed to a
+ * particular folder.
+ * @param folder The folder under the media root to download to.
+ * @param rssUrl URL of the RSS feed.
+ * @returns {number} the number of torrents added
+ */
+export const postBulkDownload =
+  async (folder: string, rssUrl: string): Promise<number> => {
+    const res = await fetch(`${API_HOST}/api/bulk-download`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({folder, rssUrl})
+    });
+    if (res.status === 200) {
+      return (await res.json())['torrentsAdded'];
+    } else {
+      let message = `${res.status} Error from server!`;
+      try {
+        const json = await res.json();
+        console.error(json);
+        message += ' "' + json['message'] + '"';
+      } catch (_) { /* Continue */}
+      throw new Error(message);
+    }
+  };

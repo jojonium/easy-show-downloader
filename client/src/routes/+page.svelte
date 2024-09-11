@@ -1,7 +1,3 @@
-<svelte:head>
-  <title>Easy Show Downloader</title>
-</svelte:head>
-
 <script lang="ts">
   import { version } from '$app/environment';
   import { getData, postData, postDownload } from '$lib/api-helpers';
@@ -9,6 +5,7 @@
   import { blankData } from '@easy-show-downloader/common/src/data';
   import { onMount } from 'svelte';
   import { slide } from 'svelte/transition';
+  import Header from '../Header.svelte';
   import FeedList from '../FeedList.svelte';
   import Log from '../Log.svelte';
   import ShowList from '../ShowList.svelte';
@@ -88,15 +85,7 @@
   onMount(refreshData);
 </script>
 
-<header>
-  <h1 class="line">Easy Show Downloader v{version}
-    {#if viteMode === 'development'}
-      &lt;<span style="color: yellow;">Development mode</span>&gt;
-    {/if}
-  </h1>
-</header>
-
-<hr>
+<Header title="Easy Show Downloader"></Header>
 
 <div class="line" style="display: flex;">
     <button 
@@ -111,7 +100,9 @@
       {/key}
       </div>
   </button>
+
   <span>&nbsp;</span>
+
   <button
     id="download-new"
     class="variable-text"
@@ -123,6 +114,16 @@
         <span transition:slide>{downloadMessage}</span>
       {/key}
     </div>
+  </button>
+
+  <span>&nbsp;</span>
+
+  <button
+    id="bulk-downloader"
+  >
+    <a href="/bulk-downloader">
+      Bulk downloader ->
+    </a>
   </button>
 </div>
 

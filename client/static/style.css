@@ -56,7 +56,7 @@ div.transition-height {
   transition: height 400ms ease-out;
 }
 
-.list-holder li, div.header {
+.list-holder li, div.header, .flex {
   display: flex;
 }
 
@@ -99,6 +99,11 @@ input[type=text] {
   min-width: 0;
 }
 
+input[type=text].standalone {
+  flex-grow: 1;
+  max-width: 56.6em;
+}
+
 input[type=text], span.folder, span.regex {
   padding: 1px 2px;
 }
@@ -130,7 +135,7 @@ input:disabled {
   color: gray;
 }
 
-button {
+button, button a {
   background: none;
   border: none;
   padding: 0;
@@ -140,6 +145,7 @@ button {
   cursor: pointer;
   transition: color 0.2s;
   text-shadow: 0 0 10px;
+  text-decoration: none;
 }
 button::before {
   content: "[";
@@ -147,10 +153,10 @@ button::before {
 button::after {
   content: "]";
 }
-button:hover {
+button:hover, button:hover a {
   color: #1ca350;
 }
-button:disabled, button:hover:disabled, button.delete:hover:disabled {
+button:disabled, button:hover:disabled, button.delete:hover:disabled, button:disabled a, button:hover:disabled a {
   color: gray;
   cursor: inherit;
 }
