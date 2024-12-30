@@ -1,11 +1,17 @@
 # Build container
 FROM node:22-alpine AS builder
 ENV NODE_ENV=production
+
 WORKDIR /app
 
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
+
+# Now copy the app files
 COPY . .
 
-RUN --mount=type=cache,target=/app/.yarn/cache yarn YARN_CACHE_FOLDER=/app/.yarn/cache install --immutable
+RUN yarn --immutable
+
 RUN yarn run build && \
     yarn workspaces focus @easy-show-downloader/server --production && \
     rm -rf node_modules/.cache

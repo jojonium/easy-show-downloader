@@ -11,13 +11,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: actions/cache@v4
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            .yarn/cache
+            .yarn/releases
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn
+        run: yarn --immutable
       - name: Yarn build common
         run: yarn run common:build
       - name: Yarn build server
