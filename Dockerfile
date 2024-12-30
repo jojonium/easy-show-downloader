@@ -14,7 +14,7 @@ RUN yarn --immutable
 
 RUN yarn run build && \
     yarn workspaces focus @easy-show-downloader/server --production && \
-    rm -rf node_modules/.cache
+    rm -rf node_modules/.cache .yarn/cache
 
 # Run container
 FROM node:22-alpine AS runner
