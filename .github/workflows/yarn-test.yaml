@@ -12,12 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
       - name: Install dependencies
-        run: yarn
+        run: yarn --immutable
       - name: Yarn build common
         run: yarn run common:build
       - name: Yarn build server
