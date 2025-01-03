@@ -1,7 +1,7 @@
 {
   "name": "easy-show-downloader",
   "packageManager": "yarn@4.6.0",
-  "version": "4.2.2-beta.5",
+  "version": "4.2.2",
   "scripts": {
     "start": "yarn run server:start",
     "dev": "yarn run client:dev",
