@@ -17,9 +17,9 @@
     "@types/eslint": "^9.6.1",
     "@types/mocha": "^10.0.10",
     "chai": "^4.5.0",
-    "eslint": "^9.19.0",
+    "eslint": "^9.24.0",
     "mocha": "^10.8.2",
-    "ts-mocha": "^10.0.0",
-    "typescript": "^5.7.3"
+    "ts-mocha": "^10.1.0",
+    "typescript": "^5.8.3"
   }
 }
