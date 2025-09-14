@@ -3,7 +3,7 @@ import express from 'express';
 import {Server} from 'http';
 import fs from 'fs';
 import chai, {expect} from 'chai';
-import chaiHttp from 'chai-http';
+import {default as chaiHttp, request} from 'chai-http';
 import {config} from '../src/config';
 import {writeDataFile} from '../src/fs-helper';
 import {Show} from '@easy-show-downloader/common/dist/show';
@@ -38,7 +38,7 @@ describe('POST /api/bulk-download', () => {
     };
     await writeDataFile(fileName, data);
 
-    const res = await chai.request(app)
+    const res = await request.execute(app)
       .post('/api/bulk-download')
       .send({folder: 'Bulk folder', rssUrl: `http://${config.HOST}:${config.PORT}/test-rss-3.xml`});
     expect(res).to.have.status(200);

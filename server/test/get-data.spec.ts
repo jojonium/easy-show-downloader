@@ -1,7 +1,7 @@
 import {app as server, shutDown} from '../src/index';
 import fs from 'fs';
 import chai, {expect} from 'chai';
-import chaiHttp from 'chai-http';
+import {default as chaiHttp, request} from 'chai-http';
 import {config} from '../src/config';
 import {writeDataFile} from '../src/fs-helper';
 import {Data} from '@easy-show-downloader/common/dist/data';
@@ -32,7 +32,7 @@ describe('GET /api/data', () => {
   it('Should return an empty data object if no data file exists', async () => {
     await fs.promises.rm(fileName, {force: true});
 
-    const res = await chai.request(server).get('/api/data');
+    const res = await request.execute(server).get('/api/data');
     expect(res).to.have.status(200);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['shows']).to.be.an('array');
@@ -44,7 +44,7 @@ describe('GET /api/data', () => {
   it('Should return an error message for a malformed data file', async () => {
     await fs.promises.writeFile(fileName, 'jasid:fj}ds');
 
-    const res = await chai.request(server).get('/api/data');
+    const res = await request.execute(server).get('/api/data');
     expect(res).to.have.status(500);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['statusCode']).to.equal(500);
@@ -55,9 +55,9 @@ describe('GET /api/data', () => {
     const data: Data = {
       shows: [
         new Show(
-            'asdf',
-            /asdf.*1080p/,
-            'asdf/Season 01',
+          'asdf',
+          /asdf.*1080p/,
+          'asdf/Season 01',
         ),
         new Show('Mobile Suit Zeta Gundam'),
       ],
@@ -68,7 +68,7 @@ describe('GET /api/data', () => {
     };
     await writeDataFile(fileName, data);
 
-    const res = await chai.request(server).get('/api/data');
+    const res = await request.execute(server).get('/api/data');
     expect(res).to.have.status(200);
     expect(res).to.have.header('Content-Type', /application\/json/);
     expect(res.body['shows']).to.be.an('array');

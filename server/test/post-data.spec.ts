@@ -1,7 +1,7 @@
 import {app as server, shutDown} from '../src/index';
 import fs from 'fs';
 import chai, {expect} from 'chai';
-import chaiHttp from 'chai-http';
+import {default as chaiHttp, request} from 'chai-http';
 import {config} from '../src/config';
 import {readDataFile, writeDataFile} from '../src/fs-helper';
 import {Show} from '@easy-show-downloader/common/dist/show';
@@ -31,10 +31,10 @@ describe('POST /api/data', () => {
       shows: [],
       rssUrls: ['asdf'],
     });
-    const res = await chai
-        .request(server)
-        .post('/api/data')
-        .send(JSON.parse(toSend));
+    const res = await request
+      .execute(server)
+      .post('/api/data')
+      .send(JSON.parse(toSend));
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.be.empty;
@@ -47,20 +47,20 @@ describe('POST /api/data', () => {
       shows: [new Show('Old Show')],
       rssUrls: [],
     });
-    const res = await chai
-        .request(server)
-        .post('/api/data')
-        .send(JSON.parse(stringifyData({
-          shows: [
-            new Show('New Show', undefined),
-            new Show(
-                'Only on Nyaa',
-                undefined,
-                'https://nyaa.se',
-            ),
-          ],
-          rssUrls: ['https://example.com', 'https://nyaa.se'],
-        })));
+    const res = await request
+      .execute(server)
+      .post('/api/data')
+      .send(JSON.parse(stringifyData({
+        shows: [
+          new Show('New Show', undefined),
+          new Show(
+            'Only on Nyaa',
+            undefined,
+            'https://nyaa.se',
+          ),
+        ],
+        rssUrls: ['https://example.com', 'https://nyaa.se'],
+      })));
     expect(res).to.have.status(200);
     const written = await readDataFile(fileName);
     expect(written.shows).to.have.lengthOf(2);
@@ -75,16 +75,16 @@ describe('POST /api/data', () => {
   });
 
   it('Should return a 400 error on invalid input', async () => {
-    const res = await chai
-        .request(server)
-        .post('/api/data')
-        .send({
-          shows: [
-            {test: 'wrong'},
-            new Show('Only on Nyaa', undefined, 'https://nyaa.se'),
-          ],
-          rssUrls: ['https://example.com', 'https://nyaa.se'],
-        });
+    const res = await request
+      .execute(server)
+      .post('/api/data')
+      .send({
+        shows: [
+          {test: 'wrong'},
+          new Show('Only on Nyaa', undefined, 'https://nyaa.se'),
+        ],
+        rssUrls: ['https://example.com', 'https://nyaa.se'],
+      });
     expect(res).to.have.status(400);
     const file = await readDataFile(fileName);
     expect(file.shows).to.be.empty;
