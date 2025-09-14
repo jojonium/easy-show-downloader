@@ -42,10 +42,12 @@ __metadata:
     "@types/chai": "npm:^5.2.2"
     "@types/eslint": "npm:^9.6.1"
     "@types/mocha": "npm:^10.0.10"
+    "@types/node": "npm:^24.4.0"
     chai: "npm:^6.0.1"
     eslint: "npm:^9.35.0"
     mocha: "npm:^11.7.2"
     ts-mocha: "npm:^11.1.0"
+    ts-node: "npm:^10.9.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -72,6 +74,7 @@ __metadata:
     rss-parser: "npm:^3.13.0"
     transmission-promise: "npm:^1.1.7"
     ts-mocha: "npm:^11.1.0"
+    ts-node: "npm:^10.9.2"
     typescript: "npm:^5.9.2"
   languageName: unknown
   linkType: soft
@@ -1404,13 +1407,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.6.3":
-  version: 1.7.4
-  resolution: "axios@npm:1.7.4"
+  version: 1.12.0
+  resolution: "axios@npm:1.12.0"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/7a1429be1e3d0c2e1b96d4bba4d113efbfabc7c724bed107beb535c782c7bea447ff634886b0c7c43395a264d085450d009eb1154b5f38a8bae49d469fdcbc61
+  checksum: 10/6c45e294b6ee72f832dbee94cb3fe7331bf2961874fa6b656d909a93b3574c59281f0c62eb92baf7b3e4f39be71936c9f1fcbbe494c90f7ff4d7cc2d7932f06d
   languageName: node
   linkType: hard
 
@@ -2598,18 +2601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
-  dependencies:
-    asynckit: "npm:^0.4.0"
-    combined-stream: "npm:^1.0.8"
-    mime-types: "npm:^2.1.12"
-  checksum: 10/7264aa760a8cf09482816d8300f1b6e2423de1b02bba612a136857413fdc96d7178298ced106817655facc6b89036c6e12ae31c9eb5bdc16aabf502ae8a5d805
-  languageName: node
-  linkType: hard
-
-"form-data@npm:^4.0.4":
+"form-data@npm:^4.0.0, form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
