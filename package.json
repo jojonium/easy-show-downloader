@@ -1,6 +1,6 @@
 {
   "name": "easy-show-downloader",
-  "packageManager": "yarn@4.9.0",
+  "packageManager": "yarn@4.12.0",
   "version": "4.2.5",
   "scripts": {
     "start": "yarn run server:start",
@@ -16,16 +16,16 @@
     "client"
   ],
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.39.1",
     "@types/eslint": "^9.6.1",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^24.4.0",
-    "eslint": "^9.35.0",
-    "globals": "^16.4.0",
-    "mocha": "^11.7.2",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "mocha": "^11.7.5",
     "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.43.0"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
   }
 }
