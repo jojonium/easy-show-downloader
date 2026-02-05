@@ -15,9 +15,6 @@ const config = {
   kit: {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
-    files: {
-      appTemplate: "src/App.svelte"
-    },
     version: {
       name: pkg.version
     }
