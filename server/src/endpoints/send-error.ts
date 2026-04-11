@@ -9,13 +9,13 @@ import {Response} from 'express';
  * object.
  */
 export const sendError = async (
-    res: Response,
-    statusCode: number,
-    message: string,
-    additionalProps?: object,
+  res: Response,
+  statusCode: number,
+  message: string,
+  additionalProps?: object,
 ) => {
   res
-      .status(statusCode)
-      .header('Content-Type', 'application/json')
-      .send(JSON.stringify({statusCode, message, ...additionalProps}));
+    .status(statusCode)
+    .header('Content-Type', 'application/json')
+    .send(JSON.stringify({statusCode, message, ...additionalProps}));
 };

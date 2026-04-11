@@ -1,6 +1,6 @@
-import {Data} from '@easy-show-downloader/common/dist/data';
-import {Show} from '@easy-show-downloader/common/dist/show';
-import {resolveTorrents} from './resolve-torrents';
+import {Data} from '@easy-show-downloader/common/dist/data.js';
+import {Show} from '@easy-show-downloader/common/dist/show.js';
+import {resolveTorrents} from './resolve-torrents.js';
 
 /**
  * Helper for downloading ALL torrents from an RSS feed to a single folder.

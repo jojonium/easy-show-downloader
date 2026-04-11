@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-import {config} from '../config';
-import {readDataFile} from '../fs-helper';
-import {sendError} from './send-error';
-import {logger} from '../logger';
+import {config} from '../config.js';
+import {readDataFile} from '../fs-helper.js';
+import {sendError} from './send-error.js';
+import {logger} from '../logger.js';
 
 export const getHealth = async (_: Request, res: Response) => {
   // Make sure data file is readable.
@@ -10,9 +10,9 @@ export const getHealth = async (_: Request, res: Response) => {
     await readDataFile(config.DATA_FILE);
   } catch (e) {
     logger.log(
-        'Failure in GET /api/health. ' +
+      'Failure in GET /api/health. ' +
       `Could not read data file '${config.DATA_FILE}'.\n${e}`,
-        'ERROR',
+      'ERROR',
     );
     sendError(res, 500, 'Unable to read data file.');
     return;

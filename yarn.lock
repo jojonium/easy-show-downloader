@@ -46,7 +46,6 @@ __metadata:
     chai: "npm:^6.2.2"
     eslint: "npm:^10.2.0"
     mocha: "npm:^11.7.5"
-    ts-mocha: "npm:^11.1.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^6.0.2"
   languageName: unknown
@@ -73,7 +72,6 @@ __metadata:
     mocha: "npm:^11.7.5"
     rss-parser: "npm:^3.13.0"
     transmission-promise: "npm:^1.1.7"
-    ts-mocha: "npm:^11.1.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^6.0.2"
   languageName: unknown
@@ -1827,7 +1825,6 @@ __metadata:
     eslint: "npm:^10.2.0"
     globals: "npm:^17.4.0"
     mocha: "npm:^11.7.5"
-    ts-mocha: "npm:^11.1.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^6.0.2"
     typescript-eslint: "npm:^8.58.1"
@@ -4381,22 +4378,6 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.4"
   checksum: 10/d5f1936f5618c6ab6942a97b78802217540ced00e7501862ae1f578d9a3aa189fc06050e64cb8951d21f7088e5fd35f53d2bf0d0370a883861c7b05e993ebc44
-  languageName: node
-  linkType: hard
-
-"ts-mocha@npm:^11.1.0":
-  version: 11.1.0
-  resolution: "ts-mocha@npm:11.1.0"
-  peerDependencies:
-    mocha: ^3.X.X || ^4.X.X || ^5.X.X || ^6.X.X || ^7.X.X || ^8.X.X || ^9.X.X || ^10.X.X || ^11.X.X
-    ts-node: ^7.X.X || ^8.X.X || ^9.X.X || ^10.X.X
-    tsconfig-paths: ^4.X.X
-  peerDependenciesMeta:
-    tsconfig-paths:
-      optional: true
-  bin:
-    ts-mocha: bin/ts-mocha
-  checksum: 10/1e1b508e164702b7d8bc7298c50060a8eb13338a89d8b6dd61ff31237443aab2b1494dd779e72fdba3fab2d46cdf4f32ae4821f9cf66ca76ee4a74e8e9399b5e
   languageName: node
   linkType: hard
 

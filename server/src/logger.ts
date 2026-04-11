@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {config} from './config';
+import {config} from './config.js';
 export type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
 
 /**
@@ -29,8 +29,8 @@ class Logger {
    * @return {string} The text that was written.
    */
   public async log(
-      text: string = '',
-      level: LogLevel = 'INFO',
+    text: string = '',
+    level: LogLevel = 'INFO',
   ): Promise<string> {
     const s = `${new Date().toISOString()} [${level}] ${text}`;
     await this.write(s);

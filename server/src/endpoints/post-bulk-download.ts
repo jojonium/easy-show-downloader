@@ -1,11 +1,11 @@
 import {Request, Response} from 'express';
-import {readDataFile} from '../fs-helper';
-import {sendError} from './send-error';
-import {logger} from '../logger';
-import {config} from '../config';
-import {addTorrents} from '../add-torrents';
-import {Data} from '@easy-show-downloader/common/dist/data';
-import {bulkResolve} from '../bulk-resolve';
+import {readDataFile} from '../fs-helper.js';
+import {sendError} from './send-error.js';
+import {logger} from '../logger.js';
+import {config} from '../config.js';
+import {addTorrents} from '../add-torrents.js';
+import {Data} from '@easy-show-downloader/common/dist/data.js';
+import {bulkResolve} from '../bulk-resolve.js';
 
 /**
  * Downloads ALL torrents from an RSS feed to a single folder. The request body

@@ -1,15 +1,15 @@
 import {CronJob} from 'cron';
 import express from 'express';
-import {addTorrents} from './add-torrents';
-import {config, prettyPrintConfig} from './config';
-import {getData} from './endpoints/get-data';
-import {getHealth} from './endpoints/get-health';
-import {postBulkDownload} from './endpoints/post-bulk-download';
-import {postData} from './endpoints/post-data';
-import {postDownload} from './endpoints/post-download';
-import {readDataFile} from './fs-helper';
-import {logger} from './logger';
-import {resolveTorrents} from './resolve-torrents';
+import {addTorrents} from './add-torrents.js';
+import {config, prettyPrintConfig} from './config.js';
+import {getData} from './endpoints/get-data.js';
+import {getHealth} from './endpoints/get-health.js';
+import {postBulkDownload} from './endpoints/post-bulk-download.js';
+import {postData} from './endpoints/post-data.js';
+import {postDownload} from './endpoints/post-download.js';
+import {readDataFile} from './fs-helper.js';
+import {logger} from './logger.js';
+import {resolveTorrents} from './resolve-torrents.js';
 
 export const app = express();
 

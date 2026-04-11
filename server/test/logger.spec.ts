@@ -1,8 +1,9 @@
-import {logger} from '../src/logger';
-import chai, {expect} from 'chai';
+import {logger} from '../src/logger.js';
+import * as chai from 'chai';
+const {expect} = chai;
 import fs from 'fs';
 import chaiAsPromised from 'chai-as-promised';
-import {config} from '../src/config';
+import {config} from '../src/config.js';
 chai.use(chaiAsPromised);
 
 describe('Logger', () => {
@@ -23,7 +24,7 @@ describe('Logger', () => {
 
     it('Should include a current ISO timestamp', async () => {
       expect(await logger.log('Test')).to.contain(
-          new Date().toISOString().substring(0, 19),
+        new Date().toISOString().substring(0, 19),
       );
     });
 
@@ -51,9 +52,9 @@ describe('Logger', () => {
         const d = new Date();
         await logger.log('Test');
         expect((await fs.promises.readFile(logFileName)).toString()).to.match(
-            new RegExp(
-                `^${d.toISOString().substring(0, 16)}.* \\[INFO\\] Test\\n$`,
-            ),
+          new RegExp(
+            `^${d.toISOString().substring(0, 16)}.* \\[INFO\\] Test\\n$`,
+          ),
         );
       });
 
@@ -61,8 +62,8 @@ describe('Logger', () => {
         await logger.log('Another');
         await logger.log('And another');
         expect(
-            (await fs.promises.readFile(logFileName)).toString().split('\n')
-                .length,
+          (await fs.promises.readFile(logFileName)).toString().split('\n')
+            .length,
         ).to.equal(3);
       });
     });

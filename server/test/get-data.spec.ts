@@ -1,11 +1,12 @@
-import {app as server, shutDown} from '../src/index';
+import {app as server, shutDown} from '../src/index.js';
 import fs from 'fs';
-import chai, {expect} from 'chai';
+import * as chai from 'chai';
+const {expect} = chai;
 import {default as chaiHttp, request} from 'chai-http';
-import {config} from '../src/config';
-import {writeDataFile} from '../src/fs-helper';
-import {Data} from '@easy-show-downloader/common/dist/data';
-import {Show} from '@easy-show-downloader/common/dist/show';
+import {config} from '../src/config.js';
+import {writeDataFile} from '../src/fs-helper.js';
+import {Data} from '@easy-show-downloader/common/dist/data.js';
+import {Show} from '@easy-show-downloader/common/dist/show.js';
 
 chai.use(chaiHttp);
 
