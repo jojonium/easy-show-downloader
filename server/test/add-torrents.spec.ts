@@ -1,11 +1,11 @@
-import {Show} from '@easy-show-downloader/common/dist/show';
+import {Show} from '@easy-show-downloader/common/dist/show.js';
 import {expect} from 'chai';
 import express from 'express';
 import {Server} from 'http';
-import {addTorrents} from '../src/add-torrents';
-import {config} from '../src/config';
-import {app, shutDown} from '../src/index';
-import {resolveTorrents} from '../src/resolve-torrents';
+import {addTorrents} from '../src/add-torrents.js';
+import {config} from '../src/config.js';
+import {app, shutDown} from '../src/index.js';
+import {resolveTorrents} from '../src/resolve-torrents.js';
 
 describe('addTorrents()', () => {
   const oldLogStdout = config.LOG_STDOUT;

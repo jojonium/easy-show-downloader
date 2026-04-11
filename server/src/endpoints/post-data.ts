@@ -1,9 +1,9 @@
 import {Request, Response} from 'express';
-import {writeDataFile} from '../fs-helper';
-import {parsePlainDataObject} from '@easy-show-downloader/common/dist/data';
-import {sendError} from './send-error';
-import {logger} from '../logger';
-import {config} from '../config';
+import {writeDataFile} from '../fs-helper.js';
+import {parsePlainDataObject} from '@easy-show-downloader/common/dist/data.js';
+import {sendError} from './send-error.js';
+import {logger} from '../logger.js';
+import {config} from '../config.js';
 
 export const postData = async (req: Request, res: Response) => {
   try {

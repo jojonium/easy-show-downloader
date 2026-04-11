@@ -1,6 +1,6 @@
-import {Data} from '@easy-show-downloader/common/dist/data';
+import {Data} from '@easy-show-downloader/common/dist/data.js';
 import Parser from 'rss-parser';
-import {logger} from './logger';
+import {logger} from './logger.js';
 
 /**
  * Reads the RSS feeds and shows specified in the data file and finds all

@@ -1,19 +1,20 @@
-import {readDataFile, writeDataFile} from '../src/fs-helper';
-import chai, {expect} from 'chai';
+import {readDataFile, writeDataFile} from '../src/fs-helper.js';
+import * as chai from 'chai';
+const {expect} = chai;
 import chaiAsPromised from 'chai-as-promised';
-import {Data, parseDataString} from '@easy-show-downloader/common/dist/data';
+import {Data, parseDataString} from '@easy-show-downloader/common/dist/data.js';
 import fs from 'fs';
-import {Show} from '@easy-show-downloader/common/dist/show';
+import {Show} from '@easy-show-downloader/common/dist/show.js';
 chai.use(chaiAsPromised);
 
 describe('fs-helpers', () => {
   describe('readDataFile()', () => {
     it('Should yield an empty data object when the file does not exist',
-        async () => {
-          const result = await readDataFile('asdfasdfasdf');
-          expect(result.rssUrls).to.be.empty;
-          expect(result.shows).to.be.empty;
-        });
+      async () => {
+        const result = await readDataFile('asdfasdfasdf');
+        expect(result.rssUrls).to.be.empty;
+        expect(result.shows).to.be.empty;
+      });
 
     it('Should read files written by writeDataFile()', async () => {
       const fileName = 'data.json';
@@ -55,13 +56,13 @@ describe('fs-helpers', () => {
     it('Should write to a file', async () => {
       await writeDataFile(fileName, data);
       expect((await fs.promises.readFile(fileName)).toString())
-          .to.be.a('string');
+        .to.be.a('string');
     });
 
     it('Should write a valid JSON string', async () => {
       await writeDataFile(fileName, data);
       expect(JSON.parse((await fs.promises.readFile(fileName)).toString()))
-          .to.be.an('object');
+        .to.be.an('object');
     });
   });
 
@@ -79,7 +80,7 @@ describe('fs-helpers', () => {
 
     it('Should correctly parse a valid data string', () => {
       const result = parseDataString(
-          '{"shows":[{"folder":"Cowboy Bebop"}],"rssUrls":["asdf.com"]}',
+        '{"shows":[{"folder":"Cowboy Bebop"}],"rssUrls":["asdf.com"]}',
       );
       expect(result.rssUrls).to.have.lengthOf(1);
       expect(result.rssUrls[0]).to.equal('asdf.com');
@@ -103,14 +104,14 @@ describe('fs-helpers', () => {
 
     it('Should gracefully handle missing fields', () => {
       const result1 = parseDataString(
-          '{"rssUrls":["asdf.com"]}',
+        '{"rssUrls":["asdf.com"]}',
       );
       expect(result1.rssUrls).to.have.lengthOf(1);
       expect(result1.rssUrls[0]).to.equal('asdf.com');
       expect(result1.shows).to.be.empty;
 
       const result2 = parseDataString(
-          '{"shows":[{"folder":"Cowboy Bebop"}]}',
+        '{"shows":[{"folder":"Cowboy Bebop"}]}',
       );
       expect(result2.rssUrls).to.be.empty;
       expect(result2.shows).to.have.lengthOf(1);

@@ -2,7 +2,7 @@ import {
   Data,
   parseDataString,
   stringifyData,
-} from '@easy-show-downloader/common/dist/data';
+} from '@easy-show-downloader/common/dist/data.js';
 import fs from 'fs';
 
 /**

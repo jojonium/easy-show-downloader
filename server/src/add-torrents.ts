@@ -1,5 +1,5 @@
 import Transmission from 'transmission-promise';
-import {config} from './config';
+import {config} from './config.js';
 import path from 'path';
 
 /**
@@ -10,8 +10,8 @@ import path from 'path';
  * @param {string} mediaRoot Optional root directory to download to.
  */
 export const addTorrents = async (
-    links: Array<{folder: string, link: string}>,
-    mediaRoot: string = '',
+  links: Array<{folder: string, link: string}>,
+  mediaRoot: string = '',
 ): Promise<number> => {
   let count = 0;
   const t = new Transmission(config.transmission);

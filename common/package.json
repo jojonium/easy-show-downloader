@@ -1,27 +1,27 @@
 {
   "name": "@easy-show-downloader/common",
   "private": true,
-  "packageManager": "yarn@3.6.1",
+  "type": "module",
+  "packageManager": "yarn@4.13.0",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "lint": "eslint src",
-    "test": "NODE_ENV=test ts-mocha",
+    "test": "NODE_ENV=test mocha --require ts-node/register",
     "common:build": "tsc",
     "common:clean": "rm -rf dist tsconfig.tsbuildinfo",
     "common:lint": "eslint src",
-    "common:test": "NODE_ENV=test ts-mocha"
+    "common:test": "NODE_ENV=test mocha --require ts-node/register"
   },
   "devDependencies": {
     "@types/chai": "^5.2.3",
     "@types/eslint": "^9.6.1",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.2.0",
+    "@types/node": "^25.6.0",
     "chai": "^6.2.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.2.0",
     "mocha": "^11.7.5",
-    "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }

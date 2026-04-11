@@ -1,4 +1,4 @@
-import {Show} from './show';
+import {Show} from './show.js';
 
 /**
  * Contains all the data the server knows about shows and RSS sources.
